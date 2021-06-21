@@ -7,8 +7,9 @@ const PORT = 3000;
 app.use(express.static('public'));
 
 app.get('/', function (req, res) {
-    res.sendFile(__dirname + 'index.html');
+    res.sendFile(__dirname + '/../public/index.html');
 });
+console.log(__dirname);
 
 const { goodNew } = require("./goodNew/index.js");
 
