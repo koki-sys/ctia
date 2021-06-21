@@ -1,12 +1,12 @@
-var express = require('express');
-var app = express();
-var http = require('http').Server(app);
+const express = require('express');
+const app = express();
+const http = require('http').Server(app);
 const socketIoServer = require('socket.io')(http);
 const PORT = 3000;
 
 app.use(express.static('public'));
 
-app.get('/', function (req, res) {
+app.get('/', function (res) {
     res.render('index.html');
 });
 console.log(__dirname);
