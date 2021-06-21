@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const http = require('http').Server(app);
 const socketIoServer = require('socket.io')(http);
-const PORT = 3000;
+const PORT = process.env.PORT || 8000;
 
 app.use(express.static('public'));
 
