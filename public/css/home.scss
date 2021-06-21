@@ -1,0 +1,18 @@
+.home-card {
+    box-shadow: 3px 3px 6px #acacac;
+}
+
+.home-card:active {
+    box-shadow: 0 0;
+}
+
+$card-text: #707070;
+
+a {
+    color: $card-text;
+}
+
+a:hover {
+    text-decoration: none;
+    color: $card-text;
+}
