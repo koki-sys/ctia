@@ -4,12 +4,10 @@ let backendUrl = "";
 let frontendUrl = "";
 switch (document.domain) {
     case "localhost":
-        backendUrl = "http://localhost:3000";
-        frontendUrl = "http://localhost/CTIAssist";
+        backendUrl, frontendUrl = "http://localhost:8000";
         break;
-    case "ice-break.lolipop.io":
-        backendUrl = "https://ctia-backend.lolipop.io";
-        frontendUrl = "https://ice-break.lolipop.io";
+    case "ctiassist.lolipop.io":
+        backendUrl, frontendUrl = "https://ctiassist.lolipop.io";
         break;
 }
 

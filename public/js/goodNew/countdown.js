@@ -28,9 +28,6 @@ const countDown = () => {
         if (dt.getTime() >= endDt.getTime()) {
             clearInterval(id);
             displayCount.textContent = "発言終了！";
-            // ioの処理
-            const gnClientIO = io(goodNewUrl);
-            // テスト用URL
 
             gnClientIO.emit("order", {
                 flg: "answered",

@@ -9,7 +9,6 @@ app.use(express.static('public'));
 app.get('/', function (res) {
     res.render('index.html');
 });
-console.log(__dirname);
 
 const { goodNew } = require("./goodNew/index.js");
 
@@ -17,7 +16,7 @@ goodNew(socketIoServer);
 
 // ポート番号3000でListening
 http.listen(PORT, () => {
-    console.log("server listening. Port: 3000");
+    console.log("server listening. Port: " + PORT);
     console.log("server running......");
-    console.log("Please Access to http://localhost:3000/goodnew");
+    console.log("Please Access URL:http://localhost:"+ PORT + "/");
 });
