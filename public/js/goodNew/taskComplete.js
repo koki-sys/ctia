@@ -1,15 +1,15 @@
 import { gnClientIO } from '../../link.js';
 
 window.onload = () => {
-    gnClientIO.emit('requestOrderNumber', {
+    gnClientIO.emit('requestOrderPattern', {
         countInRoom: sessionStorage.getItem('countInRoom'),
         entryRoomName: sessionStorage.getItem('entryRoomName'),
     })
 }
 
 // 順番受け取り処理
-gnClientIO.on("sendOrderNumber", (data) => {
-    sessionStorage.setItem('orderNumber', data.orderNumber);
+gnClientIO.on("sendOrderPattern", (data) => {
+    sessionStorage.setItem('orderPattern', data.orderPattern);
 })
 
 const toAnnounce = async () => {
@@ -18,10 +18,10 @@ const toAnnounce = async () => {
 
 // 順番切り替え処理
 gnClientIO.on("changeOrder", async (data) => {
-    const orderNumber = sessionStorage.getItem('orderNumber');
+    const orderPattern = sessionStorage.getItem('orderPattern');
 
     // 順番が来たら、発表画面に切り替える。
-    if (data.changeNumber == orderNumber) {
+    if (data.changePattern == orderPattern) {
         await toAnnounce();
     }
 })
