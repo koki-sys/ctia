@@ -1,5 +1,4 @@
-exports.order = (socket, IOserver) => {
-    let orderArray = [];
+exports.order = (socket, IOserver, orderArray) => {
 
     const randomPattern = (digit) => {
         const patterns = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');

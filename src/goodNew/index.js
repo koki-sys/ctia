@@ -13,11 +13,14 @@ exports.goodNew = (socketIoServer) => {
     let goodNewRoomArray = Array(10);
     groupInit(goodNewRoomArray);
 
+    // 順番を保存する配列
+    let orderArray = [];
+
     // namespaceがGoodNewServerで設定、接続
     const goodNewServer = socketIoServer.of("/gn");
     goodNewServer.on("connection", (socket) => {
         group(socket, goodNewServer, goodNewRoomArray);
         few(socket, goodNewServer, fewGoodNewRoomArray);
-        order(socket, goodNewServer);
+        order(socket, goodNewServer, orderArray);
     });
 };

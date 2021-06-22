@@ -5,7 +5,6 @@ const gameStart = document.getElementById('gamestart');
 window.onload = () => {
     // ロード時に参加部屋などの情報を保存
     sessionStorage.setItem('entryRoomName', getParam('entry'));
-    sessionStorage.setItem('roomCount', getParam('roomCount'));
     sessionStorage.setItem('countInRoom', getParam('countInRoom'));
 }
 

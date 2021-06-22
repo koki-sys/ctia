@@ -33,7 +33,6 @@ const countDown = () => {
                 flg: "answered",
                 entryRoomName: sessionStorage.getItem('entryRoomName'),
                 name: name,
-                oyaNumber: sessionStorage.getItem('oyaNumber'),
             });
             console.log("ordered")
 
