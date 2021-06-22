@@ -20,13 +20,14 @@ gnClientIO.on("generate", (data) => {
     // sessionStorageに入っている部屋名を保存
     console.log("connecting generateQR");
     sessionStorage.setItem('entryRoomName', data.entryRoomName);
+    const entryRoomName = data.entryRoomName;
+    const countInRoom = parseInt(data.countInRoom);
 
     // QRを生成するときのURLを設定
     const qrUrl = frontendUrl + '/goodnew/few/index_ko.html?';
-    const entryRoomName = "entry=" + data.entryRoomName + "&";
-    const roomCount = "roomCount=" + data.roomCount + "&";
-    const countInRoom = "countInRoom=" + data.countInRoom;
-    const text = qrUrl + entryRoomName + roomCount + countInRoom;
+    const entryRoomNameParam = "entry=" + entryRoomName + "&";
+    const countInRoomParam = "countInRoom=" + countInRoom;
+    const text = qrUrl + entryRoomNameParam + countInRoomParam;
     const utf8qrtext = unescape(encodeURIComponent(text));
 
     // QRを生成

@@ -1,9 +1,4 @@
-exports.group = (socket, IOserver) => {
-    const { groupInit } = require('./groupInit');
-
-    // 部屋内の人数を管理するための配列の定義、初期化
-    let goodNewRoomArray = Array(10);
-    groupInit(goodNewRoomArray);
+exports.group = (socket, IOserver, room) => {
 
     // 部屋数と制限人数を定義
     let roomCount;
@@ -32,17 +27,17 @@ exports.group = (socket, IOserver) => {
             limitPerRoom = parseInt(data.limitPerRoom);
         }
 
-        for (let i = 0; i < goodNewRoomArray.length; i++) {
+        for (let i = 0; i < room.length; i++) {
 
             // 部屋番号をランダムに生成する変数（ランダムで部屋に割り振りするため）
             const randomRoomNumber = Math.floor(Math.random() * roomCount);
 
-            console.log(goodNewRoomArray[randomRoomNumber]);
-            if (goodNewRoomArray[randomRoomNumber] < limitPerRoom) {
-                goodNewRoomArray[randomRoomNumber]++;
+            console.log(room[randomRoomNumber]);
+            if (room[randomRoomNumber] < limitPerRoom) {
+                room[randomRoomNumber]++;
                 const enterRoomName = "部屋" + (randomRoomNumber + 1);
                 socket.join(enterRoomName);
-                const countInRoom = goodNewRoomArray[randomRoomNumber];
+                const countInRoom = room[randomRoomNumber];
                 IOserver.to(enterRoomName).emit("waiting", {
                     nickName: nickName,
                     entryRoomName: enterRoomName,
