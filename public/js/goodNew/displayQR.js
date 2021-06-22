@@ -24,7 +24,7 @@ gnClientIO.on("generate", (data) => {
     const countInRoom = parseInt(data.countInRoom);
 
     // QRを生成するときのURLを設定
-    const qrUrl = frontendUrl + '/goodnew/few/index_ko.html?';
+    const qrUrl = frontendUrl + '/html/goodnew/few/index_ko.html?';
     const entryRoomNameParam = "entry=" + entryRoomName + "&";
     const countInRoomParam = "countInRoom=" + countInRoom;
     const text = qrUrl + entryRoomNameParam + countInRoomParam;
