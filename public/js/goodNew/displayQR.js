@@ -43,9 +43,5 @@ const toOyaGame = async () => {
 
 const oyaGamestart = document.getElementById("oya_gamestart");
 oyaGamestart.onclick = async () => {
-    await sessionStorage.setItem('oyaNumber', 1);
-    await gnClientIO.emit("requestOrderNumber", {
-        oyaNumber: sessionStorage.getItem('oyaNumber'),
-    })
     await toOyaGame();
 }
