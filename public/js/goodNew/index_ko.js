@@ -4,8 +4,8 @@ const gameStart = document.getElementById('gamestart');
 
 window.onload = () => {
     // ロード時に参加部屋などの情報を保存
-    sessionStorage.setItem('entryRoomName', getParam('entry'));
-    sessionStorage.setItem('countInRoom', getParam('countInRoom'));
+    const urlParams = new URLSearchParams(window.location.search);
+    sessionStorage.setItem('entryRoomName', urlParams.get('entry'));
 }
 
 // ボタン押下時に招待された部屋に参加

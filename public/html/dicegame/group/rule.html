@@ -31,7 +31,7 @@
             crossorigin="anonymous"
         ></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
-        <link rel="icon" type="image/x-icon" href="../../../favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="../../favicon.ico" />
         <title>CTIAssist</title>
     </head>
 
@@ -50,21 +50,36 @@
     </body>
 </html>
 
-<div class="container mt-5">
-    <p id="input-order">名前、ニックネームの入力をお願いします。</p>
-    <form><input type="text" id="name" class="form-control mt-5" /><br /></form>
-    <div class="row fixed-bottom">
-        <button
-            type="button"
-            class="btn btn-lg text-white mt-5 mb-5 mx-auto"
-            style="background-color: #00a6fb"
-            id="input-name"
-        >
-            確定して次へ
-        </button>
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-6">
+            <h2>GOOD&NEW</h2>
+        </div>
+        <div class="col-6"></div>
+    </div>
+    <h4>ルール</h4>
+    <ul>
+        <li>グループはランダムで決まります。</li>
+        <li>乱数で順番を決める。</li>
+        <li>基本的に24時間以内にあった「いいこと」「発見」について話す</li>
+        <li>※土日などの休日の出来事を話すこともあるので縛りすぎないこと）</li>
+        <li>話す内容は30秒〜1分程度にする</li>
+        <li>話をしてくれた人に拍手をする</li>
+    </ul>
+    <h4>手順</h4>
+    <ul>
+        <li>グループはランダムで決まります。</li>
+        <li>乱数で順番を決める</li>
+        <li>24時間以内にあった「いいこと」や「発見」について話す</li>
+        <li>話をしてくれた人に拍手をする</li>
+    </ul>
+    <div class="row fixed-bottom bg-white">
+        <a href="./name.html" class="btn btn-lg text-white mt-2 mb-2 mx-auto" style="background-color: #04CCFF;"
+            onclick="">
+            <strong>今すぐゲームを開始する</strong>
+        </a>
     </div>
 </div>
-<script type="module" src="../../../js/goodNew/name.js"></script>
 <script>
 document.addEventListener('touchstart', () => {}, {
     passive: true

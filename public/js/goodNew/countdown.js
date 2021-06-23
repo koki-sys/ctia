@@ -4,7 +4,7 @@ const name = sessionStorage.getItem(['after_set_name']);
 
 const countDown = () => {
     // カウントダウンする秒数
-    let sec = 6;
+    let sec = 31;
 
     // 開始日時を設定
     let dt = new Date();
@@ -29,6 +29,8 @@ const countDown = () => {
             clearInterval(id);
             displayCount.textContent = "発言終了！";
 
+            console.log("部屋名:" + sessionStorage.getItem('entryRoomName'));
+            sessionStorage.setItem("isOrdered", true);
             gnClientIO.emit("order", {
                 flg: "answered",
                 entryRoomName: sessionStorage.getItem('entryRoomName'),

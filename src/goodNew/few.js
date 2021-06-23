@@ -12,7 +12,7 @@ exports.few = (socket, IOserver, room) => {
             if (room[roomNumber] < 13) {
                 room[roomNumber] += 1;
                 console.log("現在部屋内の人数:" + room[roomNumber]);
-                const entryRoomName = (data.roomName == null) ? "部屋" + (roomNumber + 1) : data.roomName;
+                const entryRoomName = (data.roomName == null) ? "room" + (roomNumber + 1) : data.roomName;
                 socket.join(entryRoomName);
                 const countInRoom = room[roomNumber];
 

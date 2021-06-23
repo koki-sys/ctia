@@ -31,7 +31,7 @@
             crossorigin="anonymous"
         ></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
-        <link rel="icon" type="image/x-icon" href="../../../favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="../../favicon.ico" />
         <title>CTIAssist</title>
     </head>
 
@@ -50,21 +50,23 @@
     </body>
 </html>
 
-<div class="container mt-5">
-    <p id="input-order">名前、ニックネームの入力をお願いします。</p>
-    <form><input type="text" id="name" class="form-control mt-5" /><br /></form>
-    <div class="row fixed-bottom">
-        <button
-            type="button"
-            class="btn btn-lg text-white mt-5 mb-5 mx-auto"
-            style="background-color: #00a6fb"
-            id="input-name"
-        >
-            確定して次へ
-        </button>
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-sm-2"></div>
+        <div class=" col-sm-8">
+            <p class="text-center mb-5">人数を教えて下さい。</p>
+            <a href="../few/index_oya.html">
+                <p class="text-white rounded-circle d-flex align-items-center text-center justify-content-center mx-auto d-block"
+                    style="width: 10rem;height: 10rem;background-color: #0582CA;">13人未満</p>
+            </a>
+            <a href="../group/group.html">
+                <p class="text-white rounded-circle d-flex align-items-center text-center justify-content-center mx-auto d-block mt-5"
+                    style="width: 10rem;height: 10rem;background-color: #003554;">13人以上</p>
+            </a>
+        </div>
+        <div class=" col-sm-2"></div>
     </div>
 </div>
-<script type="module" src="../../../js/goodNew/name.js"></script>
 <script>
 document.addEventListener('touchstart', () => {}, {
     passive: true

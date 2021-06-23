@@ -31,7 +31,7 @@
             crossorigin="anonymous"
         ></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
-        <link rel="icon" type="image/x-icon" href="../../../favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="../../favicon.ico" />
         <title>CTIAssist</title>
     </head>
 
@@ -50,21 +50,29 @@
     </body>
 </html>
 
-<div class="container mt-5">
-    <p id="input-order">名前、ニックネームの入力をお願いします。</p>
-    <form><input type="text" id="name" class="form-control mt-5" /><br /></form>
-    <div class="row fixed-bottom">
-        <button
-            type="button"
-            class="btn btn-lg text-white mt-5 mb-5 mx-auto"
-            style="background-color: #00a6fb"
-            id="input-name"
-        >
-            確定して次へ
-        </button>
+<div class="container">
+    <div class="row-center">
+        <div class="col-4-center">
+            <h4 class="text-center">グループをいくつに分けますか</h4>
+        </div>
+        <div class="mt-4">
+            <div class="text-center">
+                <input type="text" name="name" placeholder="グループ数" id="group-count">
+            </div><br>
+            <h4 class="text-right">に分ける</h4><br>
+            <div class="text-center">
+                <input type="text" name="name" placeholder="人数" id="person-count">
+            </div>
+        </div>
+        <div class="row fixed-bottom">
+            <button class="btn btn-lg text-white mt-5 mb-5 mx-auto"
+                style="width:140px;height:40px; background-color: #00A6FB;" id="setgroup">
+                <strong style="font-size:22px">次へ</strong>
+            </button>
+        </div>
     </div>
 </div>
-<script type="module" src="../../../js/goodNew/name.js"></script>
+<script type="module" src="../../../js/goodNew/group.js"></script>
 <script>
 document.addEventListener('touchstart', () => {}, {
     passive: true

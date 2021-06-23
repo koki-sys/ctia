@@ -14,20 +14,23 @@ exports.order = (socket, IOserver, orderArray) => {
     };
 
     socket.on("requestOrderPattern", (data) => {
-        // Setの追加前の長さと追加後の長さを比較して、重複を確認する。
+        // 順番作製のために
         const orderPattern = randomPattern(15);
         orderArray.push(orderPattern);
 
-        // 順番を送る。
-        IOserver.to(data.entryRoomName).emit("sendOrderPattern", {
+        // 順番を受け取りに来たユーザに順番を送る。
+        IOserver.to(socket.id).emit("sendOrderPattern", {
             orderPattern: orderPattern,
         });
     });
 
     socket.on("order", (data) => {
+        console.log("順番切り替え処理を行っています・・・");
         if (data.flg == "answered") {
             const nextPattern = orderArray.shift();
-            IOserver.to(data.entryRoomName).emit("changeOrder", {
+            console.log("送信パターン" + nextPattern);
+            console.log("参加部屋名：" + data.entryRoomName);
+            IOserver.emit("changeOrder", {
                 changePattern: nextPattern,
             })
         }
