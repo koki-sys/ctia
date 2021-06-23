@@ -1,0 +1,11 @@
+<%- include( '../_header.ejs' ); %>
+<div class="container mt-3">
+    <a href="index.html" style="color: #003554;">
+        <h3 class="text-center">番目です</h3>
+        echo '<img src="../charaimg/gazou', rand(1, 14), '.png">';>         
+    <form action="nameoboeta.html" method="post">
+        <input type="text" name="chara_name">
+        <input type="submit" value="名前つけたよ!">
+    </form> 
+</div>
+<%- include( '../_footer.ejs' ); %>

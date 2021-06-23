@@ -13,9 +13,11 @@ switch (document.domain) {
 
 // socket.IO接続部分
 const gnClientIO = io(backendUrl + "/gn");
+const dgClientIO = io(backendUrl + "/dg");
 
 export {
     frontendUrl,
     gnClientIO,
+    dgClientIO,
     completeGroupingUrl
 }
