@@ -28,6 +28,8 @@ gnClientIO.on("changeOrder", (data) => {
             entryRoomName: sessionStorage.getItem('entryRoomName'),
             name: name,
         });
+
+        // sessionStorageを切る
     } else if (data.changePattern == orderPattern) {
         location.href = "./announce.html";
     }
