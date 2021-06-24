@@ -1,4 +1,4 @@
-import { dgClientIO } from '../../link.js';
+import { ngClientIO } from '../../link.js';
 
 const gameStart = document.getElementById('gamestart');
 
@@ -10,7 +10,7 @@ window.onload = () => {
 
 // ボタン押下時に招待された部屋に参加
 gameStart.onclick = () => {
-    dgClientIO.emit('few_group', {
+    ngClientIO.emit('few_group', {
         roomName: sessionStorage.getItem('entryRoomName'),
     })
 }

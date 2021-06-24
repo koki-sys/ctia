@@ -1,20 +1,30 @@
-import { dgClientIO } from '../../link.js';
+import { ngClientIO } from '../../link.js';
 
 const name = sessionStorage.getItem('after_set_name');
 
-const questionArray = [
-    '出身地はどこですか？',
-    '好きな食べ物はなんですか？',
-    '好きな動物はなんですか？',
-    '趣味はなんですか？',
-    '好きな音楽はなんですか？',
-    '好きなスポーツはなんですか？'
-];
-const questionNumber = Math.floor(Math.random() * 5) + 1;
-const question = document.getElementById("question");
-question.textContent = questionArray[questionNumber];
 
 const announced = document.getElementById('announced');
+
+const toComplete = async () => {
+    document.location.href = "./taskComplete.html";
+}
+
+// 時間切れ、ボタン押下時の処理
+const sendOrder = async () => {
+    console.log("部屋名:" + sessionStorage.getItem('entryRoomName'));
+    sessionStorage.setItem("isOrdered", true);
+    await ngClientIO.emit("order", {
+        flg: "answered",
+        entryRoomName: sessionStorage.getItem('entryRoomName'),
+        name: name,
+    });
+    console.log("ordered")
+    await toComplete();
+}
+
+announced.onclick = () => {
+    sendOrder();
+}
 
 const countDown = () => {
     // カウントダウンする秒数
@@ -43,37 +53,9 @@ const countDown = () => {
             clearInterval(id);
             displayCount.textContent = "発言終了！";
 
-            console.log("部屋名:" + sessionStorage.getItem('entryRoomName'));
-            sessionStorage.setItem("isOrdered", true);
-            dgClientIO.emit("order", {
-                flg: "answered",
-                entryRoomName: sessionStorage.getItem('entryRoomName'),
-                name: name,
-            });
-            console.log("ordered")
-
-            // 送ったら遷移する処理に変える
-            setTimeout(function () {
-                console.log("sended.");
-                document.location.href = "./taskComplete.html";
-            }, 1000);
+            sendOrder();
         }
     }, 1000);
 };
 
 countDown();
-
-announced.onclick = () => {
-    console.log("部屋名:" + sessionStorage.getItem('entryRoomName'));
-    sessionStorage.setItem("isOrdered", true);
-    dgClientIO.emit("order", {
-        flg: "answered",
-        entryRoomName: sessionStorage.getItem('entryRoomName'),
-        name: name,
-    });
-    // 送ったら遷移する処理に変える
-    setTimeout(function () {
-        console.log("sended.");
-        document.location.href = "./taskComplete.html";
-    }, 1000);
-}

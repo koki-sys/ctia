@@ -1,20 +1,20 @@
-import { dgClientIO } from '../../link.js';
+import { ngClientIO } from '../../link.js';
 
 window.onload = () => {
     console.log("参加部屋名：" + sessionStorage.getItem('entryRoomName'));
-    dgClientIO.emit('requestOrderPattern', {
+    ngClientIO.emit('requestOrderPattern', {
         entryRoomName: sessionStorage.getItem('entryRoomName'),
     })
 }
 
 // 順番受け取り処理
-dgClientIO.on("sendOrderPattern", (data) => {
+ngClientIO.on("sendOrderPattern", (data) => {
     sessionStorage.setItem('orderPattern', data.orderPattern);
     console.log("パータン：" + data.orderPattern);
 })
 
 // 順番切り替え処理
-dgClientIO.on("changeOrder", (data) => {
+ngClientIO.on("changeOrder", (data) => {
     const orderPattern = sessionStorage.getItem('orderPattern');
     console.log("切り替えます。");
 
@@ -23,7 +23,7 @@ dgClientIO.on("changeOrder", (data) => {
     // 順番が来たら、発表画面に切り替える。
     if (isOrdered) {
         console.log("発表しました。");
-        dgClientIO.emit("order", {
+        ngClientIO.emit("order", {
             flg: "answered",
             entryRoomName: sessionStorage.getItem('entryRoomName'),
             name: name,
