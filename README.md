@@ -11,4 +11,5 @@
 - npm v7（パッケージ管理ツール）
 - HTML 5
 - CSS 3
+- Bootstrap v4
 - javascript(ES2017)
