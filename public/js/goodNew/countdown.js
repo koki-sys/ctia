@@ -22,15 +22,8 @@ const sendOrder = async () => {
 }
 
 //　確認ウィンドウのボタンをタップしたときの動作
-announced.onclick = async () => {
-    console.log("部屋名:" + sessionStorage.getItem('entryRoomName'));
-    sessionStorage.setItem("isOrdered", true);
-    await dgClientIO.emit("order", {
-        flg: "answered",
-        entryRoomName: sessionStorage.getItem('entryRoomName'),
-        name: name,
-    });
-    await toComplete();
+announced.onclick = () => {
+    sendOrder();
 }
 
 // カウントダウンするメソッド
