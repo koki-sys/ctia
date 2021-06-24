@@ -1,6 +1,6 @@
 import { dgClientIO } from '../../link.js';
 
-const name = sessionStorage.getItem(['after_set_name']);
+const name = sessionStorage.getItem('after_set_name');
 
 const questionArray = [
     '出身地はどこですか？',
@@ -13,6 +13,8 @@ const questionArray = [
 const questionNumber = Math.floor(Math.random() * 5) + 1;
 const question = document.getElementById("question");
 question.textContent = questionArray[questionNumber];
+
+const announced = document.getElementById('announced');
 
 const countDown = () => {
     // カウントダウンする秒数
@@ -60,3 +62,18 @@ const countDown = () => {
 };
 
 countDown();
+
+announced.onclick = () => {
+    console.log("部屋名:" + sessionStorage.getItem('entryRoomName'));
+    sessionStorage.setItem("isOrdered", true);
+    dgClientIO.emit("order", {
+        flg: "answered",
+        entryRoomName: sessionStorage.getItem('entryRoomName'),
+        name: name,
+    });
+    // 送ったら遷移する処理に変える
+    setTimeout(function () {
+        console.log("sended.");
+        document.location.href = "./taskComplete.html";
+    }, 1000);
+}
