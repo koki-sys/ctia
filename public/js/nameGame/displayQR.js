@@ -1,10 +1,10 @@
-import { dgClientIO, frontendUrl } from '../../link.js';
+import { ngClientIO, frontendUrl } from '../../link.js';
 
 console.log("displayQR");
 
 window.onload = () => {
     console.log("ロードしました。");
-    dgClientIO.emit("few_group", {});
+    ngClientIO.emit("few_group", {});
 }
 
 /**
@@ -16,7 +16,7 @@ window.onload = () => {
  * @param {Number} data.countInRoom     部屋内の人数
  * 
  */
-dgClientIO.on("generate", (data) => {
+ngClientIO.on("generate", (data) => {
     // sessionStorageに入っている部屋名を保存
     console.log("connecting generateQR");
     sessionStorage.setItem('entryRoomName', data.entryRoomName);
@@ -24,7 +24,7 @@ dgClientIO.on("generate", (data) => {
     const countInRoom = parseInt(data.countInRoom);
 
     // QRを生成するときのURLを設定
-    const qrUrl = frontendUrl + '/html/dicegame/few/index_ko.html?';
+    const qrUrl = frontendUrl + '/html/namegame/few/index_ko.html?';
     const entryRoomNameParam = "entry=" + entryRoomName + "&";
     const countInRoomParam = "countInRoom=" + countInRoom;
     const text = qrUrl + entryRoomNameParam + countInRoomParam;
@@ -38,7 +38,7 @@ dgClientIO.on("generate", (data) => {
 
 // クリック時に発火
 const toOyaGame = async () => {
-    document.location.href = "../game/announce.html";
+    document.location.href = "../game/banme.html";
 }
 
 const oyaGamestart = document.getElementById("oya_gamestart");

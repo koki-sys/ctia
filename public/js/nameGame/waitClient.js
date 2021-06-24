@@ -1,4 +1,4 @@
-import { dgClientIO, completeGroupingUrl } from '../../link.js';
+import { ngClientIO, completeGroupingUrl } from '../../link.js';
 
 
 /**
@@ -13,14 +13,14 @@ window.addEventListener('DOMContentLoaded', () => {
     console.log(sessionStorage.getItem('nickNameFromClient'));
     console.log(sessionStorage.getItem('clientRoomCount'));
     console.log(sessionStorage.getItem('clientRoomLimit'));
-    dgClientIO.emit("set_nickname", {
+    ngClientIO.emit("set_nickname", {
         nickName: sessionStorage.getItem('nickNameFromClient'),
         roomCount: sessionStorage.getItem('clientRoomCount'),
         limitPerRoom: sessionStorage.getItem('clientRoomLimit')
     })
 });
 
-dgClientIO.on("waiting", (data) => {
+ngClientIO.on("waiting", (data) => {
     console.log("waiting");
     $('ul').append('<li class="list-group-item">' + data.nickName + 'さん</li>');
     const nickNameFromClient = sessionStorage.getItem('nickNameFromClient');
