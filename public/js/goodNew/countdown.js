@@ -1,7 +1,39 @@
 import { gnClientIO } from '../../link.js';
 
-const name = sessionStorage.getItem(['after_set_name']);
+const name = sessionStorage.getItem('after_set_name');
 
+const announced = document.getElementById('announced');
+
+const toComplete = async () => {
+    document.location.href = "./taskComplete.html";
+}
+
+// 時間切れ、ボタン押下時の処理
+const sendOrder = async () => {
+    console.log("部屋名:" + sessionStorage.getItem('entryRoomName'));
+    sessionStorage.setItem("isOrdered", true);
+    await gnClientIO.emit("order", {
+        flg: "answered",
+        entryRoomName: sessionStorage.getItem('entryRoomName'),
+        name: name,
+    });
+    console.log("ordered")
+    await toComplete();
+}
+
+//　確認ウィンドウのボタンをタップしたときの動作
+announced.onclick = async () => {
+    console.log("部屋名:" + sessionStorage.getItem('entryRoomName'));
+    sessionStorage.setItem("isOrdered", true);
+    await dgClientIO.emit("order", {
+        flg: "answered",
+        entryRoomName: sessionStorage.getItem('entryRoomName'),
+        name: name,
+    });
+    await toComplete();
+}
+
+// カウントダウンするメソッド
 const countDown = () => {
     // カウントダウンする秒数
     let sec = 31;
@@ -29,20 +61,7 @@ const countDown = () => {
             clearInterval(id);
             displayCount.textContent = "発言終了！";
 
-            console.log("部屋名:" + sessionStorage.getItem('entryRoomName'));
-            sessionStorage.setItem("isOrdered", true);
-            gnClientIO.emit("order", {
-                flg: "answered",
-                entryRoomName: sessionStorage.getItem('entryRoomName'),
-                name: name,
-            });
-            console.log("ordered")
-
-            // 送ったら遷移する処理に変える
-            setTimeout(function () {
-                console.log("sended.");
-                document.location.href = "./taskComplete.html";
-            }, 1000);
+            sendOrder();
         }
     }, 1000);
 };
