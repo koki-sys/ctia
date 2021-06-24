@@ -9,5 +9,6 @@
 - socket.io v4.1.2
 - express v4.17.1
 - npm v7（パッケージ管理ツール）
-- html
+- HTML 5
+- CSS 3
 - javascript(ES2017)
