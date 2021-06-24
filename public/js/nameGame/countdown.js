@@ -16,27 +16,6 @@ question.textContent = questionArray[questionNumber];
 
 const announced = document.getElementById('announced');
 
-const toComplete = async () => {
-    document.location.href = "./taskComplete.html";
-}
-
-// 時間切れ、ボタン押下時の処理
-const sendOrder = async () => {
-    console.log("部屋名:" + sessionStorage.getItem('entryRoomName'));
-    sessionStorage.setItem("isOrdered", true);
-    await dgClientIO.emit("order", {
-        flg: "answered",
-        entryRoomName: sessionStorage.getItem('entryRoomName'),
-        name: name,
-    });
-    console.log("ordered")
-    await toComplete();
-}
-
-announced.onclick = () => {
-    sendOrder();
-}
-
 const countDown = () => {
     // カウントダウンする秒数
     let sec = 31;
@@ -64,9 +43,37 @@ const countDown = () => {
             clearInterval(id);
             displayCount.textContent = "発言終了！";
 
-            sendOrder();
+            console.log("部屋名:" + sessionStorage.getItem('entryRoomName'));
+            sessionStorage.setItem("isOrdered", true);
+            dgClientIO.emit("order", {
+                flg: "answered",
+                entryRoomName: sessionStorage.getItem('entryRoomName'),
+                name: name,
+            });
+            console.log("ordered")
+
+            // 送ったら遷移する処理に変える
+            setTimeout(function () {
+                console.log("sended.");
+                document.location.href = "./taskComplete.html";
+            }, 1000);
         }
     }, 1000);
 };
 
 countDown();
+
+announced.onclick = () => {
+    console.log("部屋名:" + sessionStorage.getItem('entryRoomName'));
+    sessionStorage.setItem("isOrdered", true);
+    dgClientIO.emit("order", {
+        flg: "answered",
+        entryRoomName: sessionStorage.getItem('entryRoomName'),
+        name: name,
+    });
+    // 送ったら遷移する処理に変える
+    setTimeout(function () {
+        console.log("sended.");
+        document.location.href = "./taskComplete.html";
+    }, 1000);
+}
