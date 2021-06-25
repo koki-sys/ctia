@@ -1,0 +1,12 @@
+canvas {
+    position: relative;
+    border:3px solid #000;
+}
+div#img-box{
+  border:3px solid #000;
+  width:500px;
+}
+div#btn-box{
+    position: fixed;
+    bottom :0px;
+}

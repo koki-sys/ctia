@@ -14,3 +14,7 @@
 - CSS 3
 - Bootstrap v4
 - javascript(ES2017)
+
+## 注意事項
+
+IE(Internet Explorer)では動作しません。
