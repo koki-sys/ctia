@@ -1,4 +1,4 @@
-const completeGroupingUrl = "./groupComplete.php";
+const completeGroupingUrl = "./groupComplete.html";
 
 let backendUrl = "";
 let frontendUrl = "";

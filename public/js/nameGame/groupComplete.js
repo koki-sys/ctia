@@ -5,5 +5,5 @@ const countInRoom = sessionStorage.getItem('countInRoom');
 roomNameText.textContent = "あなたの部屋は" + resultEntryRoomName + "です。";
 countInRoomText.textContent = "人数は" + countInRoom + "人です。";
 setTimeout(() => {
-    location.href = "../game/announce.html"
+    location.href = "../game/banme.html"
 }, 3000);
