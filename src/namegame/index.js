@@ -11,10 +11,15 @@ exports.nameGame = (socketIoServer) => {
     // 順番を保存する配列
     let orderArray = [];
 
+    let waitCount;
+
+    let namedImgNumberArray = [];
+    let tempCharaName;
+
     // namespaceがnameGameServerで設定、接続
     const nameGameServer = socketIoServer.of("/ng");
     nameGameServer.on("connection", (socket) => {
         group(socket, nameGameServer, diceGameRoomArray);
-        order(socket, nameGameServer, orderArray);
+        order(socket, nameGameServer, orderArray, waitCount, namedImgNumberArray, tempCharaName);
     });
 };

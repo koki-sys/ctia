@@ -1,15 +1,31 @@
 <%- include( '../_header.ejs' ); %>
 <div class="container mt-3">
-    <h6 class="text-center">名前覚えましたか？</h3>
-    <img src="" alt="" class="d-block mx-auto">
-
-    <h6 class="text-center">とりぴぃ</h3>
-    
+    <h6 class="text-center"><strong>名前覚えましたか？</strong><br>
+    <strong>後で回答するのに使います。</strong></h3>
+    <p class="text-center"><strong>※取得したカード数が多い方が勝ちです。</strong></p>
+        <div class="row mb-5">
+            <div class="col-sm-2 col-xs-1"></div>
+            <div class="col-sm-8 col-xs-10">
+                <img
+                    id="chara-img"
+                    width="100%"
+                    height="auto"
+                    class="d-block mx-auto border"
+                />
+                <h6 id="chara-name" class="text-center mt-3"></h3>
+            </div>
+            <div class="col-sm-2 col-xs-1"></div>
+        </div>
     <div class="row fixed-bottom">
-        <a href="namegame.html" class="btn btn-lg text-white mt-5 mb-5 mx-auto" style="background-color: #04CCFF;">
+        <button 
+            type="button"
+            class="btn btn-lg text-white mt-5 mb-5 mx-auto" 
+            style="background-color: #04CCFF;"
+            id="confirm-btn"
+         >
             <strong>大丈夫！</strong>
-        </a>
+        </button>
     </div>
 </div>
-<script src="../../../js/nameGame/namaeoboeta.js"></script>
+<script src="../../../js/nameGame/namaeoboeta.js" type="module"></script>
 <%- include( '../_footer.ejs' ); %>
