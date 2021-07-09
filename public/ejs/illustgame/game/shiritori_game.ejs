@@ -1,19 +1,19 @@
 <%- include( '../_header.ejs' ); %>
-<div>
-    <button type="button" onclick="prevCanvas()">戻る</button>
-    <button type="button" onclick="nextCanvas()">進む</button>
-    <button type="button" onclick="eraser()">消しゴムモード</button>
-    <button type="button" onclick="drawInPen()">描画モード</button>
-    <button type="button" onclick="resetCanvas()">全消し</button>
-</div>
-<br />
-<div class="text-align-center">
-    <canvas
-        id="canvassample"
-        width="250px"
-        height="350px"
-        style="border: 1px solid #000000"
-    ></canvas>
-    <script src="../../../js/illustGame/shiritori_game.js"></script>
-</div>
-<%- include( '../_footer.ejs' ); %>
+    <div class="container">
+        <div class="row-center">
+            <h4 class="text-center">1番目です</h4><br>
+            <div class="iconBtn text-align:center">
+                <img src="./images/undo.svg" width="20" height="20" type="button" onclick="prevCanvas()">
+                <img src="./images/redo.svg" width="20" height="20" type="button" onclick="nextCanvas()">
+                <img src="./images/eraser.svg" width="20" height="20" type="button" onclick="eraser()">
+                <img src="./images/marker.svg" width="20" height="20" type="button" onclick="drawInPen()">
+                <img src="./images/trash.svg" width="20" height="20" type="button" onclick="resetCanvas()">
+            </div>
+            <div calss="text-align:center">
+                <canvas id="canvassample" width="300px" height="350px" style="border: 1px solid #000000;"
+                    calss="text-align:center"></canvas>
+            </div>
+            <script src="../../../js/illustGame/shiritori_game.js"></script>
+        </div>
+    </div>
+    <%- include( '../_footer.ejs' ); %>
