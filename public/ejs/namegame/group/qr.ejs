@@ -1,24 +1,23 @@
 <%- include( '../_header.ejs' ); %>
-<div class="container mt-3">
-    <a href="./group.html" style="color: #003554"> < 戻る</a>
-    <h3 class="text-center">名前当てゲーム</h3>
-    <img
-        src="../../../images/qr/goodnewQR.png"
-        alt="qr"
-        class="mx-auto d-block"
-    />
-    <p class="text-center">
-        グループに<br />共有をお願いします<br />またはこのQRを<br />会場に掲示してください。
-    </p>
+    <div class="container mt-3">
+        <a href="./group.html" style="color: #003554">
+            < 戻る</a>
+                <h3 class="text-center">名前当てゲーム</h3>
 
-    <div class="row fixed-bottom bg-white">
-        <a
-            href="./rule.html"
-            class="btn btn-lg text-white mt-2 mb-2 mx-auto"
-            style="background-color: #04ccff"
-        >
-            <strong>ゲームを開始する</strong>
-        </a>
+                <div style="margin: 0 auto; width: 240px;" class="border rounded border-primary p-3 mt-3 mb-3"
+                    id="namegame-qr"></div>
+
+                <p class="text-center">
+                    グループに<br />共有をお願いします<br />またはこのQRを<br />会場に掲示してください。
+                </p>
+
+
+                <div class="row fixed-bottom bg-white">
+                    <a href="./rule.html" class="btn btn-lg text-white mt-2 mb-2 mx-auto"
+                        style="background-color: #04ccff">
+                        <strong>次へ</strong>
+                    </a>
+                </div>
     </div>
-</div>
-<%- include( '../_footer.ejs' ); %>
+    <script src="../../../js/nameGame/qr.js" type="module"></script>
+    <%- include( '../_footer.ejs' ); %>

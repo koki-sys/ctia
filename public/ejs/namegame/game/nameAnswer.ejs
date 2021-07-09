@@ -1,0 +1,43 @@
+<%- include( '../_header.ejs' ); %>
+<div class="container mt-3">
+    <h3 class="text-center">名前を当てよう！</h3>
+    <p class="text-center"><strong>回答の早い方がカードをもらえます。</strong></p>
+    <!-- 画像処理をjavascriptで作製 -->
+    <div class="row mb-5">
+        <div class="col-sm-2 col-xs-1"></div>
+        <div class="col-sm-8 col-xs-10">
+            <img
+                id="named_chara_img"
+                width="100%"
+                height="auto"
+                class="d-block mx-auto border"
+            />
+        </div>
+        <div class="col-sm-2 col-xs-1"></div>
+    </div>
+    <div class="row fixed-bottom bg-white">
+        <div class="col-sm-3 col-xs-2"></div>
+        <div class="col-sm-6 col-xs-8">
+            <p class="text-danger" id="incorrect-text"></p>
+            <form>
+                <input
+                    id="named_chara_name"
+                    type="text"
+                    class="form-control"
+                    placeholder="名前を当てよう！"
+                /><br />
+            </form>
+            <button
+                type="button"
+                class="btn btn-lg btn-block text-white mb-3 mx-auto"
+                style="background-color: #00a6fb"
+                id="named-btn"
+            >
+                <strong style="font-size: 15px">回答する！</strong>
+            </button>
+        </div>
+        <div class="col-sm-3 col-xs-2"></div>
+    </div>
+</div>
+<script src="../../../js/nameGame/nameAnswer.js" type="module"></script>
+<%- include( '../_footer.ejs' ); %>
