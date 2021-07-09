@@ -1,9 +1,31 @@
-const resultEntryRoomName = sessionStorage.getItem('entryRoomName');
-const roomNameText = document.getElementById('room-name');
-const countInRoomText = document.getElementById('count-in-room');
-const countInRoom = sessionStorage.getItem('countInRoom');
-roomNameText.textContent = "あなたの部屋は" + resultEntryRoomName + "です。";
-countInRoomText.textContent = "人数は" + countInRoom + "人です。";
+import { ngClientIO } from "../../link.js";
+
+// session取得
+const resultEntryRoomNameFromSession = sessionStorage.getItem('entryRoomName');
+const countInRoomFromSession = sessionStorage.getItem('limitPerRoom');
+
+// html要素取得
+const roomNameElement = document.getElementById('room-name');
+const countInRoomElement = document.getElementById('count-in-room');
+
+// 部屋数などを表示
+roomNameElement.textContent = "あなたの部屋は" + resultEntryRoomNameFromSession + "です。";
+countInRoomElement.textContent = "人数は" + countInRoomFromSession + "人です。";
+
+// 順番をリクエストする
+window.onload = () => {
+    ngClientIO.emit('requestOrderPattern', {});
+}
+
+// 順番を受信して保存。
+ngClientIO.on('sendOrderPattern', (data) => {
+    console.log("順番情報を保存しました。");
+    sessionStorage.setItem('orderPattern', data.orderPattern);
+});
+
+// 三秒後にゲーム画面に遷移
 setTimeout(() => {
-    location.href = "../game/announce.html"
+    console.log("ゲーム画面に遷移します。");
+    location.href = "../game/banme.html"
 }, 3000);
+

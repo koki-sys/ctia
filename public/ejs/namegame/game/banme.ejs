@@ -1,11 +1,40 @@
 <%- include( '../_header.ejs' ); %>
 <div class="container mt-3">
-    <h3 class="text-center">番目です</h3>
+    <h3 class="text-center">あなたの番です</h3>
     <!-- 画像処理をjavascriptで作製 -->
-    <img src="../charaimg/gazou', rand(1, 14), '.png" id="gazou-img">
-    <form action="nameoboeta.html" method="get">
-        <input type="text" name="chara_name" />
-        <input type="submit" value="名前つけたよ!" />
-    </form>
+    <div class="row mb-5">
+        <div class="col-sm-2 col-xs-1"></div>
+        <div class="col-sm-8 col-xs-10">
+            <img
+                id="chara-img"
+                width="100%"
+                height="auto"
+                class="d-block mx-auto border"
+            />
+        </div>
+        <div class="col-sm-2 col-xs-1"></div>
+    </div>
+    <div class="row fixed-bottom bg-white">
+        <div class="col-sm-3 col-xs-2"></div>
+        <div class="col-sm-6 col-xs-8">
+            <form>
+                <input
+                    id="chara_name"
+                    type="text"
+                    class="form-control"
+                /><br />
+            </form>
+            <button
+                type="button"
+                class="btn btn-lg btn-block text-white mb-3 mx-auto"
+                style="background-color: #00a6fb"
+                id="named-btn"
+            >
+                <strong style="font-size: 15px">名前つけたよ！</strong>
+            </button>
+        </div>
+        <div class="col-sm-3 col-xs-2"></div>
+    </div>
 </div>
+<script src="../../../js/nameGame/banme.js" type="module"></script>
 <%- include( '../_footer.ejs' ); %>

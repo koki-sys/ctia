@@ -1,12 +1,27 @@
+// html要素取得
 const group = document.getElementById('setgroup');
+
+window.onload = () => {
+    // sessionをリセット
+    sessionStorage.clear();
+}
+// qr.htmlに遷移するメソッド
 const qrlink = async () => {
+    console.log("qr画面に遷移しました。");
     document.location.href = "qr.html";
 }
+
+// ボタンをクリックしたときに部屋情報を保存する
 group.addEventListener('click', async () => {
+    // valueを取得する
     const groupCount = document.getElementById('group-count').value;
     const personCount = document.getElementById('person-count').value;
-    await sessionStorage.setItem('clientRoomCount', groupCount);
-    await sessionStorage.setItem('clientRoomLimit', personCount);
-    console.log("sended.");
+
+    // 保存する
+    await sessionStorage.setItem('roomCount', groupCount);
+    await sessionStorage.setItem('limitPerRoom', personCount);
+    console.log("部屋情報を保存しました。");
+
+    // qr画面に遷移する
     await qrlink();
 })
