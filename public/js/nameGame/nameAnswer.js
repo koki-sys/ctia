@@ -11,7 +11,7 @@ const nickName = sessionStorage.getItem('nickName');
 
 // 画面遷移処理
 const toCorrectAnswerer = async () => {
-    document.location.href = "./correctAnswerer";
+    document.location.href = "./correctAnswerer.html";
 }
 
 // ロード時に画像をセット
@@ -21,23 +21,31 @@ window.onload = () => {
     名前をつけた人（name.js）でsessionつけて、
     それに当てはまる人がサーバーに送信していく。(emit)
     */
-    if (namedFlg == "named") {
-        ngClientIO.emit('requestDisplayCharaImg', {});
+    setTimeout(() => {
+        if (namedFlg == "named") {
+            ngClientIO.emit('requestDisplayCharaImg', {});
 
-        // デバッグ
-        console.log("画像取得をサーバーにリクエストしました。");
-    }
+            // デバッグ
+            console.log("画像取得をサーバーにリクエストしました。");
+        }
+    }, 2000);
+
 }
 
 // 回答用の画像を表示
 ngClientIO.on('randomNamedCharaImg', (data) => {
     // デバッグ
     console.log("サーバーから受信しました。");
-    // サーバ側で定義したモノを配置
     const randomCardNumber = data.randomCardNumber;
-    const charaImgPath = "../allstars/gazou" + randomCardNumber + ".png";;
-    namedCharaImg.setAttribute('src', charaImgPath);
-    sessionStorage.setItem('answername', data.charaName);
+    if (randomCardNumber == 0 && randomCardNumber == null) {
+        const charaImgPath = "../allstars/gazou" + randomCardNumber + ".png";
+        namedCharaImg.setAttribute('src', charaImgPath);
+    } else {
+        // サーバ側で定義したモノを配置
+        const charaImgPath = "../allstars/gazou" + randomCardNumber + ".png";
+        namedCharaImg.setAttribute('src', charaImgPath);
+        sessionStorage.setItem('answername', data.charaName);
+    }
 })
 
 // 正解者を受信して保存
