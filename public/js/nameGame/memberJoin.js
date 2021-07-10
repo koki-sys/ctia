@@ -3,8 +3,7 @@ window.onload = () => {
 
     // ロード時に参加部屋などの情報を保存
     const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('entryRoomName')) {
-        sessionStorage.setItem('entryRoomName', urlParams.get('entryRoomName'));
+    if (urlParams.get('roomCount')) {
         sessionStorage.setItem('roomCount', urlParams.get('roomCount'));
         sessionStorage.setItem('limitPerRoom', urlParams.get('limitPerRoom'));
 

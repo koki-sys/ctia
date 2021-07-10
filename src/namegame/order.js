@@ -95,14 +95,23 @@ exports.order = (socket, IOserver, orderArray, waitCount, namedImgNumberArray, t
     socket.on('requestDisplayCharaImg', () => {
 
         const randomNamedChara = namedImgNumberArray.shift();
+        console.log(randomNamedChara);
         // 後で判定するために値を保存。
         tempCharaName = randomNamedChara.name;
 
-        // ランダムで名前つけたカードを表示
-        IOserver.emit('randomNamedCharaImg', {
-            randomCardNumber: randomNamedChara.number,
-            charaName: randomNamedChara.name
-        })
+        if (tempCharaName == undefined) {
+            // 画像情報が入ってないときの処理。
+            IOserver.emit('randomNamedCharaImg', {
+                randomCardNumber: 0,
+                charaName: "空"
+            });
+        } else {
+            // ランダムで名前つけたカードを表示
+            IOserver.emit('randomNamedCharaImg', {
+                randomCardNumber: randomNamedChara.number,
+                charaName: randomNamedChara.name
+            });
+        }
     })
 
     // 回答チェックして、正解の場合は正解画面表示のレスポンスを送信
@@ -117,7 +126,7 @@ exports.order = (socket, IOserver, orderArray, waitCount, namedImgNumberArray, t
             })
             tempCharaName = '';
         } else {
-            IOserver.emit('incorrectAnswer', {
+            IOserver.to(socket.id).emit('incorrectAnswer', {
                 msg: "不正解です。"
             })
         }
