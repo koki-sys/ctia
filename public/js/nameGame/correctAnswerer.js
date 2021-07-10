@@ -6,5 +6,5 @@ const correctAnswererFromSession = sessionStorage.getItem('correctAnswerer');
 
 // ロード時に画面に正解者を表示
 window.onload = () => {
-    correctAnswererFromElement.textContent = correctAnswererFromElement;
+    correctAnswererFromElement.textContent = correctAnswererFromSession + "さん";
 }

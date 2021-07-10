@@ -26,6 +26,6 @@ ngClientIO.on('sendOrderPattern', (data) => {
 // 三秒後にゲーム画面に遷移
 setTimeout(() => {
     console.log("ゲーム画面に遷移します。");
-    location.href = "../game/banme.html"
+    location.href = "../game/namegame.html"
 }, 3000);
 
