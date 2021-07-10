@@ -34,7 +34,6 @@
         var char_num = 0;
         var word_char;
         var random;
-        const inputTxt = document.getElementById('input-text');
         function ready() {
             readytime = 3;
             scoredis.innerHTML = "";
@@ -83,7 +82,7 @@
             random = 0;
             char_num = 0;
         }
-        inputTxt.onkeydown = function (e) {
+        document.onkeydown = function (e) {
             if (e.keyCode == 189) {
                 keyStr = "-";
             } else if (e.keyCode == 188) {
