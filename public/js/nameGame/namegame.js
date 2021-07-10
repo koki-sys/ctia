@@ -22,8 +22,8 @@ window.onload = () => {
         });
         console.log("順番変更処理をリクエストしました。")
 
-        // セッション情報を削除
-        sessionStorage.clear()
+        // セッション情報を削除 バグ原因
+        sessionStorage.remove("answered");
 
     }
 }

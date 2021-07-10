@@ -15,7 +15,6 @@ const randomCard = () => {
     const charaImg = document.getElementById("chara-img");
     const charaImgPath = "../allstars/gazou" + randomCardNumber + ".png";
     charaImg.setAttribute('src', charaImgPath);
-
 }
 
 // randomCard実行
