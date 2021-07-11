@@ -11,7 +11,7 @@ const setName = () => {
         } else {
             form.textContent = "待機中・・・"
             console.log("setting...")
-            await sessionStorage.setItem('nickNameFromClient', nickName);
+            await sessionStorage.setItem('nickName', nickName);
             await redirect();
         }
     }
