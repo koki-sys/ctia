@@ -24,6 +24,7 @@ const toComplete = async () => {
 const sendOrder = async () => {
     console.log("部屋名:" + sessionStorage.getItem('entryRoomName'));
     sessionStorage.setItem("isOrdered", true);
+    sessionStorage.setItem('flg', "answered");
     await dgClientIO.emit("order", {
         flg: "answered",
         entryRoomName: sessionStorage.getItem('entryRoomName'),
