@@ -16,7 +16,7 @@ window.onload = () => {
     })
 
     //最初の人は、名前をつける。
-    if(firstPersonFromSession == "first"){
+    if (firstPersonFromSession == "first") {
         sessionStorage.removeItem('firstPerson');
         toNameGame();
     }
@@ -40,6 +40,11 @@ const toNameGame = async () => {
     document.location.href = "./banme.html";
 }
 
+// 名前確認画面に遷移する。
+const toNameConfirm = async () => {
+    document.location.href = "./namaeoboeta.html";
+}
+
 // 名前を当てる画面に遷移する
 const toNameAnswered = async () => {
     document.location.href = "./nameAnswer.html";
@@ -60,4 +65,9 @@ ngClientIO.on('changeOrder', (data) => {
     } else if (pageFlg == 2) {
         toNameAnswered();
     }
+})
+
+ngClientIO.on("toNameConfirmResponse", () => {
+    // 名前の確認画面に遷移
+    toNameConfirm();
 })

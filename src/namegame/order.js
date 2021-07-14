@@ -131,4 +131,9 @@ exports.order = (socket, IOserver, orderArray, waitCount, namedImgNumberArray, t
             })
         }
     })
+
+    // 確認画面に遷移するために画像番号、名前を送る
+    socket.on('toNameConfirmRequest', () => {
+        IOserver.emit("toNameConfirmResponse", {});
+    })
 }
