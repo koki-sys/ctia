@@ -20,16 +20,17 @@ const toNameGame = async () => {
 
 // ロード時にsessionで保存されている名前と画像の番号を送信、順番変更をリクエスト
 window.onload = () => {
-    // キャラ情報をサーバーに送信
-    ngClientIO.emit('sendCardInformationToServer', {
-        entryRoomName: entryRoomNameFromSession,
-        randomCardNumber: randomCardNumberFromSession,
-        charaName: charaNameFromSession
-    });
+
     console.log("回答情報を送信しました。")
 
     // 回答者の場合、確認用待機ルームを作製。
     if (flgFromSession == "answered") {
+        // キャラ情報をサーバーに送信
+        ngClientIO.emit('sendCardInformationToServer', {
+            entryRoomName: entryRoomNameFromSession,
+            randomCardNumber: randomCardNumberFromSession,
+            charaName: charaNameFromSession
+        });
         ngClientIO.emit('waitInit', {});
         console.log("確認用待機ルーム作成しました。");
     }
