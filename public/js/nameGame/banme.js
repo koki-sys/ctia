@@ -1,7 +1,4 @@
-import { ngClientIO } from "../../link";
-
-// セッションストレージ（セッション）
-const name = sessionStorage.getItem('after_set_name');
+import { ngClientIO } from "../../link.js";
 
 // htmlの要素取得
 const namedBtn = document.getElementById('named-btn');
@@ -19,7 +16,6 @@ const randomCard = () => {
     charaImg.setAttribute('src', charaImgPath);
 }
 
-// randomCard実行
 randomCard();
 
 const storeSession = async (charaName) => {
