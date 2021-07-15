@@ -34,6 +34,8 @@ namedBtn.onclick = async () => {
     await storeSession(charaName);
     console.log("名前をつけたフラグを付けました。");
     // ここに確認画面を全員に見せる処理
-    await ngClientIO.emit("toNameConfirmRequest", {});
+    await ngClientIO.emit("toNameConfirmRequest", {
+        
+    });
     await toNameStore();
 }
