@@ -1,5 +1,4 @@
-// セッションストレージ（セッション）
-const name = sessionStorage.getItem('after_set_name');
+import { ngClientIO } from "../../link.js";
 
 // htmlの要素取得
 const namedBtn = document.getElementById('named-btn');
@@ -17,7 +16,6 @@ const randomCard = () => {
     charaImg.setAttribute('src', charaImgPath);
 }
 
-// randomCard実行
 randomCard();
 
 const storeSession = async (charaName) => {
@@ -35,5 +33,7 @@ namedBtn.onclick = async () => {
     const charaName = document.getElementById('chara_name').value;
     await storeSession(charaName);
     console.log("名前をつけたフラグを付けました。");
+    // ここに確認画面を全員に見せる処理
+    await ngClientIO.emit("toNameConfirmRequest", {});
     await toNameStore();
 }
