@@ -32,8 +32,8 @@ function startPoint(e){
  
    
   // 矢印の先っぽから始まるように調整
-  Xpoint = e.clientX+1;
-  Ypoint = e.clientY-55;
+  Xpoint = e.clientX-215;
+  Ypoint = e.clientY-170;
    
   ctx.moveTo(Xpoint, Ypoint);
 }
@@ -41,8 +41,8 @@ function startPoint(e){
 function movePoint(e){
   if(e.buttons === 1 || e.witch === 1 || e.type == 'touchmove')
   {
-    Xpoint = e.pageX+1;
-  　Ypoint = e.pageY-55;
+    Xpoint = e.pageX-215;
+  　Ypoint = e.pageY-170;
     moveflg = 1;
      
     ctx.lineTo(Xpoint, Ypoint);
@@ -69,6 +69,7 @@ function endPoint(e)
     
     setLocalStoreage();
 }
+
 function resetCanvas() {
     ctx.clearRect(0, 0, ctx.canvas.clientWidth, ctx.canvas.clientHeight);
 }
@@ -76,6 +77,7 @@ function resetCanvas() {
 function initLocalStorage(){
     myStorage.setItem("__log", JSON.stringify([]));
 }
+
 function setLocalStoreage(){
     var png = canvas.toDataURL();
     var logs = JSON.parse(myStorage.getItem("__log"));
@@ -86,6 +88,7 @@ function setLocalStoreage(){
         temp = [];
     }, 0);
 }
+
 function prevCanvas(){
     var logs = JSON.parse(myStorage.getItem("__log"));
     if(logs.length > 0)
@@ -98,6 +101,7 @@ function prevCanvas(){
         }, 0);
     }
 }
+
 function nextCanvas(){
     var logs = JSON.parse(myStorage.getItem("__log"));
     if(temp.length > 0)
@@ -110,6 +114,7 @@ function nextCanvas(){
         }, 0);
     }
 }
+
 function draw(src) {
     var img = new Image();
     img.src = src;
@@ -117,6 +122,7 @@ function draw(src) {
         ctx.drawImage(img, 0, 0);
     }
 }
+
 //追加したのは以下の部分 GenSaito at 2021-06-25
 //全消し
 function clear() {
@@ -126,6 +132,7 @@ function clear() {
 function eraser(){
     defColor = '#FFFFFF';
 }
+
 //描画モード　色を元の色に戻すだけ
 function drawInPen(){
     defColor = "#555";
