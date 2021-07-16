@@ -22,15 +22,16 @@ const toNameGame = async () => {
 window.onload = () => {
 
     console.log("回答情報を送信しました。")
-
     // 回答者の場合、確認用待機ルームを作製。
     if (flgFromSession == "answered") {
         // キャラ情報をサーバーに送信
-        ngClientIO.emit('sendCardInformationToServer', {
-            entryRoomName: entryRoomNameFromSession,
-            randomCardNumber: randomCardNumberFromSession,
-            charaName: charaNameFromSession
-        });
+        setTimeout(() => {
+            ngClientIO.emit('sendCardInformationToServer', {
+                entryRoomName: entryRoomNameFromSession,
+                randomCardNumber: randomCardNumberFromSession,
+                charaName: charaNameFromSession
+            });
+        }, 2000);
         ngClientIO.emit('waitInit', {});
         console.log("確認用待機ルーム作成しました。");
     }
