@@ -1,7 +1,9 @@
 exports.order = (socket, IOserver, orderArray, waitCount, namedImgNumberArray, tempCharaName) => {
 
     const { waitCounter } = require('./waitCounter');
-    const { mycon } = require('../connectDB');
+    const { connectDB } = require('../connectDB');
+
+    const mycon = connectDB();
 
     const randomPattern = (digit) => {
         const patterns = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
@@ -15,6 +17,11 @@ exports.order = (socket, IOserver, orderArray, waitCount, namedImgNumberArray, t
 
         return val;
     };
+
+    const deleteData = async () => {
+        const deleteSQL = 'delete from namegame';
+        mycon.execute(deleteSQL);
+    }
 
     // 順番を送る。
     socket.on("requestOrderPattern", () => {
@@ -56,7 +63,7 @@ exports.order = (socket, IOserver, orderArray, waitCount, namedImgNumberArray, t
     })
 
     // キャラカード情報を受信して、チームに入っているメンバーに送る。
-    socket.on('sendCardInformationToServer', async (data) => {
+    socket.on('sendCardInformationToServer', (data) => {
         const randomCardNumber = parseInt(data.randomCardNumber);
         const charaName = data.charaName;
 
@@ -64,16 +71,21 @@ exports.order = (socket, IOserver, orderArray, waitCount, namedImgNumberArray, t
         const namedCharaCard = [randomCardNumber, charaName];
         const insertSQL = 'insert into namegame (id, chara_name) values (?, ?)';
 
-        const [err] = await mycon.query(insertSQL, namedCharaCard);
-        console.log(err);
-        const selectSQL = 'select * from namegame where id=? and chara_name=?';
-        const [results, fields] = await mycon.query(selectSQL, namedCharaCard);
+        mycon.execute(insertSQL, namedCharaCard, (err, results, fields) => {
+            console.log(results);
+            console.log(fields);
+            console.log(err);
+        });
 
-        // カードの名前をつけたやつを送信
-        IOserver.emit('displayCardName', {
-            randomCardNumber: results[0].id,
-            charaName: results[0].chara_name
-        })
+
+        const selectSQL = 'select * from namegame where id=? and chara_name=?';
+        mycon.execute(selectSQL, namedCharaCard, (err, results, fields) => {
+            // カードの名前をつけたやつを送信
+            IOserver.emit('displayCardName', {
+                randomCardNumber: results[0].id,
+                charaName: results[0].chara_name
+            })
+        });
     });
 
 
@@ -146,13 +158,12 @@ exports.order = (socket, IOserver, orderArray, waitCount, namedImgNumberArray, t
         IOserver.emit("toNameConfirmResponse", {});
     })
 
+
     socket.on('isOrderPatternArray', async (data) => {
         if (orderArray.length() === 0) {
-            const deleteSQL = 'delete from namegame';
-
-            await mycon.execute(deleteSQL);
+            await deleteData();
             console.log('データ削除');
-            socket.leave(data.entryRoomName);
+            await socket.leave(data.entryRoomName);
             await IOserver.emit('toGameEnd', {})
         }
     })
