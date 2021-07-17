@@ -36,48 +36,18 @@
 </body>
 
 </html>
-<div class="container">
-    <div class="row-center">
-        <div class="col-4-center">
-            <h4 class="text-center">グループをいくつに分けますか</h4>
-            <p class="text-center">
-                ※グループを分けないときは<br />グループ数に1を設定してください。
-            </p>
-        </div>
-        <div class="mt-4">
-            <div class="text-center">
-                <input
-                    type="text"
-                    name="name"
-                    placeholder="グループ数"
-                    id="group-count"
-                />
-            </div>
-            <br />
-            <h4 class="text-right">に分ける</h4>
-            <br />
-            <div class="text-center">
-                <input
-                    type="text"
-                    name="name"
-                    placeholder="人数"
-                    id="person-count"
-                />
-            </div>
-        </div>
-        <div class="row fixed-bottom">
-            <button
-                class="btn btn-lg text-white mt-5 mb-5 mx-auto"
-                style="width: 140px; height: 40px; background-color: #00a6fb"
-                id="setgroup"
-            >
-                <strong style="font-size: 22px">次へ</strong>
-            </button>
-        </div>
+    <div class="container mt-3">
+        <h3 class="mt-5 text-center">お疲れさまでした！</h3>
+        <img src="../../../images/gameEnd.svg" alt="待機" class="mx-auto d-block" />
+        <strong>
+            <p class="text-center">名前当てゲームを終了します...</p>
+        </strong>
+        <small>
+            <p class="text-center">自動でホーム画面に遷移します。</p>
+        </small>
     </div>
-</div>
-<script type="module" src="../../../js/nameGame/group.js"></script>
-<script>
+    <script type="module" src="../../../js/nameGame/gameEnd.js"></script>
+    <script>
 document.addEventListener('touchstart', () => {}, {
     passive: true
 });

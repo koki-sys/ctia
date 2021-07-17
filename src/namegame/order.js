@@ -1,6 +1,7 @@
 exports.order = (socket, IOserver, orderArray, waitCount, namedImgNumberArray, tempCharaName) => {
 
     const { waitCounter } = require('./waitCounter');
+    const { mycon } = require('../connectDB');
 
     const randomPattern = (digit) => {
         const patterns = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
@@ -55,18 +56,26 @@ exports.order = (socket, IOserver, orderArray, waitCount, namedImgNumberArray, t
     })
 
     // キャラカード情報を受信して、チームに入っているメンバーに送る。
-    socket.on('sendCardInformationToServer', (data) => {
+    socket.on('sendCardInformationToServer', async (data) => {
         const randomCardNumber = parseInt(data.randomCardNumber);
+        const charaName = data.charaName;
 
         // 名前をつけたカードを記録する。
-        namedImgNumberArray.push({ number: randomCardNumber, name: data.charaName });
+        const namedCharaCard = [randomCardNumber, charaName];
+        const insertSQL = 'insert into namegame (id, chara_name) values (?, ?)';
+
+        const [err] = await mycon.query(insertSQL, namedCharaCard);
+        console.log(err);
+        const selectSQL = 'select * from namegame where id=? and chara_name=?';
+        const [results, fields] = await mycon.query(selectSQL, namedCharaCard);
 
         // カードの名前をつけたやつを送信
         IOserver.emit('displayCardName', {
-            randomCardNumber: randomCardNumber,
-            charaName: data.charaName
+            randomCardNumber: results[0].id,
+            charaName: results[0].chara_name
         })
-    })
+    });
+
 
     // 確認用待機ルーム作製
     socket.on('waitInit', () => {
@@ -135,5 +144,15 @@ exports.order = (socket, IOserver, orderArray, waitCount, namedImgNumberArray, t
     // 確認画面に遷移するために画像番号、名前を送る
     socket.on('toNameConfirmRequest', () => {
         IOserver.emit("toNameConfirmResponse", {});
+    })
+
+    socket.on('isOrderPatternArray', async () => {
+        if (orderArray.length() === 0) {
+            const deleteSQL = 'delete from namegame';
+
+            await mycon.execute(deleteSQL);
+            console.log('データ削除');
+            await IOserver.emit('toGameEnd', {})
+        }
     })
 }

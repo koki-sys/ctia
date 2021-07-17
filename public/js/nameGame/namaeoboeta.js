@@ -10,9 +10,8 @@ const flgFromSession = sessionStorage.getItem('flg');
 const countInRoomFromSession = sessionStorage.getItem('countInRoom');
 
 // html要素取得
-const charaImgElement = document.getElementById('chara-img');
-const charaNameElement = document.getElementById('chara-name');
 const confirmBtnElement = document.getElementById('confirm-btn');
+const charaElement = document.getElementById('chara-card');
 
 const toNameGame = async () => {
     document.location.href = "./namegame.html";
@@ -46,8 +45,9 @@ ngClientIO.on('displayCardName', (data) => {
     console.log("カード番号：" + randomCardNumber);
     console.log("キャラの名前：" + charaName);
 
-    charaImgElement.src = "../allstars/gazou" + randomCardNumber + ".png";
-    charaNameElement.textContent = charaName;
+    const charaImgElement = '<img src="../allstars/gazou'+ randomCardNumber + '.png" width="100%" height="auto" class="d-block mx-auto border"/>';
+    const charaNameElement = '<h6 class="text-center mt-3">' + charaName + '</h3>';
+    charaElement.innerHTML = charaImgElement + charaNameElement;
 })
 
 // ボタンを押した時に待機させる。
