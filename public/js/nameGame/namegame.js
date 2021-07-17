@@ -17,7 +17,9 @@ window.onload = () => {
             entryRoomName: entryRoomNameFromSession,
         })
     } else {
-        ngClientIO.emit('isOrderPatternArray', {});
+        ngClientIO.emit('isOrderPatternArray', {
+            entryRoomName: entryRoomNameFromSession,
+        });
     }
 
     //最初の人は、名前をつける。
