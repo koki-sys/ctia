@@ -146,12 +146,13 @@ exports.order = (socket, IOserver, orderArray, waitCount, namedImgNumberArray, t
         IOserver.emit("toNameConfirmResponse", {});
     })
 
-    socket.on('isOrderPatternArray', async () => {
+    socket.on('isOrderPatternArray', async (data) => {
         if (orderArray.length() === 0) {
             const deleteSQL = 'delete from namegame';
 
             await mycon.execute(deleteSQL);
             console.log('データ削除');
+            socket.leave(data.entryRoomName);
             await IOserver.emit('toGameEnd', {})
         }
     })
