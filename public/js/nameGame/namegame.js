@@ -8,12 +8,17 @@ const firstPersonFromSession = sessionStorage.getItem('firstPerson');
 
 // 回答済みかを格納する変数
 const isAnsweredFlg = (flgFromSession == "answered") ? true : false;
+const isOrderPattern = (orderPatternFromSession != "undifined" || orderPatternFromSession != null) ? true : false;
 
 window.onload = () => {
     console.log("参加部屋名：" + entryRoomNameFromSession);
-    ngClientIO.emit('requestOrderPattern', {
-        entryRoomName: entryRoomNameFromSession,
-    })
+    if (!isOrderPattern) {
+        ngClientIO.emit('requestOrderPattern', {
+            entryRoomName: entryRoomNameFromSession,
+        })
+    } else {
+        ngClientIO.emit('isOrderPatternArray', {});
+    }
 
     //最初の人は、名前をつける。
     if (firstPersonFromSession == "first") {
@@ -30,8 +35,8 @@ window.onload = () => {
         });
         console.log("順番変更処理をリクエストしました。");
 
-        // セッション情報を削除 バグ原因
-        sessionStorage.remove("answered");
+        // 回答したflgを削除
+        sessionStorage.removeItem("flg");
     }
 }
 
@@ -50,9 +55,16 @@ const toNameAnswered = async () => {
     document.location.href = "./nameAnswer.html";
 }
 
+// ゲーム終了画面に遷移する
+const toGameEnd = async () => {
+    document.location.href = "./gameEnd.html";
+}
+
 // 順番受け取ってセッションに保存する処理
 ngClientIO.on("sendOrderPattern", (data) => {
-    sessionStorage.setItem('orderPattern', data.orderPattern);
+    if (!isOrderPattern) {
+        sessionStorage.setItem('orderPattern', data.orderPattern);
+    }
     console.log("パータン：" + data.orderPattern);
 })
 
@@ -70,4 +82,9 @@ ngClientIO.on('changeOrder', (data) => {
 ngClientIO.on("toNameConfirmResponse", () => {
     // 名前の確認画面に遷移
     toNameConfirm();
+})
+
+ngClientIO.on("toGameEnd", () => {
+    // ゲーム終了画面に遷移
+    toGameEnd();
 })
