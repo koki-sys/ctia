@@ -13,10 +13,12 @@ app.get('/', function (res) {
 const { goodNew } = require("./goodNew/index.js");
 const { diceGame } = require('./dicegame/index.js');
 const { nameGame } = require('./namegame/index.js');
+const { typingGame } = require('./typing/index.js');
 
 goodNew(socketIoServer);
 diceGame(socketIoServer);
 nameGame(socketIoServer);
+typingGame(socketIoServer);
 
 // ポート番号3000でListening
 http.listen(PORT, () => {

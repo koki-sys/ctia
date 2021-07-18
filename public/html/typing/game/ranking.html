@@ -31,3 +31,25 @@
             <img src="../../../images/CTIAssist.svg" alt="logo" width="150" height="20" class="d-block mx-auto" />
         </a>
     </nav>
+    <div class="container mt-3">
+        <h3 class="mt-5 text-center" style="color:#00CBFF">ランキング</h3>
+        <ol id="ranking-list">
+
+        </ol>
+    </div>
+    <script type="module" src="../../../js/typing/ranking.js"></script>
+<script>
+document.addEventListener('touchstart', () => {}, {
+    passive: true
+});
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('serviceWorker.js').then(async (registration) => {
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }).catch((err) => {
+        console.log('ServiceWorker registration failed: ', err);
+    });
+}
+</script>
+</body>
+
+</html>
