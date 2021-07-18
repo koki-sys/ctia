@@ -31,3 +31,29 @@
             <img src="../../../images/CTIAssist.svg" alt="logo" width="150" height="20" class="d-block mx-auto" />
         </a>
     </nav>
+    <div class="container mt-3">
+        <h3 class="mt-5 text-center">お疲れさまでした！</h3>
+        <img src="../../../images/gameEnd.svg" alt="待機" class="mx-auto d-block" />
+        <strong>
+            <p class="text-center">名前当てゲームを終了します...</p>
+        </strong>
+        <small>
+            <p class="text-center">自動でホーム画面に遷移します。</p>
+        </small>
+    </div>
+    <script type="module" src="../../../js/typing/gameEnd.js"></script>
+    <script>
+document.addEventListener('touchstart', () => {}, {
+    passive: true
+});
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('serviceWorker.js').then(async (registration) => {
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }).catch((err) => {
+        console.log('ServiceWorker registration failed: ', err);
+    });
+}
+</script>
+</body>
+
+</html>

@@ -31,3 +31,42 @@
             <img src="../../../images/CTIAssist.svg" alt="logo" width="150" height="20" class="d-block mx-auto" />
         </a>
     </nav>
+    <div class="container">
+        <div class="row mt-4">
+            <h2>タイピングゲーム</h2>
+        </div>
+        <h4>ルール</h4>
+        <ul>
+            <li>スマホのフリック入力の速さで競うゲームです。</li>
+            <li>入力はフリック入力のみ</li>
+            <li>変換もなし</li>
+        </ul>
+        <h4>手順</h4>
+        <ul>
+            <li>1.共有用のQRをスマホで読み取ってもらう</li>
+            <li>各自始めてもらってグループで各自の点数を順位にして表示する</li>
+            <li>感想などを話し合いこの冷え切った場をアイスブレイク！！</li>
+        </ul>
+        <div class="row fixed-bottom bg-white">
+            <a href="../group/name.html" class="btn btn-lg text-white mt-2 mb-2 mx-auto" style="background-color: #04ccff"
+                onclick="">
+                <strong>今すぐゲームを開始する</strong>
+            </a>
+        </div>
+    </div>
+    <script src="../../../js/typing/memberJoin.js" type="module"></script>
+    <script>
+document.addEventListener('touchstart', () => {}, {
+    passive: true
+});
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('serviceWorker.js').then(async (registration) => {
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }).catch((err) => {
+        console.log('ServiceWorker registration failed: ', err);
+    });
+}
+</script>
+</body>
+
+</html>

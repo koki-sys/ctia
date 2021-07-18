@@ -4,7 +4,7 @@ const { config } = require('./config');
 
 let mycon = null;
 
-(async () => {
+const connDB = async () => {
     try {
         mycon = await mysql.createConnection(config.database);
         mycon.connect(function (err) {
@@ -17,5 +17,14 @@ let mycon = null;
     } catch (e) {
         console.log(e);
     }
-})();
-exports.mycon = mycon;
+}
+
+const exportConnection = async () => {
+    exports.mycon = mycon;
+}
+
+const execute = async () => {
+    await connDB();
+    await exportConnection();
+}
+execute();
