@@ -4,24 +4,18 @@ const { config } = require('./config');
 
 let mycon = null;
 
-const initDB = async () => {
+(async () => {
     try {
         mycon = await mysql.createConnection(config.database);
-        mycon.connect();
+        mycon.connect(function (err) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log("success");
+            }
+        })
     } catch (e) {
         console.log(e);
     }
-};
-
-const isConnect = async () => {
-    if (mycon != null) {
-        exports.mycon = mycon;
-    };
-}
-
-const connectDB = async () => {
-    await initDB();
-    await isConnect();
-}
-
-connectDB();
+})();
+exports.mycon = mycon;

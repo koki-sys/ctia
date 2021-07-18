@@ -152,7 +152,7 @@ exports.order = (socket, IOserver, orderArray, waitCount, namedImgNumberArray, t
 
             await mycon.execute(deleteSQL);
             console.log('データ削除');
-            socket.leave(data.entryRoomName);
+            await socket.leave(data.entryRoomName);
             await IOserver.emit('toGameEnd', {})
         }
     })
