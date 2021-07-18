@@ -31,3 +31,33 @@
             <img src="../../../images/CTIAssist.svg" alt="logo" width="150" height="20" class="d-block mx-auto" />
         </a>
     </nav>
+<div class="container mt-5">
+    <p id="input-order">名前、ニックネームの入力をお願いします。</p>
+    <form><input type="text" id="name" class="form-control mt-5" /><br /></form>
+    <div class="row fixed-bottom">
+        <button
+            type="button"
+            class="btn btn-lg text-white mt-5 mb-5 mx-auto"
+            style="background-color: #00a6fb"
+            id="input-name"
+        >
+            確定して次へ
+        </button>
+    </div>
+</div>
+<script type="module" src="../../../js/typing/name.js"></script>
+<script>
+document.addEventListener('touchstart', () => {}, {
+    passive: true
+});
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('serviceWorker.js').then(async (registration) => {
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }).catch((err) => {
+        console.log('ServiceWorker registration failed: ', err);
+    });
+}
+</script>
+</body>
+
+</html>

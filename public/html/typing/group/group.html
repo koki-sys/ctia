@@ -31,3 +31,59 @@
             <img src="../../../images/CTIAssist.svg" alt="logo" width="150" height="20" class="d-block mx-auto" />
         </a>
     </nav>
+<div class="container">
+    <div class="row-center">
+        <div class="col-4-center">
+            <h4 class="text-center">グループをいくつに分けますか</h4>
+            <p class="text-center">
+                ※グループを分けないときは<br />グループ数に1を設定してください。
+            </p>
+        </div>
+        <div class="mt-4">
+            <div class="text-center">
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="グループ数"
+                    id="group-count"
+                />
+            </div>
+            <br />
+            <h4 class="text-right">に分ける</h4>
+            <br />
+            <div class="text-center">
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="人数"
+                    id="person-count"
+                />
+            </div>
+        </div>
+        <div class="row fixed-bottom">
+            <button
+                class="btn btn-lg text-white mt-5 mb-5 mx-auto"
+                style="width: 140px; height: 40px; background-color: #00a6fb"
+                id="setgroup"
+            >
+                <strong style="font-size: 22px">次へ</strong>
+            </button>
+        </div>
+    </div>
+</div>
+<script type="module" src="../../../js/typing/group.js"></script>
+<script>
+document.addEventListener('touchstart', () => {}, {
+    passive: true
+});
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('serviceWorker.js').then(async (registration) => {
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }).catch((err) => {
+        console.log('ServiceWorker registration failed: ', err);
+    });
+}
+</script>
+</body>
+
+</html>

@@ -31,3 +31,26 @@
             <img src="../../../images/CTIAssist.svg" alt="logo" width="150" height="20" class="d-block mx-auto" />
         </a>
     </nav>
+<div class="container mt-3">
+    <h4 id="room-name" class="text-center"></h4>
+    <h4 id="count-in-room" class="text-center"></h4>
+    <h4 class="text-center">
+        ゲームを開始します。<br />しばらくお待ち下さい。
+    </h4>
+</div>
+<script src="../../../js/typing/groupComplete.js" type="module"></script>
+<script>
+document.addEventListener('touchstart', () => {}, {
+    passive: true
+});
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('serviceWorker.js').then(async (registration) => {
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }).catch((err) => {
+        console.log('ServiceWorker registration failed: ', err);
+    });
+}
+</script>
+</body>
+
+</html>
