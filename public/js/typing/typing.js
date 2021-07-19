@@ -13,7 +13,7 @@ const wordlistJapanese = [
     "うとうとしたとおもううちにめがさめた",
     "するととなりのへやでみょうなおとがする",
     "はじめはなんのおともまたどこからくるともはんしかしはけんとうがつかなかったが",
-    "きいているうちに、だんだんみみのなかへまとまったかんねんができてきた",
+    "きいているうちにだんだんみみのなかへまとまったかんねんができてきた",
     "さむいふゆがほっぽうから",
     "きつねのおやこのすんでいるもりへやってきました",
     "あるあさほらあなからこどものきつねがでようとしましたが",
@@ -53,7 +53,7 @@ const wordlist = [
     "utotoshitatomouchinimegasameta",
     "surutotonarinoheyademyonaotogasuru",
     "hajimehanannotomomatadokokarakurutomohanshikashihakentogatsukanakattaga",
-    "kiiteiruchini、dandammiminonakahematomattakannengadekitekita",
+    "kiiteiruchinidandammiminonakahematomattakannengadekitekita",
     "samuifuyugahoppokara",
     "kitsunenoyakonosundeirumoriheyattekimashita",
     "aruasahoraanakarakodomonokitsunegadeyotoshimashitaga",
@@ -88,12 +88,13 @@ let word_char;
 let random;
 const startButton = document.getElementById('start_button');
 
+
 function ready() {
     readytime = 3;
     scoredis.innerHTML = "";
     start_button.style.visibility = "hidden";
     const readytimer = setInterval(function () {
-        count.innerHTML = readytime;
+        count.innerHTML = "<h1>" + readytime + "</h1>";
         readytime--;
         if (readytime < 0) {
             clearInterval(readytimer);
@@ -102,7 +103,7 @@ function ready() {
     }, 1000);
 }
 
-startButton.onclick = () => {
+window.onload = () => {
     ready();
 }
 
@@ -128,7 +129,7 @@ function gameStart() {
 function wordDisplay() {
     random = Math.floor(Math.random() * wordlist.length);
     word.innerHTML = wordlist[random];
-    japanese.innerHTML = wordlistJapanese[random];
+    japanese.innerHTML = wordlistJapanese[random] + "<br>";
     charInsort();
 }
 function charInsort() {
