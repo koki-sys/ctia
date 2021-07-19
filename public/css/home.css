@@ -1,16 +1,36 @@
 .home-card {
-  box-shadow: 3px 3px 6px #acacac;
+    box-shadow: 3px 3px 6px #acacac;
 }
 
 .home-card:active {
-  box-shadow: 0 0;
+    box-shadow: 0 0;
 }
 
 a {
-  color: #707070;
+    color: #707070;
 }
 
 a:hover {
-  text-decoration: none;
-  color: #707070;
+    text-decoration: none;
+    color: #707070;
+}
+h2 {
+    font-family: "Damion", cursive;
+    color: #006494;
+}
+p {
+    font-family: "Kiwi Maru", serif;
+    font-weight: bolder;
+}
+
+body {
+    background-image: url("../images/home-smartphone.png");
+    background-size: cover;
+}
+
+@media screen and (min-width: 1024px) {
+    body {
+        background-image: url("../images/home.png");
+        background-size: cover;
+    }
 }

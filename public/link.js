@@ -15,11 +15,13 @@ switch (document.domain) {
 const gnClientIO = io(backendUrl + "/gn");
 const dgClientIO = io(backendUrl + "/dg");
 const ngClientIO = io(backendUrl + "/ng");
+const tpClientIO = io(backendUrl + "/tp");
 
 export {
     frontendUrl,
     gnClientIO,
     dgClientIO,
     ngClientIO,
+    tpClientIO,
     completeGroupingUrl
 }
