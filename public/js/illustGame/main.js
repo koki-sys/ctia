@@ -43,11 +43,6 @@ window.addEventListener('load', () => {
   function clear() {
     context.clearRect(0, 0, canvas.width, canvas.height);
   }
-
-  // canvas上に描いた絵を一つ前に戻す
-  function prevCanvas(){
-    
-  }
  
   // マウスのドラッグを開始したらisDragのフラグをtrueにしてdraw関数内で
   // お絵かき処理が途中で止まらないようにする
@@ -68,8 +63,6 @@ window.addEventListener('load', () => {
  
   // マウス操作やボタンクリック時のイベント処理を定義する
   function initEventHandler() {
-    const clearButton = document.querySelector('#clear-button');
-    clearButton.addEventListener('click', clear);
  
     canvas.addEventListener('mousedown', dragStart);
     canvas.addEventListener('mouseup', dragEnd);
@@ -85,12 +78,11 @@ window.addEventListener('load', () => {
       draw(event.layerX, event.layerY);
     });
 
-    const prevButton = document.querySelector('#prev-button');
-    prevButton.addEventListener('click', prev);
 
 
   }
+
  
   // イベント処理を初期化する
-  initEventHandler();
+
 });

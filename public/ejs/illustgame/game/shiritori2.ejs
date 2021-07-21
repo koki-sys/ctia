@@ -1,0 +1,25 @@
+<%- include( '../_header.ejs' ); %>
+
+    <script src="../../../css/shiritori_game.css"></script>
+    <h4 class="text-center">1番目です</h4><br>
+    <div class="container-fluid">
+        <div class="row-center">
+            <div calss="col-12">
+                <div class="iconBtn text-align:center">
+                    <img src="../images/undo.svg" width="20" height="20" type="button" onclick="prevCanvas()">
+                    <img src="../images/redo.svg" width="20" height="20" type="button" onclick="nextCanvas()">
+                    <img src="../images/eraser.svg" width="20" height="20" type="button" onclick="eraser()">
+                    <img src="../images/marker.svg" width="20" height="20" type="button" onclick="drawInPen()">
+                    <img src="../images/trash.svg" width="20" height="20" type="button" onclick="resetCanvas()">
+                </div>
+                <div calss="row">
+                    <div calss="col-md-12 mt-3">
+                        <canvas id="canvassample" width="300px" height="350px" style="border: 1px solid #000000;"
+                            calss="text-align:center"></canvas>
+                    </div>
+                </div>
+                <script src="../../../js/illustGame/shiritori2.js" type="module"></script>
+            </div>
+        </div>
+    </div>
+    <%- include( '../_footer.ejs' ); %>
