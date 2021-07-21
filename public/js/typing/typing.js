@@ -86,13 +86,11 @@ let mistake;
 let char_num = 0;
 let word_char;
 let random;
-const startButton = document.getElementById('start_button');
 
 
 function ready() {
     readytime = 3;
     scoredis.innerHTML = "";
-    start_button.style.visibility = "hidden";
     const readytimer = setInterval(function () {
         count.innerHTML = "<h1>" + readytime + "</h1>";
         readytime--;
@@ -141,7 +139,6 @@ async function finish() {
     count.innerHTML = "";
     word.innerHTML = "";
     japanese.innerHTML = "";
-    start_button.style.visibility = "visible";
     word_char = 0;
     random = 0;
     char_num = 0;
