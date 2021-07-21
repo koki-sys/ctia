@@ -1,12 +1,15 @@
 canvas {
     position: relative;
-    border:3px solid #000;
+    top: 40px;
+    right: 80px;
 }
-div#img-box{
-  border:3px solid #000;
-  width:500px;
+
+div #img-box {
+    border: 3px solid #000;
+    width: 500px;
 }
-div#btn-box{
+
+div #btn-box {
     position: fixed;
-    bottom :0px;
+    bottom: 0px;
 }

@@ -1,17 +1,18 @@
 <%- include( '../_header.ejs' ); %>
-<div class="container">
-    <div class="row-center">
-        <h4 class="text-center">1番目です</h4><br>
-        <div>
-            <button id="clear-button">全消し</button>
-            <button id="eraser-button">消しゴム</button>
-            <button id="prev-button">戻る</button>
-        </div><br>
-        <div class="text-align-center">
-            <canvas class="text-align-center" id="draw-area" width="250px" height="350px" style="border: 1px solid #000000;"></canvas>
+    <div class="container">
+        <div class="row-center">
+            <h4 class="text-center">1番目です</h4><br>
+            <div>
+                <button id="clear-button">全消し</button>
+                <button id="eraser-button">消しゴム</button>
+                <button id="prev-button">戻る</button>
+            </div><br>
+            <div class="text-align-center">
+                <canvas class="text-align-center" id="draw-area" width="250px" height="350px"
+                    style="border: 1px solid #000000;"></canvas>
                 <script src="../../../js/illustGame/main.js"></script>
-                <script src="../../../js/illustGame/shiritori_game.js"></script>
+                <script src="../../../js/illustGame/shiritori_game.js" type="module"></script>
+            </div>
         </div>
     </div>
-</div>
-<%- include( '../_footer.ejs' ); %>
+    <%- include( '../_footer.ejs' ); %>

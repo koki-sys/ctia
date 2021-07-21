@@ -1,57 +1,58 @@
 var canvas = document.getElementById('canvassample'),
     ctx = canvas.getContext('2d'),
-    moveflg = 0,
-    Xpoint,
-    Ypoint,
     currentCanvas,
     temp = [];
- 
-//初期値（サイズ、色、アルファ値）の決定
-var defSize = 3,
-    defColor = "#555";
  
 // ストレージの初期化
 var myStorage = localStorage;
 window.onload = initLocalStorage();
  
  
-// PC対応
-canvas.addEventListener('mousedown', startPoint, false);
-canvas.addEventListener('mousemove', movePoint, false);
-canvas.addEventListener('mouseup', endPoint, false);
-// スマホ対応
-canvas.addEventListener('touchstart', startPoint, false);
-canvas.addEventListener('touchmove', movePoint, false);
-canvas.addEventListener('touchend', endPoint, false);
+canvas.addEventListener('mousedown', dragStart);
+canvas.addEventListener('mouseup', dragEnd);
+canvas.addEventListener('mouseout', dragEnd);
+
+
+canvas.addEventListener('touchdown', touchstart);
+canvas.addEventListener('touchup', touchend);
+canvas.addEventListener('touchout', touchend);
 
  
-function startPoint(e){
-  e.preventDefault();
-  ctx.beginPath();
-  console.log(e.clientX);
- 
-   
-  // 矢印の先っぽから始まるように調整
-  Xpoint = e.clientX-300;
-  Ypoint = e.clientY-185;
-   
-  ctx.moveTo(Xpoint, Ypoint);
-}
- 
-function movePoint(e){
-  if(e.buttons === 1 || e.witch === 1 || e.type == 'touchmove')
-  {
-    Xpoint = e.pageX-300;
-  　Ypoint = e.pageY-185;
-    moveflg = 1;
-     
-    ctx.lineTo(Xpoint, Ypoint);
-    ctx.lineCap = "round";
-    ctx.lineWidth = defSize * 2;
-    ctx.strokeStyle = defColor;
-    ctx.stroke();
-     
+// 直前のマウスのcanvas上のx座標とy座標を記録する
+const lastPosition = { x: null, y: null };
+let isDrag = false;
+
+// 絵を書く
+function draw(x, y) {
+  // マウスがドラッグされていなかったら処理を中断する。
+  // ドラッグしながらしか絵を書くことが出来ない。
+  if(!isDrag) {
+    return;
   }
+
+ 
+  context.lineCap = 'round'; // 丸みを帯びた線にする
+  context.lineJoin = 'round'; // 丸みを帯びた線にする
+  context.lineWidth = 5; // 線の太さ
+  context.strokeStyle = 'black'; // 線の色
+
+
+  if (lastPosition.x === null || lastPosition.y === null) {
+    // ドラッグ開始時の線の開始位置
+    context.moveTo(x, y);
+  } else {
+    // ドラッグ中の線の開始位置
+    context.moveTo(lastPosition.x, lastPosition.y);
+  }
+
+  context.lineTo(x, y);
+
+  // context.moveTo, context.lineToの値を元に実際に線を引く
+  context.stroke();
+
+  // 現在のマウス位置を記録して、次回線を書くときの開始点に使う
+  lastPosition.x = x;
+  lastPosition.y = y;
 }
  
 function endPoint(e)
