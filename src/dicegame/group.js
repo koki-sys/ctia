@@ -1,7 +1,7 @@
 exports.group = (socket, IOserver) => {
 
     const { createRoom } = require('./createRoom');
-    const { getUserCount} = require('./getUserCount')
+    const { getUserCount } = require('./getUserCount')
 
     /**
      * 待機処理を行う関数(ニックネーム入力画面から送信)
@@ -21,6 +21,7 @@ exports.group = (socket, IOserver) => {
         // 部屋数と制限人数を定義
         let roomCount;
         let limitPerRoom;
+        let roomNumber;
 
         // クライアントから送られてくるモノ（Doc Comment参照してください）
         const nickName = data.nickName != null ? data.nickName : "ニックネームが送信されていません";
@@ -31,18 +32,15 @@ exports.group = (socket, IOserver) => {
             limitPerRoom = parseInt(data.limitPerRoom);
         }
 
-        for (let i = 0; i < room.length; i++) {
-
+        while (true) {
             // 部屋番号をランダムに生成する変数（ランダムで部屋に割り振りするため）
-            const roomNumber = Math.floor(Math.random() * roomCount);
-
+            roomNumber = Math.floor(Math.random() * 100);
             const personCountInRoom = await getUserCount(roomNumber);
 
-            // room-> user
             // 部屋内の人数内に収まっているとき
             if (personCountInRoom < limitPerRoom) {
                 // ルームを追加してユーザ追加
-                const enterRoomName = "部屋" + (roomNumber + 1);
+                const enterRoomName = "room" + (roomNumber + 1);
 
                 // 部屋情報を作製
                 const roomData = {
@@ -53,15 +51,15 @@ exports.group = (socket, IOserver) => {
                 }
 
                 // ルーム作製
-                createRoom(roomData);
+                await createRoom(roomData);
 
                 // ルーム参加
-                socket.join(enterRoomName);
+                await socket.join(enterRoomName);
 
-                // ルーム内の人数を取得 countInRoom
+                // ルーム内の人数を取得
                 const countInRoom = await getUserCount(roomNumber);
 
-                IOserver.to(enterRoomName).emit("waiting", {
+                IOserver.emit("waiting", {
                     nickName: nickName,
                     entryRoomName: enterRoomName,
                     roomCount: roomCount,
@@ -71,5 +69,6 @@ exports.group = (socket, IOserver) => {
                 break;
             }
         }
+
     });
 }
