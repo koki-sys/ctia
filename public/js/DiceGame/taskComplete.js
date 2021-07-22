@@ -12,6 +12,12 @@ const toDiceGame = async () => {
     document.location.href = "./announce.html";
 }
 
+// ゲーム画面に遷移する
+const toGameEnd = async () => {
+    document.location.href = "./gameEnd.html";
+}
+
+
 window.onload = () => {
     console.log("参加部屋名：" + entryRoomNameFromSession);
     dgClientIO.emit('requestOrderPattern', {
@@ -59,4 +65,8 @@ dgClientIO.on('changeOrder', (data) => {
     } else if (orderPatternFromSession == changePattern) {
         toDiceGame();
     }
+})
+
+dgClientIO.on('gameEnd', () => {
+    toGameEnd();
 })
