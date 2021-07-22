@@ -35,7 +35,7 @@ exports.order = (socket, IOserver, orderArray, waitCount, namedImgNumberArray, t
         // 1 => 名前つける
         // 2 => 回答する
         let pageFlg = Math.floor(Math.random() * 2) + 1;
-        if (namedImgNumberArray.length == 0) {
+        if (namedImgNumberArray.length() == 0) {
             pageFlg = 1;
         }
 
