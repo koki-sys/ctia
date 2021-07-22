@@ -18,6 +18,8 @@ exports.group = (socket, IOserver, room) => {
      * @emits {Number} data.countInRoom 部屋内の人数
      */
 
+
+    // 配列に入れてるグループとかをDBに移行
     socket.on("set_nickname", (data) => {
 
         // クライアントから送られてくるモノ（Doc Comment参照してください）
