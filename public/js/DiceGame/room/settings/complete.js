@@ -1,7 +1,7 @@
-import { dgClientIO } from "../../link.js";
+import { dgClientIO } from "../../../../link.js";
 
 // session取得
-const resultEntryRoomNameFromSession = sessionStorage.getItem('entryRoomName');
+const roomIdFromSession = sessionStorage.getItem('roomId');
 const countInRoomFromSession = sessionStorage.getItem('limitPerRoom');
 
 // html要素取得
@@ -9,7 +9,7 @@ const roomNameElement = document.getElementById('room-name');
 const countInRoomElement = document.getElementById('count-in-room');
 
 // 部屋数などを表示
-roomNameElement.textContent = "あなたの部屋は" + resultEntryRoomNameFromSession + "です。";
+roomNameElement.textContent = "あなたの部屋IDは" + roomIdFromSession + "番です。";
 countInRoomElement.textContent = "人数は" + countInRoomFromSession + "人です。";
 
 // 順番をリクエストする
