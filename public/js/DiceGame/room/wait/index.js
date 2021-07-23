@@ -1,6 +1,10 @@
-import { dgClientIO, completeGroupingUrl } from '../../link.js';
+import { dgClientIO, completeGroupingUrl } from '../../../../link.js';
+import { displayWaitUser } from './displayWaitUser.js';
+
+const userListFromElement = document.getElementById('user-list');
 
 // セッション取得
+const roomIdFromSession = sessionStorage.getItem('roomId');
 const nickNameFromSession = sessionStorage.getItem('nickName');
 const roomCountFromSession = sessionStorage.getItem('roomCount');
 const limitPerRoomFromSession = sessionStorage.getItem('limitPerRoom');
@@ -17,7 +21,8 @@ window.addEventListener('DOMContentLoaded', () => {
     console.log("ニックネームは、" + nickNameFromSession);
     console.log("部屋数は、" + roomCountFromSession);
     console.log("制限人数は、" + limitPerRoomFromSession);
-    dgClientIO.emit("set_nickname", {
+    dgClientIO.emit("join_game", {
+        roomId: roomIdFromSession,
         nickName: nickNameFromSession,
         roomCount: roomCountFromSession,
         limitPerRoom: limitPerRoomFromSession
@@ -25,16 +30,20 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 dgClientIO.on("waiting", (data) => {
-    console.log("waiting");
-    $('ul').append('<li class="list-group-item">' + data.nickName + 'さん</li>');
+    const userRow = data.userRow;
+
+    displayWaitUser(userListFromElement, userRow);
+
+    // 個人情報を受信する
     const nickNameFromServer = data.nickName;
+    console.log(nickNameFromServer);
     const countInRoomFromServer = parseInt(data.countInRoom);
     const limitPerRoomFromServer = parseInt(data.limitPerRoom);
     console.log("受信した部屋数：" + countInRoomFromServer);
     console.log("受信した制限人数:" + limitPerRoomFromServer);
     // 自分が入力したニックネームと一致しているのを確認
     if (nickNameFromServer == nickNameFromSession) {
-        sessionStorage.setItem('nickName', data.nickName);
+        sessionStorage.setItem('nickName', data.userRow);
     }
 
     // 人数が揃ったら自動遷移

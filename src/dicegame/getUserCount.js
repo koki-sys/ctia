@@ -1,6 +1,4 @@
-exports.getUserCount = async (random) => {
-
-    const { mycon } = require("../connectDB");
+exports.getUserCount = async (mycon, random) => {
 
     // ルーム内のユーザ数をカウント
     const getUserCountParam = random;

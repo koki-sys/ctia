@@ -1,4 +1,4 @@
-import { dgClientIO } from '../../link.js';
+import { dgClientIO } from '../../../link.js';
 
 const flgFromSession = sessionStorage.getItem('flg');
 const entryRoomNameFromSession = sessionStorage.getItem('entryRoomName');
@@ -17,10 +17,10 @@ const toGameEnd = async () => {
     document.location.href = "./gameEnd.html";
 }
 
-
 window.onload = () => {
     console.log("参加部屋名：" + entryRoomNameFromSession);
     dgClientIO.emit('requestOrderPattern', {
+        flg: flgFromSession,
         entryRoomName: entryRoomNameFromSession,
     })
 
@@ -57,11 +57,6 @@ dgClientIO.on('changeOrder', (data) => {
     // 順番が来たら、発表画面に切り替える。
     if (isOrdered) {
         console.log("発表しました。");
-        dgClientIO.emit("order", {
-            flg: "answered",
-            entryRoomName: sessionStorage.getItem('entryRoomName'),
-            name: name,
-        });
     } else if (orderPatternFromSession == changePattern) {
         toDiceGame();
     }
