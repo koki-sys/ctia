@@ -1,4 +1,4 @@
-import { dgClientIO } from '../../link.js';
+import { dgClientIO } from '../../../link.js';
 
 const name = sessionStorage.getItem('after_set_name');
 
