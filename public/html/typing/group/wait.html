@@ -40,15 +40,14 @@
             <img src="../../../images/CTIAssist.svg" alt="logo" width="150" height="20" class="d-block mx-auto" />
         </a>
     </nav>
-
-<div class="container">
-    <h4 class="text-center mt-3">
-        みなさんの準備が<br />できるまでお待ち下さい
-    </h4>
-    <ul class="list-group"></ul>
-</div>
-<script src="../../../js/typing/waitClient.js" type="module"></script>
-<script>
+    <div class="container">
+        <h4 class="text-center mt-3">
+            みなさんの準備が<br />できるまでお待ち下さい
+        </h4>
+        <ul class="list-group" id="user-list"></ul>
+    </div>
+    <script src="../../../js/typing/room/wait/index.js" type="module"></script>
+    <script>
 document.addEventListener('touchstart', () => {}, {
     passive: true
 });

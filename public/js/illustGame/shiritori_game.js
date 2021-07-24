@@ -19,7 +19,6 @@ window.onload = initLocalStorage();
 canvas.addEventListener('mousedown', startPoint, false);
 canvas.addEventListener('mousemove', movePoint, false);
 canvas.addEventListener('mouseup', endPoint, false);
-
 // スマホ対応
 canvas.addEventListener('touchstart', startPoint, false);
 canvas.addEventListener('touchmove', movePoint, false);
@@ -29,30 +28,20 @@ canvas.addEventListener('touchend', endPoint, false);
 function startPoint(e) {
     e.preventDefault();
     ctx.beginPath();
+    console.log(e.clientX);
 
-    console.log(e);
-    console.log(e.type);
-    console.log("X座標: " + e.clientX);
-    console.log("X座標: " + e.changedTouches[0].clientX);
-    console.log("Y座標: " + e.clientY);
-    console.log("Y座標: " + e.changedTouches[0].clientY);
 
-    if (e.type == "touchstart") {
-        Xpoint = e.changedTouches[0].clientX + 70;
-        Ypoint = e.changedTouches[0].clientY - 150;
-    } else if (e.type == "mousedown") {
-        // 矢印の先っぽから始まるように調整
-        Xpoint = e.clientX - 300;
-        Ypoint = e.clientY - 185;
-    }
+    // 矢印の先っぽから始まるように調整
+    Xpoint = e.offsetX - 1;
+    Ypoint = e.offsetY - 1;
 
     ctx.moveTo(Xpoint, Ypoint);
 }
 
 function movePoint(e) {
     if (e.buttons === 1 || e.witch === 1 || e.type == 'touchmove') {
-        Xpoint = e.pageX - 520;
-        Ypoint = e.pageY - 170;
+        Xpoint = e.offsetX - 1;
+        Ypoint = e.offsetY - 1;
         moveflg = 1;
 
         ctx.lineTo(Xpoint, Ypoint);
@@ -60,6 +49,7 @@ function movePoint(e) {
         ctx.lineWidth = defSize * 2;
         ctx.strokeStyle = defColor;
         ctx.stroke();
+
     }
 }
 
