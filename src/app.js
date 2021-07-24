@@ -1,4 +1,5 @@
 const express = require('express');
+const { Controller } = require('./controller/Controller');
 const app = express();
 const http = require('http').Server(app);
 const socketIoServer = require('socket.io')(http);
@@ -10,15 +11,7 @@ app.get('/', function (res) {
     res.render('index.html');
 });
 
-const { goodNew } = require("./goodNew/index.js");
-const { diceGame } = require('./dicegame/index.js');
-const { nameGame } = require('./namegame/index.js');
-const { typingGame } = require('./typing/index.js');
-
-goodNew(socketIoServer);
-diceGame(socketIoServer);
-nameGame(socketIoServer);
-typingGame(socketIoServer);
+Controller(socketIoServer);
 
 // ポート番号3000でListening
 http.listen(PORT, () => {
