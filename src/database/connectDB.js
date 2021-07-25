@@ -23,8 +23,9 @@ const exportConnection = async () => {
     exports.mycon = mycon;
 }
 
-const execute = async () => {
+const connection = async () => {
     await connDB();
     await exportConnection();
 }
-execute();
+
+exports.connection = connection;

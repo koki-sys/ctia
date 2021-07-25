@@ -1,7 +1,11 @@
 exports.userController = (socket, serverIO) => {
 
-    const { mycon } = require('../../database/connectDB');
+    const { mycon, connection } = require('../../database/connectDB');
     const { user } = require('../../model/user');
+
+    socket.on('connectDatabase', () => {
+        connection();
+    });
 
     socket.on('join_game', async (data) => {
         const roomId = parseInt(data.roomId);
