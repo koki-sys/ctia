@@ -15,7 +15,6 @@ exports.dgController = (socket, IOserver, orderArray) => {
                 orderPattern: orderPattern,
             });
         }
-
     });
 
     socket.on("order", (data) => {

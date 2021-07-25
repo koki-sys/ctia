@@ -1,9 +1,12 @@
+import { gnClientIO } from '../../../../link.js';
+
 // html要素取得
 const group = document.getElementById('setgroup');
 
 window.onload = () => {
     // sessionをリセット
     sessionStorage.clear();
+    gnClientIO.emit("connectDatabase",{});
 }
 // qr.htmlに遷移するメソッド
 const qrlink = async () => {
