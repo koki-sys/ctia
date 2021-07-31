@@ -7,8 +7,6 @@ const { ngController } = require('./namegame/ngController');
 
 exports.Controller = (socketIoServer) => {
     // 順番を保存する配列
-    let diceGameOrder = [];
-    let goodNewOrder = [];
     let nameGameOrder = [];
     let waitCount;
     let namedImgNumberArray = [];
@@ -19,7 +17,7 @@ exports.Controller = (socketIoServer) => {
     diceGameServer.on("connection", (socket) => {
         roomController(socket, diceGameServer);
         userController(socket, diceGameServer);
-        dgController(socket, diceGameServer, diceGameOrder);
+        dgController(socket, diceGameServer);
     });
 
     // Good&New
@@ -27,7 +25,7 @@ exports.Controller = (socketIoServer) => {
     goodNewServer.on("connection", (socket) => {
         roomController(socket, goodNewServer);
         userController(socket, goodNewServer);
-        gnController(socket, goodNewServer, goodNewOrder);
+        gnController(socket, goodNewServer);
     });
 
     // タイピング

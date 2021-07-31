@@ -1,14 +1,29 @@
-const { patternCheck } = require("../../component/patternCheck");
+const { user } = require('../../model/user');
+const { order } = require('../../model/order');
 
-exports.gnController = (socket, IOserver, orderArray) => {
+exports.gnController = (socket, IOserver) => {
 
     const { randomPattern } = require("../../component/randomPattern");
 
-    socket.on("requestOrderPattern", (data) => {
+    socket.on("requestOrderPattern", async (data) => {
         if (data.flg != "answered") {
+            const roomId = data.roomId;
+            const nickname = data.nickname;
+
             // 順番作製のために
             const orderPattern = randomPattern();
-            orderArray.push(orderPattern);
+
+            const PersonInfo = await user.find(nickname);
+            const userId = PersonInfo.id;
+
+            const orderData = {
+                roomId: roomId,
+                userId: userId,
+                random: orderPattern
+            }
+
+            console.log(orderData);
+            await order.add(orderData);
 
             // 順番を受け取りに来たユーザに順番を送る。
             IOserver.to(socket.id).emit("sendOrderPattern", {
@@ -17,12 +32,19 @@ exports.gnController = (socket, IOserver, orderArray) => {
         }
     });
 
-    socket.on("order", (data) => {
-        console.log("順番切り替え処理を行っています・・・");
+    socket.on("order", async (data) => {
         if (data.flg == "answered") {
-            const nextPattern = orderArray.shift();
-            console.log(nextPattern);
-            patternCheck(nextPattern, data.entryRoomName, IOserver);
+            const result = await order.first(data.roomId);
+            if (result != false && typeof result != "undefined") {
+                const nextPattern = result.order_pattern;
+                await order.flgUpdate(result.id);
+
+                IOserver.emit("changeOrder", {
+                    changePattern: nextPattern,
+                })
+            } else {
+                IOserver.emit("gameEnd", {});
+            }
         }
     })
 }

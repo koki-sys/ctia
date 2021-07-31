@@ -1,11 +1,12 @@
 import { gnClientIO } from '../../../link.js';
 
-const flgFromSession = sessionStorage.getItem('flg');
-const entryRoomNameFromSession = sessionStorage.getItem('entryRoomName');
-const orderPatternFromSession = sessionStorage.getItem('orderPattern');
-const firstPersonFromSession = sessionStorage.getItem('firstPerson');
+const answeredFlg = sessionStorage.getItem('flg');
+const nickname = sessionStorage.getItem('nickName');
+const firstPerson = sessionStorage.getItem('firstPerson');
+const roomId = sessionStorage.getItem('roomId');
 
-const isAnsweredFlg = (flgFromSession == "answered") ? true : false;
+const isAnswered = (answeredFlg == "answered") ? true : false;
+const isFirst = (firstPerson == "first") ? true : false;
 
 // ゲーム画面に遷移する
 const toGoodNew = async () => {
@@ -18,27 +19,24 @@ const toGameEnd = async () => {
 }
 
 window.onload = () => {
-    console.log("参加部屋名：" + entryRoomNameFromSession);
     gnClientIO.emit('requestOrderPattern', {
-        flg: flgFromSession,
-        entryRoomName: entryRoomNameFromSession,
+        flg: answeredFlg,
+        nickname: nickname,
+        roomId: roomId
     })
 
     //最初の人は、名前をつける。
-    if (firstPersonFromSession == "first") {
+    if (isFirst) {
         sessionStorage.removeItem('firstPerson');
         toGoodNew();
     }
 
     // 名前を変えた人が順番変え処理をリクエストする。
-    if (isAnsweredFlg) {
-        // 順番変更処理を入れる。セッションでansweredを送信
-        gnClientIO.emit('order', {
-            flg: flgFromSession,
-            entryRoomName: entryRoomNameFromSession
+    if (isAnswered) {
+        gnClientIO.emit("order", {
+            flg: "answered",
+            roomId: roomId
         });
-        console.log("順番変更処理をリクエストしました。");
-
         // セッション情報を削除 バグ原因
         sessionStorage.remove("answered");
     }
@@ -52,12 +50,14 @@ gnClientIO.on("sendOrderPattern", (data) => {
 
 // 順番が自分に回ってきたら遷移する。
 gnClientIO.on('changeOrder', (data) => {
-    const changePattern = data.changePattern;
-    const isOrdered = sessionStorage.getItem('isOrdered');
+    const pattern = String(data.changePattern);
+    const orderPattern = sessionStorage.getItem('orderPattern');
+    console.log("'" + pattern + "'");
+    console.log("'" + orderPattern + "'");
+
     // 順番が来たら、発表画面に切り替える。
-    if (isOrdered) {
-        console.log("発表しました。");
-    } else if (orderPatternFromSession == changePattern) {
+    console.log("junnbannkae");
+    if (orderPattern === pattern) {
         toGoodNew();
     }
 })

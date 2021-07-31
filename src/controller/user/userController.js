@@ -1,6 +1,5 @@
 exports.userController = (socket, serverIO) => {
 
-    const { mycon } = require('../../database/connectDB');
     const { user } = require('../../model/user');
 
     socket.on('join_game', async (data) => {
@@ -17,20 +16,20 @@ exports.userController = (socket, serverIO) => {
         }
         console.log(userData);
 
-        const count = await user.count(mycon, userData);
+        const count = await user.count(userData.roomId);
         if (count < limitPerRoom) {
             // ユーザーを追加
-            await user.add(mycon, userData);
+            await user.add(userData);
         }
-        const nowCount = await user.count(mycon, userData);
+        const nowCount = await user.count(userData.roomId);
         console.log("count:" + count);
 
-        const PersonalInfo = await user.find(mycon, userData.nickname);
+        const PersonalInfo = await user.find(userData.nickname);
 
         const name = PersonalInfo.nickname;
         console.log("ユーザ設定ニックネーム:" + name);
 
-        const userRow = await user.all(mycon, userData);
+        const userRow = await user.all(userData.roomId);
 
         serverIO.emit("waiting", {
             userRow: userRow,

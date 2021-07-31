@@ -5,6 +5,7 @@ window.onload = () => {
     // sessionをリセット
     sessionStorage.clear();
 }
+
 // qr.htmlに遷移するメソッド
 const qrlink = async () => {
     console.log("qr画面に遷移しました。");
