@@ -2,7 +2,6 @@ const { typing } = require('../../model/typing');
 const { user } = require('../../model/user');
 
 exports.tpController = async (socket, IOserver) => {
-    const { mycon } = require('../../database/connectDB');
 
     socket.on('requestRanking', async (data) => {
         const nickname = data.nickName;

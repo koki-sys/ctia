@@ -3,6 +3,7 @@ import { ngClientIO } from "../../../../link.js";
 // session取得
 const roomIdFromSession = sessionStorage.getItem('roomId');
 const countInRoomFromSession = sessionStorage.getItem('limitPerRoom');
+const nickNameFromSession = sessionStorage.getItem('nickName');
 
 // html要素取得
 const roomNameElement = document.getElementById('room-name');
@@ -14,7 +15,10 @@ countInRoomElement.textContent = "人数は" + countInRoomFromSession + "人で�
 
 // 順番をリクエストする
 window.onload = () => {
-    ngClientIO.emit('requestOrderPattern', {});
+    ngClientIO.emit('requestOrderPattern', {
+        nickname: nickNameFromSession,
+        roomId: roomIdFromSession
+    });
 }
 
 // 順番を受信して保存。
