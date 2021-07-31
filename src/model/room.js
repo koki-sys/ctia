@@ -1,40 +1,71 @@
+const mysql = require('mysql2/promise');
+const { config } = require('../config/config');
+
 exports.room = {
 
-    createRoom: async (mycon, roomData) => {
-
+    create: async (roomData) => {
         // 部屋情報
-        const roomNumber = roomData.roomNumber;
+        const roomId = roomData.roomId;
         const enterRoomName = roomData.enterRoomName;
         const limitPerRoom = roomData.limitPerRoom;
 
-        // ルーム追加
-        const param = [roomNumber, enterRoomName, limitPerRoom];
-        const sql = 'INSERT INTO room VALUES(?, ?, ?)';
-        const [addRoomError] = await mycon.query(sql, param);
-        console.log(addRoomError);
-    },
+        try {
+            mycon = await mysql.createConnection(config.database);
+            mycon.connect();
 
-    getRoomId: async (mycon, roomNumber) => {
+            // ルーム追加
+            const param = [roomId, enterRoomName, limitPerRoom];
+            const sql = 'INSERT INTO room VALUES(?, ?, ?)';
+            const [addRoomError] = await mycon.query(sql, param);
 
-        // ルーム情報を取得
-        const param = [roomNumber];
-        const sql = 'SELECT id FROM room WHERE id = ?';
-        const [roomInfo] = await mycon.query(sql, param);
-
-        const roomId = roomInfo[0].id;
-        return roomId;
-    },
-
-    isRoom: async (mycon, roomNumber) => {
-        // ルーム情報を取得
-        const param = [roomNumber];
-        const sql = 'SELECT COUNT(id) AS cnt FROM room WHERE id = ?';
-        const [roomInfo] = await mycon.query(sql, param);
-
-        const roomCount = roomInfo[0].cnt;
-        if (roomCount >= 1) {
+            mycon.end();
             return true;
+        } catch (err) {
+            mycon.end();
+            return false;
         }
-        return false;
+    },
+
+    getRoomId: async (roomId) => {
+
+        try {
+            mycon = await mysql.createConnection(config.database);
+            mycon.connect();
+
+            // ルーム情報を取得
+            const param = [roomId];
+            const sql = 'SELECT id FROM room WHERE id = ?';
+            const [roomInfo] = await mycon.query(sql, param);
+
+            const resultRoomId = roomInfo[0].id;
+
+            mycon.end();
+            return resultRoomId;
+        } catch (err) {
+            mycon.end();
+            return false;
+        }
+    },
+
+    exists: async (roomId) => {
+        try {
+            mycon = await mysql.createConnection(config.database);
+            mycon.connect();
+            // ルーム情報を取得
+            const param = [roomId];
+            const sql = 'SELECT COUNT(id) AS cnt FROM room WHERE id = ?';
+            const [roomInfo] = await mycon.query(sql, param);
+
+            const roomCount = roomInfo[0].cnt;
+            mycon.end();
+
+            if (roomCount >= 1) {
+                return true;
+            }
+            return false;
+        } catch (err) {
+            mycon.end();
+            return false;
+        }
     }
 }

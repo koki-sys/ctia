@@ -1,4 +1,3 @@
-const { patternCheck } = require("../../component/patternCheck");
 
 exports.dgController = (socket, IOserver, orderArray) => {
 

@@ -1,7 +1,3 @@
-import { gnClientIO } from '../../../link.js';
-
-const name = sessionStorage.getItem('after_set_name');
-
 const announced = document.getElementById('announced');
 
 const toComplete = async () => {
@@ -13,11 +9,7 @@ const sendOrder = async () => {
     console.log("部屋名:" + sessionStorage.getItem('entryRoomName'));
     sessionStorage.setItem("isOrdered", true);
     sessionStorage.setItem('flg', "answered");
-    await gnClientIO.emit("order", {
-        flg: "answered",
-        entryRoomName: sessionStorage.getItem('entryRoomName'),
-        name: name,
-    });
+
     console.log("ordered")
     await toComplete();
 }

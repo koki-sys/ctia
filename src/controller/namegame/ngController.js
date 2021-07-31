@@ -1,3 +1,4 @@
+const { order } = require('../../model/order');
 
 
 exports.ngController = (socket, IOserver, orderArray, waitCount, namedImgNumberArray, tempCharaName) => {
@@ -6,13 +7,27 @@ exports.ngController = (socket, IOserver, orderArray, waitCount, namedImgNumberA
     const { namegame } = require('../../model/namegame');
     const { user } = require('../../model/user');
     const { waitCounter } = require('./waitCounter');
-    const { mycon } = require('../../database/connectDB');
 
     // 順番を送る。
-    socket.on("requestOrderPattern", () => {
+    socket.on("requestOrderPattern", async (data) => {
+        const nickname = data.nickname;
+        const roomId = data.roomId;
+
         // 順番作製のために
         const orderPattern = randomPattern();
-        orderArray.push(orderPattern);
+
+        const PersonInfo = await user.find(mycon, nickname);
+        console.log(PersonInfo)
+        const userId = PersonInfo.id;
+
+        const orderData = {
+            roomId: roomId,
+            userId: userId,
+            random: orderPattern
+        }
+
+        console.log(orderData);
+        await order.add(mycon, orderData);
 
         // 順番を受け取りに来たユーザに順番を送る。
         IOserver.to(socket.id).emit("sendOrderPattern", {
@@ -26,10 +41,10 @@ exports.ngController = (socket, IOserver, orderArray, waitCount, namedImgNumberA
         let random = Math.floor(Math.random() * 14) + 1;
         while (true) {
             const number = namedImgNumberArray.indexOf(random);
-            if (number == 1) {
-                random = Math.floor(Math.random() * 14) + 1;
-            } else {
+            if (number === -1) {
                 break;
+            } else {
+                random = Math.floor(Math.random() * 14) + 1;
             }
         }
         IOserver.emit('setImgNumber', {
@@ -38,7 +53,9 @@ exports.ngController = (socket, IOserver, orderArray, waitCount, namedImgNumberA
     })
 
     // 順番切り替えをする処理
-    socket.on("order", (data) => {
+    socket.on("order", async (data) => {
+        const roomId = data.roomId;
+
         console.log("順番切り替え処理を行っています・・・");
         // ランダムで覚えたやつか名前つけるかを出す。
         // 1 => 名前つける
@@ -47,20 +64,29 @@ exports.ngController = (socket, IOserver, orderArray, waitCount, namedImgNumberA
         if (namedImgNumberArray.length == 0) {
             pageFlg = 1;
         }
+        console.log("ページフラグ" + pageFlg);
 
-        // 名前つけるか、回答かのフラグを送る。
-        if (data.flg == "answered" && pageFlg == 1) {
-            const nextPattern = orderArray.shift();
-            console.log("送信パターン(順番)" + nextPattern);
-            console.log("参加部屋名：" + data.entryRoomName);
-            IOserver.emit("changeOrder", {
-                changePattern: nextPattern,
-                pageFlg: pageFlg,
-            })
-        } else if (pageFlg == 2) {
-            IOserver.emit("changeOrder", {
-                pageFlg: pageFlg,
-            })
+        switch (pageFlg) {
+            case 1:
+                const first = await order.first(mycon, roomId);
+
+                console.log(JSON.stringify(first));
+                const orderId = first.id;
+                const nextPattern = first.order_pattern;
+
+                await order.flgUpdate(mycon, orderId);
+
+                IOserver.emit("changeOrder", {
+                    changePattern: nextPattern,
+                    pageFlg: pageFlg,
+                })
+                break;
+
+            case 2:
+                IOserver.emit("changeOrder", {
+                    pageFlg: pageFlg,
+                })
+                break;
         }
     })
 

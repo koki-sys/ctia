@@ -1,9 +1,7 @@
 exports.roomController = async (socket, IOserver) => {
 
-    const { mycon } = require('../../database/connectDB');
     const { room } = require('../../model/room');
-    const { getUserCount } = require('../../controller/user/getUserCount');
-
+    const { user } = require('../../model/user');
 
     /**
      * 待機処理を行う関数(ニックネーム入力画面から送信)
@@ -24,7 +22,7 @@ exports.roomController = async (socket, IOserver) => {
         // 部屋数と制限人数を定義
         let roomCount;
         let limitPerRoom;
-        let roomNumber;
+        let roomId;
 
         // 型変換( int型へ ) 
         if (data.roomCount != null || data.limitPerRoom != null) {
@@ -34,40 +32,39 @@ exports.roomController = async (socket, IOserver) => {
 
         while (true) {
             // 部屋番号をランダムに生成する変数（ランダムで部屋に割り振りするため）
-            roomNumber = Math.floor(Math.random() * 100);
-            const roomExists = await room.isRoom(mycon, roomNumber);
+            roomId = Math.floor(Math.random() * 100);
+            const roomExists = await room.exists(roomId);
             if (roomExists === false) {
                 break;
             }
         }
 
         while (true) {
-            const personCountInRoom = await getUserCount(mycon, roomNumber);
+            const personCountInRoom = await user.count(roomId);
 
             // 部屋内の人数内に収まっているとき
             if (personCountInRoom < limitPerRoom) {
                 // ルームを追加してユーザ追加
-                const enterRoomName = "room" + (roomNumber + 1);
+                const enterRoomName = "room" + (roomId + 1);
 
                 // 部屋情報を作製
                 const roomData = {
-                    roomNumber: roomNumber,
+                    roomId: roomId,
                     enterRoomName: enterRoomName,
                     limitPerRoom: limitPerRoom
                 }
 
-
                 // ルーム作製
-                await room.createRoom(mycon, roomData);
+                await room.create(roomData);
 
-                const roomId = await room.getRoomId(mycon, roomNumber);
-                console.log("部屋ID" + roomId);
+                const id = await room.getRoomId(roomId);
+                console.log("部屋ID" + id);
 
                 // ルーム参加
                 await socket.join(enterRoomName);
 
                 IOserver.emit("roomInfo", {
-                    roomId: roomId,
+                    roomId: id,
                     roomCount: roomCount,
                     limitPerRoom: limitPerRoom,
                 });

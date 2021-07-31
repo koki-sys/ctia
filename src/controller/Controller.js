@@ -27,7 +27,7 @@ exports.Controller = (socketIoServer) => {
     goodNewServer.on("connection", (socket) => {
         roomController(socket, goodNewServer);
         userController(socket, goodNewServer);
-        gnController(socket, goodNewServer, goodNewOrder);
+        gnController(socket, goodNewServer);
     });
 
     // タイピング
