@@ -14,7 +14,6 @@ exports.gnController = (socket, IOserver) => {
             const orderPattern = randomPattern();
 
             const PersonInfo = await user.find(nickname);
-            console.log(PersonInfo);
             const userId = PersonInfo.id;
 
             const orderData = {
@@ -34,16 +33,12 @@ exports.gnController = (socket, IOserver) => {
     });
 
     socket.on("order", async (data) => {
-        console.log("順番切り替え処理を行っています・・・");
         if (data.flg == "answered") {
             const result = await order.first(data.roomId);
-            console.log("処理結果:" + JSON.stringify(result));
             if (result != false && typeof result != "undefined") {
                 const nextPattern = result.order_pattern;
                 await order.flgUpdate(result.id);
 
-
-                console.log("送信パターン" + nextPattern);
                 IOserver.emit("changeOrder", {
                     changePattern: nextPattern,
                 })
