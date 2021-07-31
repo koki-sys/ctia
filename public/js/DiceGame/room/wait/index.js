@@ -43,7 +43,7 @@ dgClientIO.on("waiting", (data) => {
     console.log("受信した制限人数:" + limitPerRoomFromServer);
     // 自分が入力したニックネームと一致しているのを確認
     if (nickNameFromServer == nickNameFromSession) {
-        sessionStorage.setItem('nickName', data.userRow);
+        sessionStorage.setItem('nickName', data.nickName);
     }
 
     // 人数が揃ったら自動遷移

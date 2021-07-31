@@ -1,4 +1,4 @@
-import { dgClientIO, completeGroupingUrl } from '../../../../link.js';
+import { gnClientIO, completeGroupingUrl } from '../../../../link.js';
 import { displayWaitUser } from './displayWaitUser.js';
 
 const userListFromElement = document.getElementById('user-list');
@@ -21,7 +21,7 @@ window.addEventListener('DOMContentLoaded', () => {
     console.log("ニックネームは、" + nickNameFromSession);
     console.log("部屋数は、" + roomCountFromSession);
     console.log("制限人数は、" + limitPerRoomFromSession);
-    dgClientIO.emit("join_game", {
+    gnClientIO.emit("join_game", {
         roomId: roomIdFromSession,
         nickName: nickNameFromSession,
         roomCount: roomCountFromSession,
@@ -29,7 +29,7 @@ window.addEventListener('DOMContentLoaded', () => {
     })
 });
 
-dgClientIO.on("waiting", (data) => {
+gnClientIO.on("waiting", (data) => {
     const userRow = data.userRow;
 
     displayWaitUser(userListFromElement, userRow);

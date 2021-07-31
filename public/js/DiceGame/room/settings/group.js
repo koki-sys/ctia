@@ -1,12 +1,9 @@
-import { dgClientIO } from '../../../../link.js';
-
 // html要素取得
 const group = document.getElementById('setgroup');
 
 window.onload = () => {
     // sessionをリセット
     sessionStorage.clear();
-    dgClientIO.emit("connectDatabase",{});
 }
 
 // qr.htmlに遷移するメソッド
