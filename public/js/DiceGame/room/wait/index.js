@@ -54,3 +54,15 @@ dgClientIO.on("waiting", (data) => {
         location.href = completeGroupingUrl;
     }
 });
+
+gnClientIO.on("user_exists", (data) => {
+    console.log("ユーザ存在確認");
+    const errMsg = data.errmsg;
+    let msg = "";
+    userListFromElement.innerHTML = msg;
+
+    // エラー
+    msg += '<p class="text-danger text-center">' + errMsg + '</p>';
+    msg += '<a class="btn btn-outline-secondary" href="name.html">名前をつけ直す</a>';
+    userListFromElement.innerHTML = msg;
+})
