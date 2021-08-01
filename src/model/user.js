@@ -23,7 +23,7 @@ exports.user = {
             return true;
         } catch (err) {
             mycon.end();
-            return false
+            return false;
         }
     },
 
