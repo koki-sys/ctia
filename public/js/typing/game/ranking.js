@@ -6,6 +6,7 @@ import { tpClientIO } from '../../../link.js';
 const rankingListFromElement = document.getElementById('ranking-list');
 
 // session
+const roomId = sessionStorage.getItem('roomId');
 const nickNameFromSession = sessionStorage.getItem('nickName');
 const scoreFromSession = sessionStorage.getItem('score');
 const limitPerRoomFromSession = sessionStorage.getItem('limitPerRoom');
@@ -16,7 +17,7 @@ window.onload = () => {
     tpClientIO.emit('requestRanking', {
         nickName: nickNameFromSession,
         score: scoreFromSession,
-
+        roomId: roomId
     });
 }
 

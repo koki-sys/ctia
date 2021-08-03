@@ -38,7 +38,7 @@ exports.userController = (socket, serverIO) => {
             roomCount: roomCount,
             limitPerRoom: limitPerRoom
         }
-        console.log("保存オブジェクト：" + userData);
+        console.log("保存オブジェクト：" + JSON.stringify(userData));
 
         const count = await user.count(userData.roomId);
         if (count < limitPerRoom) {
