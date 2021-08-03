@@ -1,6 +1,6 @@
 const assert = require("assert");
 const { room } = require("../src/model/room");
-const { beforeRoomTest } = require("./init/testInit");
+const { beforeRoomTest, afterRoomTest } = require("./init/testInit");
 
 const sampleData = {
     roomId: 48,
@@ -39,5 +39,9 @@ describe("Room Model Test", () => {
     it("room Add Duplicate", async () => {
         const data = await room.create(sampleData);
         assert.equal(data, false);
+    })
+
+    after(async () => {
+        await afterRoomTest();
     })
 })

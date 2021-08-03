@@ -6,24 +6,26 @@ exports.tpController = async (socket, IOserver) => {
     socket.on('requestRanking', async (data) => {
         const nickname = data.nickName;
         const score = parseInt(data.score);
+        const roomId = parseInt(data.roomId);
 
-        const PersonInfo = await user.find(mycon, nickname);
+        const PersonInfo = await user.find(nickname);
         console.log(PersonInfo)
         const userId = PersonInfo.id;
 
         const typingData = {
             nickname: nickname,
             score: score,
+            roomId: roomId,
             userId: userId
         }
 
-        const isScore = await typing.isScore(mycon, typingData);
+        const isScore = await typing.isScore(typingData);
 
         if (!isScore) {
-            await typing.add(mycon, typingData);
+            await typing.add(typingData);
         }
 
-        const scoreData = await typing.all(mycon);
+        const scoreData = await typing.all();
         console.log(scoreData[0]);
         console.log(scoreData[0].id);
         console.log(scoreData[0].nickname);
@@ -36,7 +38,7 @@ exports.tpController = async (socket, IOserver) => {
     socket.on('requestGameEnd', async (data) => {
         const limitPerRoom = parseInt(data.limitPerRoom);
 
-        const count = await typing.count(mycon);
+        const count = await typing.count();
         console.log("ユーザ数：" + count);
 
         if (count === limitPerRoom) {
@@ -45,8 +47,6 @@ exports.tpController = async (socket, IOserver) => {
     })
 
     socket.on('deleteData', async (data) => {
-
-        await typing.delete(mycon);
 
         console.log('データ削除');
         await socket.leave(data.entryRoomName);
