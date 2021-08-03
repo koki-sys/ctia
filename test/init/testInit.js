@@ -43,3 +43,61 @@ exports.afterOrderTest = async () => {
     mycon.end();
 }
 
+exports.beforeTypingTest = async () => {
+
+    const sampleData = {
+        roomId: 48,
+        enterRoomName: "部屋48",
+        nickname: "testUser",
+        limitPerRoom: 2
+    }
+
+    await room.create(sampleData);
+    await user.add(sampleData);
+    const result = await user.find(sampleData.nickname);
+    const id = result.id;
+
+    return id;
+}
+
+exports.afterRoomTest = async () => {
+    mycon = await mysql.createConnection(config.database);
+    mycon.connect();
+    await mycon.query("DELETE FROM room");
+    mycon.end();
+}
+
+exports.afterTypingTest = async () => {
+    mycon = await mysql.createConnection(config.database);
+    mycon.connect();
+    await mycon.query("DELETE FROM typing");
+    await mycon.query("DELETE FROM user");
+    await mycon.query("DELETE FROM room");
+    mycon.end();
+}
+
+exports.beforeNameGameTest = async () => {
+
+    const sampleData = {
+        roomId: 48,
+        enterRoomName: "部屋48",
+        nickname: "testUser",
+        limitPerRoom: 2
+    }
+
+    await room.create(sampleData);
+    await user.add(sampleData);
+    const result = await user.find(sampleData.nickname);
+    const id = result.id;
+
+    return id;
+}
+
+exports.afterNameGameTest = async () => {
+    mycon = await mysql.createConnection(config.database);
+    mycon.connect();
+    await mycon.query("DELETE FROM namegame");
+    await mycon.query("DELETE FROM user");
+    await mycon.query("DELETE FROM room");
+    mycon.end();
+}
