@@ -1,4 +1,4 @@
-import { dgClientIO, completeGroupingUrl } from '../../../../link.js';
+import { ngClientIO, completeGroupingUrl } from '../../../../link.js';
 import { displayWaitUser } from './displayWaitUser.js';
 
 const userListFromElement = document.getElementById('user-list');
@@ -21,7 +21,7 @@ window.addEventListener('DOMContentLoaded', () => {
     console.log("ニックネームは、" + nickNameFromSession);
     console.log("部屋数は、" + roomCountFromSession);
     console.log("制限人数は、" + limitPerRoomFromSession);
-    dgClientIO.emit("join_game", {
+    ngClientIO.emit("join_game", {
         roomId: roomIdFromSession,
         nickName: nickNameFromSession,
         roomCount: roomCountFromSession,
@@ -29,7 +29,7 @@ window.addEventListener('DOMContentLoaded', () => {
     })
 });
 
-dgClientIO.on("waiting", (data) => {
+ngClientIO.on("waiting", (data) => {
     const userRow = data.userRow;
 
     displayWaitUser(userListFromElement, userRow);
@@ -54,3 +54,15 @@ dgClientIO.on("waiting", (data) => {
         location.href = completeGroupingUrl;
     }
 });
+
+ngClientIO.on("user_exists", (data) => {
+    console.log("ユーザ存在確認");
+    const errMsg = data.errmsg;
+    let msg = "";
+    userListFromElement.innerHTML = msg;
+
+    // エラー
+    msg += '<p class="text-danger text-center">' + errMsg + '</p>';
+    msg += '<a class="btn btn-outline-secondary" href="name.html">名前をつけ直す</a>';
+    userListFromElement.innerHTML = msg;
+})
