@@ -4,7 +4,7 @@ const { requestOrderPattern } = require('../../component/order/requestOrderPatte
 const { user } = require('../../model/user');
 const { order } = require('../../model/order');
 
-exports.ngController = (socket, IOserver, waitCount, namedImgNumberArray, tempCharaName) => {
+exports.ngController = (socket, IOserver, waitCount, namedImgArray, tempCharaName) => {
 
     requestOrderPattern(socket, IOserver);
 
@@ -14,7 +14,7 @@ exports.ngController = (socket, IOserver, waitCount, namedImgNumberArray, tempCh
         let random = Math.floor(Math.random() * 14) + 1;
 
         while (true) {
-            const number = namedImgNumberArray.indexOf(random);
+            const number = namedImgArray.indexOf(random);
             if (number === -1) {
                 break;
             } else {
@@ -38,7 +38,7 @@ exports.ngController = (socket, IOserver, waitCount, namedImgNumberArray, tempCh
         // 1 => 名前つける
         // 2 => 回答する
         let pageFlg = Math.floor(Math.random() * 2) + 1;
-        if (namedImgNumberArray.length == 0) {
+        if (namedImgArray.length == 0) {
             pageFlg = 1;
         }
 
@@ -67,15 +67,14 @@ exports.ngController = (socket, IOserver, waitCount, namedImgNumberArray, tempCh
     })
 
     // キャラカード情報を受信して、チームに入っているメンバーに送る。
-    socket.on('sendCardInformationToServer', async (data) => {
+    socket.on('sendChara', async (data) => {
         const randomCardNumber = parseInt(data.randomCardNumber);
         const charaName = data.charaName;
         const nickname = data.nickName;
         const roomId = data.roomId;
-        console.log("にっくねーむ" + nickname);
+        console.log("クライアントから送られてきた値" + randomCardNumber);
 
         const PersonInfo = await user.find(nickname);
-        console.log("PersonInfo:" + PersonInfo);
         const userId = PersonInfo.id;
 
         const gameData = {
@@ -89,10 +88,11 @@ exports.ngController = (socket, IOserver, waitCount, namedImgNumberArray, tempCh
         await namegame.add(gameData);
 
         const result = await namegame.find(gameData);
+        console.log("DBから取り出したID" + result.chara_number);
 
         // カードの名前をつけたやつを送信
         IOserver.emit('displayCardName', {
-            randomCardNumber: result.id,
+            randomCardNumber: result.chara_number,
             charaName: result.chara_name
         })
     });
@@ -122,24 +122,23 @@ exports.ngController = (socket, IOserver, waitCount, namedImgNumberArray, tempCh
     })
 
     // 回答するときの表示する画像をおくる。
-    socket.on('requestDisplayCharaImg', () => {
+    socket.on('sendImg', () => {
 
-        const randomNamedChara = namedImgNumberArray.shift();
-        console.log(randomNamedChara);
-        // 後で判定するために値を保存。
-        tempCharaName = randomNamedChara.name;
+        const namedChara = namedImgArray.shift();
+
+        tempCharaName = namedChara.name;
 
         if (tempCharaName == undefined) {
             // 画像情報が入ってないときの処理。
-            IOserver.emit('randomNamedCharaImg', {
+            IOserver.emit('DisplayImg', {
                 randomCardNumber: 0,
                 charaName: "空"
             });
         } else {
             // ランダムで名前つけたカードを表示
-            IOserver.emit('randomNamedCharaImg', {
-                randomCardNumber: randomNamedChara.number,
-                charaName: randomNamedChara.name
+            IOserver.emit('DisplayImg', {
+                randomCardNumber: namedChara.number,
+                charaName: namedChara.name
             });
         }
     })
@@ -151,7 +150,7 @@ exports.ngController = (socket, IOserver, waitCount, namedImgNumberArray, tempCh
 
         // 名前つけたカードと、回答した名前があってるかチェック。
         if (namedCharaName == tempCharaName) {
-            IOserver.emit('sendCorrectAnswerer', {
+            IOserver.emit('correctAnswerer', {
                 nickName: nickName,
             })
             tempCharaName = '';
@@ -163,11 +162,11 @@ exports.ngController = (socket, IOserver, waitCount, namedImgNumberArray, tempCh
     })
 
     // 確認画面に遷移するために画像番号、名前を送る
-    socket.on('toNameConfirmRequest', () => {
+    socket.on('nameConfirm', () => {
         IOserver.emit("toNameConfirmResponse", {});
     })
 
-    socket.on('isOrderPatternArray', async (data) => {
+    socket.on('isOrder', async (data) => {
         console.log(orderArray.length);
         if (orderArray.length === 0) {
             const deleteSQL = 'delete from namegame';

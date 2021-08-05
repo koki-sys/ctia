@@ -35,14 +35,15 @@ exports.namegame = {
         // 部屋情報
         const charaId = gameData.charaId;
         const charaName = gameData.charaName;
+        const roomId = gameData.roomId;
 
         try {
             mycon = await mysql.createConnection(config.database);
             mycon.connect();
 
             // ルーム追加
-            const params = [charaId, charaName];
-            const sql = 'select * from namegame where chara_number = ? and chara_name = ?';
+            const params = [charaId, charaName, roomId];
+            const sql = 'select * from namegame where chara_number = ? and chara_name = ? and room_id = ?';
             const [results, fields] = await mycon.query(sql, params);
 
             const result = results[0];

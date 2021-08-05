@@ -25,7 +25,6 @@ window.onload = async () => {
             roomId: roomId
         });
     }
-    console.log("isOrder後")
 
     if (isFirst) {
         sessionStorage.removeItem("firstPerson");

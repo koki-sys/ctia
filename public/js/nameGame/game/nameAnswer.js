@@ -17,13 +17,13 @@ const toCorrectAnswerer = async () => {
 window.onload = () => {
     setTimeout(() => {
         if (isNamed) {
-            ngClientIO.emit('requestDisplayCharaImg', {});
+            ngClientIO.emit('sendImg', {});
         }
     }, 2000);
 }
 
 // 回答用の画像を表示
-ngClientIO.on('randomNamedCharaImg', (data) => {
+ngClientIO.on('DisplayImg', (data) => {
     const randomCardNumber = data.randomCardNumber;
     if (randomCardNumber == 0 && randomCardNumber == null) {
         const charaImgPath = "../allstars/gazou" + randomCardNumber + ".png";
@@ -37,7 +37,7 @@ ngClientIO.on('randomNamedCharaImg', (data) => {
 })
 
 // 正解者を受信して保存
-ngClientIO.on('sendCorrectAnswerer', async (data) => {
+ngClientIO.on('correctAnswerer', async (data) => {
 
     // 正解者の名前を保存
     sessionStorage.setItem('correctAnswerer', data.nickName);

@@ -26,7 +26,7 @@ window.onload = () => {
         console.log("nickname" + nickName);
         // キャラ情報をサーバーに送信
         setTimeout(() => {
-            ngClientIO.emit('sendCardInformationToServer', {
+            ngClientIO.emit('sendChara', {
                 nickName: nickName,
                 randomCardNumber: randomCard,
                 charaName: charaName,
@@ -46,9 +46,9 @@ ngClientIO.on('displayCardName', (data) => {
     console.log("カード番号：" + randomCardNumber);
     console.log("キャラの名前：" + charaName);
 
-    const charaImgElement = '<img src="../allstars/gazou'+ randomCardNumber + '.png" width="100%" height="auto" class="d-block mx-auto border"/>';
-    const charaNameElement = '<h6 class="text-center mt-3">' + charaName + '</h3>';
-    charaElement.innerHTML = charaImgElement + charaNameElement;
+    const imgElement = '<img src="../allstars/gazou'+ randomCardNumber + '.png" width="100%" height="auto" class="d-block mx-auto border"/>';
+    const nameElement = '<h6 class="text-center mt-3">' + charaName + '</h3>';
+    charaElement.innerHTML = imgElement + nameElement;
 })
 
 // ボタンを押した時に待機させる。
