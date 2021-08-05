@@ -13,13 +13,15 @@ exports.ngController = (socket, IOserver, waitCount, namedImgArray, tempCharaNam
         let random = Math.floor(Math.random() * 14) + 1;
 
         while (true) {
-            const number = namedImgArray.indexOf(random);
+            const number = parseInt(namedImgArray.indexOf(random));
             if (number === -1) {
                 break;
             } else {
                 random = Math.floor(Math.random() * 14) + 1;
             }
         }
+
+        namedImgArray.push(random);
 
         IOserver.emit('setImgNumber', {
             random: random
@@ -114,10 +116,15 @@ exports.ngController = (socket, IOserver, waitCount, namedImgArray, tempCharaNam
     })
 
     // 回答するときの表示する画像をおくる。
-    socket.on('sendImg', () => {
+    socket.on('sendImg', async (data) => {
+        const roomId = data.roomId;
 
-        const namedChara = namedImgArray.shift();
-        tempCharaName = namedChara.name;
+        // DB操作
+        const randomChara = await namegame.random(roomId);
+        id = randomChara.id;
+        tempCharaName = randomChara.chara_name;
+
+        await namegame.flgUpdate(id);
 
         if (tempCharaName == undefined) {
             // 画像情報が入ってないときの処理。
@@ -128,8 +135,8 @@ exports.ngController = (socket, IOserver, waitCount, namedImgArray, tempCharaNam
         } else {
             // ランダムで名前つけたカードを表示
             IOserver.emit('DisplayImg', {
-                randomCardNumber: namedChara.number,
-                charaName: namedChara.name
+                randomCardNumber: randomChara.chara_number,
+                charaName: randomChara.chara_name
             });
         }
     })

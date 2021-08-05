@@ -17,7 +17,9 @@ const toCorrectAnswerer = async () => {
 window.onload = () => {
     setTimeout(() => {
         if (isNamed) {
-            ngClientIO.emit('sendImg', {});
+            ngClientIO.emit('sendImg', {
+                roomId: sessionStorage.getItem('roomId')
+            });
         }
     }, 2000);
 }
