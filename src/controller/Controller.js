@@ -7,7 +7,6 @@ const { ngController } = require('./namegame/ngController');
 
 exports.Controller = (socketIoServer) => {
     // 順番を保存する配列
-    let nameGameOrder = [];
     let waitCount;
     let namedImgNumberArray = [];
     let tempCharaName;

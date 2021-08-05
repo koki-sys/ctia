@@ -10,7 +10,6 @@ exports.ngController = (socket, IOserver, waitCount, namedImgArray, tempCharaNam
 
     // 画像番号の確認
     socket.on('checkImgNumber', () => {
-
         let random = Math.floor(Math.random() * 14) + 1;
 
         while (true) {
@@ -31,9 +30,6 @@ exports.ngController = (socket, IOserver, waitCount, namedImgArray, tempCharaNam
     socket.on("order", async (data) => {
         const roomId = data.roomId;
 
-        // roomId
-        console.log(roomId);
-
         // ランダムで覚えたやつか名前つけるかを出す。
         // 1 => 名前つける
         // 2 => 回答する
@@ -45,13 +41,13 @@ exports.ngController = (socket, IOserver, waitCount, namedImgArray, tempCharaNam
         switch (pageFlg) {
             case 1:
                 const first = await order.first(roomId);
-                console.log(JSON.stringify(first));
 
                 const orderId = first.id;
                 const nextPattern = first.order_pattern;
 
                 await order.flgUpdate(orderId);
 
+                console.log("次の人：" + nextPattern);
                 IOserver.emit("changeOrder", {
                     changePattern: nextPattern,
                     pageFlg: pageFlg
@@ -72,7 +68,6 @@ exports.ngController = (socket, IOserver, waitCount, namedImgArray, tempCharaNam
         const charaName = data.charaName;
         const nickname = data.nickName;
         const roomId = data.roomId;
-        console.log("クライアントから送られてきた値" + randomCardNumber);
 
         const PersonInfo = await user.find(nickname);
         const userId = PersonInfo.id;
@@ -88,7 +83,6 @@ exports.ngController = (socket, IOserver, waitCount, namedImgArray, tempCharaNam
         await namegame.add(gameData);
 
         const result = await namegame.find(gameData);
-        console.log("DBから取り出したID" + result.chara_number);
 
         // カードの名前をつけたやつを送信
         IOserver.emit('displayCardName', {
@@ -96,7 +90,6 @@ exports.ngController = (socket, IOserver, waitCount, namedImgArray, tempCharaNam
             charaName: result.chara_name
         })
     });
-
 
     // 確認用待機ルーム作製
     socket.on('waitInit', () => {
@@ -114,7 +107,6 @@ exports.ngController = (socket, IOserver, waitCount, namedImgArray, tempCharaNam
         } else {
             console.log("error");
         }
-        console.log("待機人数：" + count);
         // 待機人数が入室人数と同じ時に画面遷移させるようなレスポンスを送る。
         if (count == countInRoom) {
             IOserver.emit('toNameGame', {})
@@ -125,7 +117,6 @@ exports.ngController = (socket, IOserver, waitCount, namedImgArray, tempCharaNam
     socket.on('sendImg', () => {
 
         const namedChara = namedImgArray.shift();
-
         tempCharaName = namedChara.name;
 
         if (tempCharaName == undefined) {
@@ -167,12 +158,10 @@ exports.ngController = (socket, IOserver, waitCount, namedImgArray, tempCharaNam
     })
 
     socket.on('isOrder', async (data) => {
-        console.log(orderArray.length);
         if (orderArray.length === 0) {
             const deleteSQL = 'delete from namegame';
 
             await mycon.execute(deleteSQL);
-            console.log('データ削除');
             await socket.leave(data.entryRoomName);
             await IOserver.emit('toGameEnd', {});
         }

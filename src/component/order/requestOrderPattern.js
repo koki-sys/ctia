@@ -11,7 +11,6 @@ exports.requestOrderPattern = (socket, IOserver) => {
         const orderPattern = randomPattern();
 
         const PersonInfo = await user.find(nickname);
-        console.log(PersonInfo);
         const userId = PersonInfo.id;
 
         const orderData = {
@@ -20,7 +19,6 @@ exports.requestOrderPattern = (socket, IOserver) => {
             random: orderPattern
         }
 
-        console.log(orderData);
         await order.add(orderData);
 
         // 順番を受け取りに来たユーザに順番を送る。

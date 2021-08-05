@@ -31,23 +31,23 @@ window.onload = async () => {
         toNameGame();
     }
 
-    // 名前を変えた人が順番変え処理をリクエストする。
-    if (isAnsweredFlg) {
-        // 順番変更処理を入れる。セッションでansweredを送信
-        ngClientIO.emit('order', {
-            roomId: roomId
-        });
+    setTimeout(() => {
+        if (isAnsweredFlg) {
+            // 順番変更処理を入れる。セッションでansweredを送信
+            ngClientIO.emit('order', {
+                roomId: roomId
+            });
 
-        // 回答したflgを削除
-        sessionStorage.removeItem("flg");
-        sessionStorage.removeItem('orderPattern');
-    }
+            // 回答したflgを削除
+            sessionStorage.removeItem("flg");
+        }
+    },2000);
 }
 
 // 順番受け取ってセッションに保存する処理
 ngClientIO.on("sendOrderPattern", (data) => {
-    console.log("パターン受信");
     sessionStorage.setItem('orderPattern', data.orderPattern);
+    console.log("パターン" + data.orderPattern);
 });
 
 // 順番が自分に回ってきたら遷移する。
@@ -57,6 +57,7 @@ ngClientIO.on('changeOrder', (data) => {
     const sessionOrder = sessionStorage.getItem('orderPattern');
 
     if (sessionOrder === changePattern && pageFlg == 1) {
+        sessionStorage.removeItem("orderPattern");
         toNameGame();
     } else if (pageFlg == 2) {
         toNameAnswered();

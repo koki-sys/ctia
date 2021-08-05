@@ -23,7 +23,6 @@ exports.namegame = {
             mycon.end();
             return true;
         } catch (err) {
-            console.log(err);
             mycon.end();
             return false;
         }

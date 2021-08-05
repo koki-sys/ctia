@@ -13,7 +13,6 @@ exports.userController = (socket, serverIO) => {
             const PersonalInfo = await user.find(userData.nickname);
 
             const name = PersonalInfo.nickname;
-            console.log("ユーザ設定ニックネーム:" + name);
 
             const userRow = await user.all(userData.roomId);
 
@@ -38,7 +37,6 @@ exports.userController = (socket, serverIO) => {
             roomCount: roomCount,
             limitPerRoom: limitPerRoom
         }
-        console.log("保存オブジェクト：" + JSON.stringify(userData));
 
         const count = await user.count(userData.roomId);
         if (count < limitPerRoom) {
