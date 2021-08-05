@@ -1,10 +1,5 @@
 import { ngClientIO } from '../../../link.js';
 
-// 順番に関する処理
-import { checkAndChangeOrder } from '../component/order/checkAndChangeOrder.js';
-import { isFirst } from '../component/order/isFirst.js';
-import { sendCheckAndOrder } from '../component/order/sendCheckAndOrder.js';
-
 // リンク
 import { toNameGame } from '../component/link/toNameGame.js';
 import { toNameConfirm } from '../component/link/toNameConfirm.js';
@@ -12,40 +7,48 @@ import { toNameAnswered } from '../component/link/toNameAnswered.js';
 import { toGameEnd } from '../component/link/toGameEnd.js';
 
 // session取得
-const nickNameFromSession = sessionStorage.getItem('nickName');
-const flgFromSession = sessionStorage.getItem('flg');
-const roomIdFromSession = sessionStorage.getItem('roomId');
-const orderPatternFromSession = sessionStorage.getItem('orderPattern');
-const firstPersonFromSession = sessionStorage.getItem('firstPerson');
+const nickName = sessionStorage.getItem('nickName');
+const flg = sessionStorage.getItem('flg');
+const roomId = sessionStorage.getItem('roomId');
+const isFirst = sessionStorage.getItem('firstPerson');
+const orderPattern = sessionStorage.getItem('orderPattern');
 
 // 回答済みかを格納する変数
-const isAnsweredFlg = (flgFromSession == "answered") ? true : false;
-const isOrderPattern = (orderPatternFromSession != "undifined" || orderPatternFromSession != null) ? true : false;
-console.log(orderPatternFromSession);
-console.log(isOrderPattern);
+const isAnsweredFlg = (flg == "answered") ? true : false;
+const isOrder = (orderPattern != null) ? true : false;
 
 window.onload = async () => {
 
-    const order = {
-        nickname: nickNameFromSession,
-        roomId: roomIdFromSession,
-        first: firstPersonFromSession,
-        flg: flgFromSession,
-        isAnswer: isAnsweredFlg
+    if (!isOrder) {
+        ngClientIO.emit('requestOrderPattern', {
+            nickname: nickName,
+            roomId: roomId
+        });
+    }
+    console.log("isOrder後")
+
+    if (isFirst) {
+        sessionStorage.removeItem("firstPerson");
+        toNameGame();
     }
 
-    await sendCheckAndOrder(ngClientIO, order);
+    // 名前を変えた人が順番変え処理をリクエストする。
+    if (isAnsweredFlg) {
+        // 順番変更処理を入れる。セッションでansweredを送信
+        ngClientIO.emit('order', {
+            roomId: roomId
+        });
 
-    await isFirst(firstPersonFromSession);
-
-    await checkAndChangeOrder(ngClientIO, order);
-
+        // 回答したflgを削除
+        sessionStorage.removeItem("flg");
+        sessionStorage.removeItem('orderPattern');
+    }
 }
 
 // 順番受け取ってセッションに保存する処理
 ngClientIO.on("sendOrderPattern", (data) => {
+    console.log("パターン受信");
     sessionStorage.setItem('orderPattern', data.orderPattern);
-    console.log("パータン：" + data.orderPattern);
 });
 
 // 順番が自分に回ってきたら遷移する。
@@ -53,6 +56,7 @@ ngClientIO.on('changeOrder', (data) => {
     const changePattern = data.changePattern;
     const pageFlg = parseInt(data.pageFlg);
     const sessionOrder = sessionStorage.getItem('orderPattern');
+
     if (sessionOrder === changePattern && pageFlg == 1) {
         toNameGame();
     } else if (pageFlg == 2) {

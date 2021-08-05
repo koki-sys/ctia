@@ -2,13 +2,13 @@
 import { ngClientIO } from '../../../link.js';
 
 // session取得
-const nickNameFromSession = sessionStorage.getItem('nickName');
-const randomCardNumberFromSession = sessionStorage.getItem('randomCardNumber');
-const charaNameFromSession = sessionStorage.getItem('charaName');
-const entryRoomNameFromSession = sessionStorage.getItem('entryRoomName');
-const roomCountFromSession = sessionStorage.getItem('roomCount');
-const flgFromSession = sessionStorage.getItem('flg');
-const countInRoomFromSession = sessionStorage.getItem('countInRoom');
+const roomId = sessionStorage.getItem('roomId');
+const nickName = sessionStorage.getItem('nickName');
+const randomCard = sessionStorage.getItem('randomCardNumber');
+const charaName = sessionStorage.getItem('charaName');
+const roomCount = sessionStorage.getItem('roomCount');
+const flg = sessionStorage.getItem('flg');
+const countInRoom = sessionStorage.getItem('countInRoom');
 
 // html要素取得
 const confirmBtnElement = document.getElementById('confirm-btn');
@@ -20,23 +20,22 @@ const toNameGame = async () => {
 
 // ロード時にsessionで保存されている名前と画像の番号を送信、順番変更をリクエスト
 window.onload = () => {
-
     console.log("回答情報を送信しました。")
     // 回答者の場合、確認用待機ルームを作製。
-    if (flgFromSession == "answered") {
-        console.log("nickname" + nickNameFromSession);
+    if (flg == "answered") {
+        console.log("nickname" + nickName);
         // キャラ情報をサーバーに送信
         setTimeout(() => {
             ngClientIO.emit('sendCardInformationToServer', {
-                nickName: nickNameFromSession,
-                randomCardNumber: randomCardNumberFromSession,
-                charaName: charaNameFromSession
+                nickName: nickName,
+                randomCardNumber: randomCard,
+                charaName: charaName,
+                roomId: roomId
             });
         }, 2000);
         ngClientIO.emit('waitInit', {});
         console.log("確認用待機ルーム作成しました。");
     }
-
 }
 
 // 回答者が名前をつけた画像と名前を表示する。
@@ -59,11 +58,9 @@ ngClientIO.on('displayCardName', (data) => {
 */
 confirmBtnElement.onclick = () => {
     ngClientIO.emit('waitConfirm', {
-        entryRoomName: entryRoomNameFromSession,
-        roomCount: roomCountFromSession,
-        countInRoom: countInRoomFromSession
+        roomCount: roomCount,
+        countInRoom: countInRoom
     })
-
 }
 
 // 全員が確認したことを受信したときに画面遷移する処理
