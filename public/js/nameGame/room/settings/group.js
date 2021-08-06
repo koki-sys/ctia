@@ -21,7 +21,7 @@ group.addEventListener('click', async () => {
     const personCount = document.getElementById('person-count').value;
 
     // 保存する
-    await sessionStorage.setItem('firstPerson', "first");
+    await sessionStorage.setItem('firstPerson', true);
     await sessionStorage.setItem('roomCount', groupCount);
     await sessionStorage.setItem('limitPerRoom', personCount);
     console.log("部屋情報を保存しました。");

@@ -32,7 +32,7 @@ const storeSession = async (charaName) => {
     sessionStorage.setItem('flg', "answered");
 
     // 名前をつけた人が全員回答リクエストを送るとき(nameAnswer.js)に使うフラグ
-    sessionStorage.setItem('namedFlg', "named");
+    sessionStorage.setItem('namedFlg', true);
     console.log("session保存しました。");
 }
 
@@ -42,7 +42,7 @@ namedBtn.onclick = async () => {
     await storeSession(charaName);
     console.log("名前をつけたフラグを付けました。");
     // ここに確認画面を全員に見せる処理
-    await ngClientIO.emit("toNameConfirmRequest", {
+    await ngClientIO.emit("nameConfirm", {
 
     });
     await toNameStore();

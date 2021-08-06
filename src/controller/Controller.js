@@ -7,7 +7,6 @@ const { ngController } = require('./namegame/ngController');
 
 exports.Controller = (socketIoServer) => {
     // 順番を保存する配列
-    let nameGameOrder = [];
     let waitCount;
     let namedImgNumberArray = [];
     let tempCharaName;
@@ -41,6 +40,6 @@ exports.Controller = (socketIoServer) => {
     nameGameServer.on("connection", (socket) => {
         roomController(socket, nameGameServer);
         userController(socket, nameGameServer);
-        ngController(socket, nameGameServer, nameGameOrder, waitCount, namedImgNumberArray, tempCharaName);
+        ngController(socket, nameGameServer, waitCount, namedImgNumberArray, tempCharaName);
     });
 }

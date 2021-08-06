@@ -1,17 +1,14 @@
 <%- include( '../_header.ejs' ); %>
-<div class="container mt-3">
-    <h3 class="text-center" id="correct-answerer"></h3>
-    <h4 class="text-center">正解です。</h4>
-    <img src="" alt="" class="d-block mx-auto" />
-    <div class="row fixed-bottom">
-        <a
-            href="namegame.html"
-            class="btn btn-lg text-white mt-5 mb-5 mx-auto"
-            style="background-color: #04ccff"
-        >
-            <strong>次へ</strong>
-        </a>
+    <div class="container mt-3">
+        <h3 class="text-center" id="correct-answerer"></h3>
+        <h4 class="text-center">正解です。</h4>
+        <img src="" alt="" class="d-block mx-auto" />
+        <div class="row fixed-bottom">
+            <button type="button" class="btn btn-lg text-white mt-5 mb-5 mx-auto" style="background-color: #04ccff"
+                id="answer-btn">
+                <strong>次へ</strong>
+            </button>
+        </div>
     </div>
-</div>
-<script src="../../../js/nameGame/game/correctAnswerer.js" type="module"></script>
-<%- include( '../_footer.ejs' ); %>
+    <script src="../../../js/nameGame/game/correctAnswerer.js" type="module"></script>
+    <%- include( '../_footer.ejs' ); %>
