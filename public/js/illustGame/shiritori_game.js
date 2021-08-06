@@ -132,3 +132,21 @@ function eraser() {
 function drawInPen() {
     defColor = "#555";
 }
+
+const perv = document.getElementById("prev");
+const next = document.getElementById("next");
+const erase = document.getElementById("erase");
+const drawPen = document.getElementById("draw");
+const reset = document.getElementById("reset");
+
+prev.addEventListener("click", prevCanvas, false);
+next.addEventListener("click", nextCanvas, false);
+erase.addEventListener("click", eraser, false);
+drawPen.addEventListener("click", drawInPen, false);
+reset.addEventListener("click", resetCanvas, false);
+
+prev.addEventListener("touch", prevCanvas, false);
+next.addEventListener("touch", nextCanvas, false);
+erase.addEventListener("touch", eraser, false);
+drawPen.addEventListener("touch", drawInPen, false);
+reset.addEventListener("touch", resetCanvas, false);
