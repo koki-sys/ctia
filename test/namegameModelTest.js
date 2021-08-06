@@ -28,6 +28,21 @@ describe("NameGame Model Test", () => {
         assert.equal(data.chara_name, "どら");
     })
 
+    it("namegame answer charaCard", async () => {
+        const data = await namegame.random(sampleData.roomId);
+
+        assert.equal(data.chara_number, 3);
+        assert.equal(data.chara_name, "どら");
+    })
+
+    it("namegame flgupdate 1", async () => {
+        const sample = await namegame.random(sampleData.roomId);
+        const id = sample.id;
+        const data = await namegame.flgUpdate(id);
+
+        assert.equal(data, true);
+    })
+
     after(async () => {
         await afterNameGameTest();
     })

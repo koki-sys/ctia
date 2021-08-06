@@ -1,52 +1,28 @@
+const { namegame } = require('../../model/namegame');
+const { waitCounter } = require('./waitCounter');
+const { requestOrderPattern } = require('../../component/order/requestOrderPattern');
+const { user } = require('../../model/user');
 const { order } = require('../../model/order');
 
+exports.ngController = (socket, IOserver, waitCount, namedImgArray, tempCharaName) => {
 
-exports.ngController = (socket, IOserver, orderArray, waitCount, namedImgNumberArray, tempCharaName) => {
-
-    const { randomPattern } = require('../../component/randomPattern');
-    const { namegame } = require('../../model/namegame');
-    const { user } = require('../../model/user');
-    const { waitCounter } = require('./waitCounter');
-
-    // 順番を送る。
-    socket.on("requestOrderPattern", async (data) => {
-        const nickname = data.nickname;
-        const roomId = data.roomId;
-
-        // 順番作製のために
-        const orderPattern = randomPattern();
-
-        const PersonInfo = await user.find(mycon, nickname);
-        console.log(PersonInfo)
-        const userId = PersonInfo.id;
-
-        const orderData = {
-            roomId: roomId,
-            userId: userId,
-            random: orderPattern
-        }
-
-        console.log(orderData);
-        await order.add(mycon, orderData);
-
-        // 順番を受け取りに来たユーザに順番を送る。
-        IOserver.to(socket.id).emit("sendOrderPattern", {
-            orderPattern: orderPattern,
-        });
-    });
+    requestOrderPattern(socket, IOserver);
 
     // 画像番号の確認
     socket.on('checkImgNumber', () => {
-
         let random = Math.floor(Math.random() * 14) + 1;
+
         while (true) {
-            const number = namedImgNumberArray.indexOf(random);
+            const number = parseInt(namedImgArray.indexOf(random));
             if (number === -1) {
                 break;
             } else {
                 random = Math.floor(Math.random() * 14) + 1;
             }
         }
+
+        namedImgArray.push(random);
+
         IOserver.emit('setImgNumber', {
             random: random
         })
@@ -56,29 +32,27 @@ exports.ngController = (socket, IOserver, orderArray, waitCount, namedImgNumberA
     socket.on("order", async (data) => {
         const roomId = data.roomId;
 
-        console.log("順番切り替え処理を行っています・・・");
         // ランダムで覚えたやつか名前つけるかを出す。
         // 1 => 名前つける
         // 2 => 回答する
         let pageFlg = Math.floor(Math.random() * 2) + 1;
-        if (namedImgNumberArray.length == 0) {
+        if (namedImgArray.length == 0) {
             pageFlg = 1;
         }
-        console.log("ページフラグ" + pageFlg);
 
         switch (pageFlg) {
             case 1:
-                const first = await order.first(mycon, roomId);
+                const first = await order.first(roomId);
 
-                console.log(JSON.stringify(first));
                 const orderId = first.id;
                 const nextPattern = first.order_pattern;
 
-                await order.flgUpdate(mycon, orderId);
+                await order.flgUpdate(orderId);
 
+                console.log("次の人：" + nextPattern);
                 IOserver.emit("changeOrder", {
                     changePattern: nextPattern,
-                    pageFlg: pageFlg,
+                    pageFlg: pageFlg
                 })
                 break;
 
@@ -91,34 +65,33 @@ exports.ngController = (socket, IOserver, orderArray, waitCount, namedImgNumberA
     })
 
     // キャラカード情報を受信して、チームに入っているメンバーに送る。
-    socket.on('sendCardInformationToServer', async (data) => {
+    socket.on('sendChara', async (data) => {
         const randomCardNumber = parseInt(data.randomCardNumber);
         const charaName = data.charaName;
         const nickname = data.nickName;
-        console.log("にっくねーむ" + nickname);
+        const roomId = data.roomId;
 
-        const PersonInfo = await user.find(mycon, nickname);
-        console.log("PersonInfo:" + PersonInfo);
+        const PersonInfo = await user.find(nickname);
         const userId = PersonInfo.id;
 
         const gameData = {
-            cardNumber: randomCardNumber,
+            charaId: randomCardNumber,
             charaName: charaName,
-            userId: userId
+            userId: userId,
+            roomId: roomId
         }
 
         // 名前をつけたカードを記録する。
-        await namegame.add(mycon, gameData);
+        await namegame.add(gameData);
 
-        const result = await namegame.find(mycon, gameData);
+        const result = await namegame.find(gameData);
 
         // カードの名前をつけたやつを送信
         IOserver.emit('displayCardName', {
-            randomCardNumber: result.id,
+            randomCardNumber: result.chara_number,
             charaName: result.chara_name
         })
     });
-
 
     // 確認用待機ルーム作製
     socket.on('waitInit', () => {
@@ -136,7 +109,6 @@ exports.ngController = (socket, IOserver, orderArray, waitCount, namedImgNumberA
         } else {
             console.log("error");
         }
-        console.log("待機人数：" + count);
         // 待機人数が入室人数と同じ時に画面遷移させるようなレスポンスを送る。
         if (count == countInRoom) {
             IOserver.emit('toNameGame', {})
@@ -144,24 +116,27 @@ exports.ngController = (socket, IOserver, orderArray, waitCount, namedImgNumberA
     })
 
     // 回答するときの表示する画像をおくる。
-    socket.on('requestDisplayCharaImg', () => {
+    socket.on('sendImg', async (data) => {
+        const roomId = data.roomId;
 
-        const randomNamedChara = namedImgNumberArray.shift();
-        console.log(randomNamedChara);
-        // 後で判定するために値を保存。
-        tempCharaName = randomNamedChara.name;
+        // DB操作
+        const randomChara = await namegame.random(roomId);
+        id = randomChara.id;
+        tempCharaName = randomChara.chara_name;
+
+        await namegame.flgUpdate(id);
 
         if (tempCharaName == undefined) {
             // 画像情報が入ってないときの処理。
-            IOserver.emit('randomNamedCharaImg', {
+            IOserver.emit('DisplayImg', {
                 randomCardNumber: 0,
                 charaName: "空"
             });
         } else {
             // ランダムで名前つけたカードを表示
-            IOserver.emit('randomNamedCharaImg', {
-                randomCardNumber: randomNamedChara.number,
-                charaName: randomNamedChara.name
+            IOserver.emit('DisplayImg', {
+                randomCardNumber: randomChara.chara_number,
+                charaName: randomChara.chara_name
             });
         }
     })
@@ -173,7 +148,7 @@ exports.ngController = (socket, IOserver, orderArray, waitCount, namedImgNumberA
 
         // 名前つけたカードと、回答した名前があってるかチェック。
         if (namedCharaName == tempCharaName) {
-            IOserver.emit('sendCorrectAnswerer', {
+            IOserver.emit('correctAnswerer', {
                 nickName: nickName,
             })
             tempCharaName = '';
@@ -185,17 +160,15 @@ exports.ngController = (socket, IOserver, orderArray, waitCount, namedImgNumberA
     })
 
     // 確認画面に遷移するために画像番号、名前を送る
-    socket.on('toNameConfirmRequest', () => {
+    socket.on('nameConfirm', () => {
         IOserver.emit("toNameConfirmResponse", {});
     })
 
-    socket.on('isOrderPatternArray', async (data) => {
-        console.log(orderArray.length);
+    socket.on('isOrder', async (data) => {
         if (orderArray.length === 0) {
             const deleteSQL = 'delete from namegame';
 
             await mycon.execute(deleteSQL);
-            console.log('データ削除');
             await socket.leave(data.entryRoomName);
             await IOserver.emit('toGameEnd', {});
         }

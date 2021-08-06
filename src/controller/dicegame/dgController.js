@@ -3,7 +3,7 @@ const { order } = require('../../model/order');
 
 exports.dgController = (socket, IOserver) => {
 
-    const { randomPattern } = require("../../component/randomPattern");
+    const { randomPattern } = require("../../component/order/randomPattern");
 
     socket.on("requestOrderPattern", async (data) => {
         if (data.flg != "answered") {
