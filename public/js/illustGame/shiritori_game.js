@@ -14,7 +14,6 @@ var defSize = 3,
 var myStorage = localStorage;
 window.onload = initLocalStorage();
 
-
 // PC対応
 canvas.addEventListener('mousedown', startPoint, false);
 canvas.addEventListener('mousemove', movePoint, false);
