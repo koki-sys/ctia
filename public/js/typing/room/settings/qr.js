@@ -25,9 +25,11 @@ const displayQR = async (roomData) => {
         const limitPerRoomParam = "limitPerRoom=" + roomData.limitPerRoom + "&";
         const roomIdParam = "roomId=" + roomData.roomId;
         const QRUrl = ruleUrl + roomCountParam + limitPerRoomParam + roomIdParam;
-        const utf8qrtext = unescape(encodeURIComponent(QRUrl));
-        $("#typing-qr").html("");
-        $("#typing-qr").qrcode({ width: 200, height: 200, text: utf8qrtext });
+        navigator.clipboard.writeText(QRUrl);
+        const new_element = document.createElement('strong');
+        new_element.setAttribute("class", "text-primary mt-3");
+        new_element.textContent = 'URL情報をコピーしました。チャットなどに貼り付けてください。';
+        errorDisplayQR.appendChild(new_element);
     } else {
         errorDisplayQR.innerHTML = "<strong class='text-danger'>QRコードの表示に<br>失敗しました。<br>設定し直してください。</strong>";
     }
