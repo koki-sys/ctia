@@ -19,13 +19,24 @@ exports.ngController = (socket, IOserver, waitCount, namedImgArray, tempCharaNam
             } else {
                 random = Math.floor(Math.random() * 14) + 1;
             }
+
+            if (namedImgArray.length === 14) {
+                random = -1;
+                break;
+            }
         }
 
-        namedImgArray.push(random);
+        if (random === -1) {
+            // デッキからカードが無くなったときの処理
+            IOserver.emit('gameResult', {})
+        } else {
+            // デッキからカードを引いたときの処理
+            namedImgArray.push(random);
 
-        IOserver.emit('setImgNumber', {
-            random: random
-        })
+            IOserver.emit('setImgNumber', {
+                random: random
+            })
+        }
     })
 
     // 順番切り替えをする処理
@@ -36,8 +47,12 @@ exports.ngController = (socket, IOserver, waitCount, namedImgArray, tempCharaNam
         // 1 => 名前つける
         // 2 => 回答する
         let pageFlg = Math.floor(Math.random() * 2) + 1;
+        // DBから取得して、flg0なのが0のやつも入れる
+        const unansweredCount = await namegame.unansweredCount(roomId);
         if (namedImgArray.length == 0) {
             pageFlg = 1;
+        } else if (unansweredCount == 0) {
+            pageFlg = 2;
         }
 
         switch (pageFlg) {
@@ -142,16 +157,28 @@ exports.ngController = (socket, IOserver, waitCount, namedImgArray, tempCharaNam
     })
 
     // 回答チェックして、正解の場合は正解画面表示のレスポンスを送信
-    socket.on('checkTheAnswer', (data) => {
+    socket.on('checkTheAnswer', async (data) => {
         const namedCharaName = data.namedCharaName;
+        const roomId = data.roomId;
         const nickName = data.nickName;
+        const token = data.answerToken;
+        const charaId = data.charaId;
+
+        const gameData = {
+            charaId: charaId,
+            roomId: roomId,
+            charaName: namedCharaName
+        }
+
+        const result = await namegame.find(gameData);
+        const answer = result.chara_name;
 
         // 名前つけたカードと、回答した名前があってるかチェック。
-        if (namedCharaName == tempCharaName) {
+        if (namedCharaName == answer) {
             IOserver.emit('correctAnswerer', {
                 nickName: nickName,
+                answerToken: token,
             })
-            tempCharaName = '';
         } else {
             IOserver.to(socket.id).emit('incorrectAnswer', {
                 msg: "不正解です。"

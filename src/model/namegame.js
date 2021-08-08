@@ -91,5 +91,24 @@ exports.namegame = {
             mycon.end();
             return false;
         }
+    },
+
+    unansweredCount: async (roomId) => {
+        try {
+            mycon = await mysql.createConnection(config.database);
+            mycon.connect();
+
+            // ルーム追加
+            const params = [roomId];
+            const sql = 'SELECT COUNT(id) AS cnt FROM namegame WHERE flg = 0 AND room_id = ?';
+            const [result] = await mycon.query(sql, params);
+
+            const count = result[0].cnt;
+            mycon.end();
+            return count;
+        } catch (err) {
+            mycon.end();
+            return false;
+        }
     }
 }

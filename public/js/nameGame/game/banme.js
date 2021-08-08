@@ -1,4 +1,5 @@
 import { ngClientIO } from "../../../link.js";
+import { toWinner } from '../component/link/toWinner.js';
 
 // htmlの要素取得
 const namedBtn = document.getElementById('named-btn');
@@ -24,6 +25,11 @@ const randomCard = () => {
 ngClientIO.on('setImgNumber', (data) => {
     imgNumber = data.random;
     randomCard();
+})
+
+ngClientIO.on('gameResult', () => {
+    // winner.ejsへの遷
+    toWinner();
 })
 
 const storeSession = async (charaName) => {
