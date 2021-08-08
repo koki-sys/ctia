@@ -43,6 +43,13 @@ describe("NameGame Model Test", () => {
         assert.equal(data, true);
     })
 
+    it("namegame unansweredCount 0", async () => {
+        const sample = await namegame.unansweredCount(sampleData.roomId);
+        const count = sample;
+
+        assert.equal(count, 0);
+    })
+
     after(async () => {
         await afterNameGameTest();
     })
