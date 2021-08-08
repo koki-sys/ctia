@@ -7,6 +7,7 @@ const incorrectText = document.getElementById('incorrect-text');
 // session取得
 const isNamed = sessionStorage.getItem('namedFlg');
 const nickName = sessionStorage.getItem('nickName');
+const roomId = sessionStorage.getItem('roomId');
 
 // 画面遷移処理
 const toCorrectAnswerer = async () => {
@@ -18,7 +19,7 @@ window.onload = () => {
     setTimeout(() => {
         if (isNamed) {
             ngClientIO.emit('sendImg', {
-                roomId: sessionStorage.getItem('roomId')
+                roomId: roomId
             });
         }
     }, 2000);
@@ -35,6 +36,7 @@ ngClientIO.on('DisplayImg', (data) => {
         const charaImgPath = "../allstars/gazou" + randomCardNumber + ".png";
         namedCharaImg.setAttribute('src', charaImgPath);
         sessionStorage.setItem('answername', data.charaName);
+        sessionStorage.setItem('answercharaId', data.randomCardNumber);
     }
 })
 
@@ -51,13 +53,20 @@ ngClientIO.on('correctAnswerer', async (data) => {
 // 不正解の場合、画面に表示
 ngClientIO.on('incorrectAnswer', (data) => {
     incorrectText.textContent = data.msg;
+    sessionStorage.removeItem('token');
 })
 
 // ボタンクリック時にサーバーに送信して、回答チェックする。
 namedBtn.onclick = () => {
+    sessionStorage.setItem('token', true);
+    const answerToken = sessionStorage.getItem('token');
+    const charaId = sessionStorage.getItem('answercharaId');
     const namedCharaName = document.getElementById('named_chara_name').value;
     ngClientIO.emit('checkTheAnswer', {
         namedCharaName: namedCharaName,
-        nickName: nickName
+        nickName: nickName,
+        answerToken: answerToken,
+        charaId: charaId,
+        roomId: roomId
     })
 }
