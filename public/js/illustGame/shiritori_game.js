@@ -14,7 +14,6 @@ var defSize = 3,
 var myStorage = localStorage;
 window.onload = initLocalStorage();
 
-
 // PC対応
 canvas.addEventListener('mousedown', startPoint, false);
 canvas.addEventListener('mousemove', movePoint, false);
@@ -28,20 +27,38 @@ canvas.addEventListener('touchend', endPoint, false);
 function startPoint(e) {
     e.preventDefault();
     ctx.beginPath();
-    console.log(e.clientX);
 
-
-    // 矢印の先っぽから始まるように調整
-    Xpoint = e.offsetX - 1;
-    Ypoint = e.offsetY - 1;
+    if (e.type == 'touchstart') {
+        console.log(e)
+        console.log(e.changedTouches[0].clientX);
+        // 矢印の先っぽから始まるように調整
+        Xpoint = e.changedTouches[0].clientX - 10;
+        Ypoint = e.changedTouches[0].clientY - 125;
+    } else {
+        console.log(e);
+        // 矢印の先っぽから始まるように調整
+        Xpoint = e.offsetX - 1;
+        Ypoint = e.offsetY - 1;
+    }
 
     ctx.moveTo(Xpoint, Ypoint);
 }
 
 function movePoint(e) {
     if (e.buttons === 1 || e.witch === 1 || e.type == 'touchmove') {
-        Xpoint = e.offsetX - 1;
-        Ypoint = e.offsetY - 1;
+        console.log("スマホ")
+        if (e.type == 'touchmove') {
+            console.log(e)
+            console.log(e.changedTouches[0].clientX);
+            // 矢印の先っぽから始まるように調整
+            Xpoint = e.changedTouches[0].clientX - 10;
+            Ypoint = e.changedTouches[0].clientY - 125;
+        } else {
+            console.log(e);
+            // 矢印の先っぽから始まるように調整
+            Xpoint = e.offsetX - 1;
+            Ypoint = e.offsetY - 1;
+        }
         moveflg = 1;
 
         ctx.lineTo(Xpoint, Ypoint);
