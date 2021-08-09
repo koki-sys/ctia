@@ -28,7 +28,7 @@ exports.score = {
 
             // ルーム追加
             const params = [roomId];
-            const sql = 'SELECT * FROM score LEFT OUTER JOIN user ON score.user_id = user.id WHERE game_id = 1 AND room_id = ? ORDER BY score DESC LIMIT 1';
+            const sql = 'SELECT * FROM score LEFT OUTER JOIN user ON score.user_id = user.id WHERE game_id = 1 AND score.room_id = ? ORDER BY score DESC LIMIT 1';
             const [results] = await mycon.query(sql, params);
 
             const result = results[0];
