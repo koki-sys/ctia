@@ -4,8 +4,12 @@ import { toWinner } from '../component/link/toWinner.js';
 // htmlの要素取得
 const namedBtn = document.getElementById('named-btn');
 
+const roomId = sessionStorage.getItem('roomId');
+
 window.onload = () => {
-    ngClientIO.emit('checkImgNumber', {});
+    ngClientIO.emit('checkImgNumber', {
+        roomId: roomId
+    });
 }
 
 const toNameStore = async () => {
