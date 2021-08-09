@@ -3,6 +3,7 @@ const { waitCounter } = require('./waitCounter');
 const { requestOrderPattern } = require('../../component/order/requestOrderPattern');
 const { user } = require('../../model/user');
 const { order } = require('../../model/order');
+const { score } = require('../../model/score');
 
 exports.ngController = (socket, IOserver, waitCount) => {
 
@@ -204,4 +205,6 @@ exports.ngController = (socket, IOserver, waitCount) => {
             await IOserver.emit('toGameEnd', {});
         }
     })
+
+
 }
