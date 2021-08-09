@@ -3,6 +3,7 @@ const { waitCounter } = require('./waitCounter');
 const { requestOrderPattern } = require('../../component/order/requestOrderPattern');
 const { user } = require('../../model/user');
 const { order } = require('../../model/order');
+const { score } = require('../../model/score');
 
 exports.ngController = (socket, IOserver, waitCount) => {
 
@@ -203,5 +204,23 @@ exports.ngController = (socket, IOserver, waitCount) => {
             await socket.leave(data.entryRoomName);
             await IOserver.emit('toGameEnd', {});
         }
+    })
+
+    socket.on('ranking', async (data) => {
+        const count = data.count;
+        const roomId = data.roomId;
+
+        const person = await user.find(data.nickname);
+        const userId = person.id;
+        console.log("個人" + JSON.stringify(person));
+        console.log("ユーザID" + userId);
+
+        await score.addNamegame(count, userId, roomId);
+        const win = await score.getNamegame(roomId);
+        console.log("勝ち" + win);
+        const winner = win.nickname;
+        IOserver.emit('displayWinner', {
+            name: winner
+        })
     })
 }
