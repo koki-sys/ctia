@@ -40,6 +40,6 @@ exports.Controller = (socketIoServer) => {
     nameGameServer.on("connection", (socket) => {
         roomController(socket, nameGameServer);
         userController(socket, nameGameServer);
-        ngController(socket, nameGameServer, waitCount, namedImgNumberArray, tempCharaName);
+        ngController(socket, nameGameServer, waitCount);
     });
 }
