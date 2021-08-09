@@ -1,5 +1,6 @@
 import { ngClientIO } from "../../../link.js";
 
+
 const namedCharaImg = document.getElementById('named_chara_img')
 const namedBtn = document.getElementById('named-btn')
 const incorrectText = document.getElementById('incorrect-text');
