@@ -6,6 +6,7 @@ import { toNameConfirm } from '../component/link/toNameConfirm.js';
 import { toNameAnswered } from '../component/link/toNameAnswered.js';
 import { toGameEnd } from '../component/link/toGameEnd.js';
 import { toWinner } from '../component/link/toWinner.js';
+import { setCount } from './cardCount.js';
 
 // session取得
 const nickName = sessionStorage.getItem('nickName');
@@ -35,6 +36,7 @@ window.onload = async () => {
 
     setTimeout(() => {
         if (isAnsweredFlg) {
+            console.log("答えたよ！");
             // 順番変更処理を入れる。セッションでansweredを送信
             ngClientIO.emit('order', {
                 roomId: roomId
@@ -43,12 +45,13 @@ window.onload = async () => {
             // 回答したflgを削除
             sessionStorage.removeItem("flg");
         } else if (isCorrect) {
+            console.log("せいかいしたよ！")
             // 順番変更処理を入れる。セッションでansweredを送信
             ngClientIO.emit('order', {
                 roomId: roomId
             });
-
             sessionStorage.removeItem('token');
+            setCount();
         }
     }, 2000);
 }
