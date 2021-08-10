@@ -1,9 +1,8 @@
 const { user } = require('../../model/user');
 const { order } = require('../../model/order');
+const { randomPattern } = require("../../component/order/randomPattern");
 
 exports.dgController = (socket, IOserver) => {
-
-    const { randomPattern } = require("../../component/order/randomPattern");
 
     socket.on("requestOrderPattern", async (data) => {
         if (data.flg != "answered") {
