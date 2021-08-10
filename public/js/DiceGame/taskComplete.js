@@ -1,17 +1,17 @@
-import { gnClientIO } from '../../../link.js';
-import { order } from '../../component/game/order.js';
-import { setOrder } from '../../component/game/setOrder.js';
-import { toAnnounce } from '../../component/link/toAnnounce.js';
-import { toGameEnd } from '../../component/link/toGameEnd.js';
+import { dgClientIO } from '../../link.js';
+import { order } from '../component/game/order.js';
+import { setOrder } from '../component/game/setOrder.js';
+import { toAnnounce } from '../component/link/toAnnounce.js';
+import { toGameEnd } from '../component/link/toGameEnd.js';
 
 window.onload = () => {
-    order(gnClientIO);
+    order(dgClientIO);
 }
 
-setOrder(gnClientIO);
+setOrder(dgClientIO);
 
 // 順番が自分に回ってきたら遷移する。
-gnClientIO.on('changeOrder', (data) => {
+dgClientIO.on('changeOrder', (data) => {
     const pattern = String(data.changePattern);
     const orderPattern = sessionStorage.getItem('orderPattern');
     console.log("'" + pattern + "'");
@@ -24,6 +24,6 @@ gnClientIO.on('changeOrder', (data) => {
     }
 })
 
-gnClientIO.on('gameEnd', () => {
+dgClientIO.on('gameEnd', () => {
     toGameEnd();
 })
