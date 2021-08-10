@@ -1,3 +1,5 @@
+import { sendOrder } from "./sendOrder.js";
+
 const countDown = (displayCount) => {
     // カウントダウンする秒数
     let sec = 31;
