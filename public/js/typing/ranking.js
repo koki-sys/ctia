@@ -1,28 +1,16 @@
-// ニックネームとスコアを送る。nickName, score
-// データベース使う
 import { tpClientIO } from '../../link.js';
+import { toGameEnd } from '../component/link/toGameEnd.js';
 
 // element
 const rankingListFromElement = document.getElementById('ranking-list');
-
-// session
-const roomId = sessionStorage.getItem('roomId');
-const nickNameFromSession = sessionStorage.getItem('nickName');
-const scoreFromSession = sessionStorage.getItem('score');
-const limitPerRoomFromSession = sessionStorage.getItem('limitPerRoom');
-
 let rankList = "";
-console.log(nickNameFromSession);
+
 window.onload = () => {
     tpClientIO.emit('requestRanking', {
-        nickName: nickNameFromSession,
-        score: scoreFromSession,
-        roomId: roomId
+        nickName: sessionStorage.getItem('nickName'),
+        score: sessionStorage.getItem('score'),
+        roomId: sessionStorage.getItem('roomId')
     });
-}
-
-const toGameEnd = () => {
-    document.location.href = "./gameEnd.html";
 }
 
 const addList = async (list) => {
@@ -43,6 +31,6 @@ tpClientIO.on('displayRanking', async (data) => {
     await addList(rankList);
 
     tpClientIO.emit('requestGameEnd', {
-        limitPerRoom: limitPerRoomFromSession
+        limitPerRoom: sessionStorage.getItem('limitPerRoom')
     });
 })
