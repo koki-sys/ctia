@@ -1,16 +1,10 @@
 import { tpClientIO } from '../../../link.js';
-
-const entryRoomName = sessionStorage.getItem('entryRoomName');
-sessionStorage.clear();
+import { gameEnd } from '../../component/gameEnd.js';
 
 window.onload = () => {
-    tpClientIO.emit('deleteData', {
-        entryRoomName: entryRoomName
-    });
+    tpClientIO.emit('deleteData', {});
 }
 
 tpClientIO.on('deletedGameData', () => {
-    setTimeout(() => {
-        document.location.href = "../../../index.html";
-    }, 2000);
+    gameEnd();
 })
