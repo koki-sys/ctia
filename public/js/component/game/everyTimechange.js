@@ -1,5 +1,5 @@
 import { setCount } from '../../nameGame/cardCount.js';
-import { toAnnounce } from '../link/toAnnounce.js';
+import { toNameGame } from '../link/toNameGame.js';
 
 const everyTimechange = (client) => {
 
@@ -17,7 +17,7 @@ const everyTimechange = (client) => {
 
     if (isFirst) {
         sessionStorage.removeItem("firstPerson");
-        toAnnounce();
+        toNameGame();
     }
 
     setTimeout(() => {
