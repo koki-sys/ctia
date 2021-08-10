@@ -5,12 +5,12 @@ import { toNameGame } from '../component/link/toNameGame.js';
 import { toNameConfirm } from '../component/link/toNameConfirm.js';
 import { toNameAnswered } from '../component/link/toNameAnswered.js';
 import { toWinner } from '../component/link/toWinner.js';
-import { order } from '../component/game/order.js';
 import { toGameEnd } from '../component/link/toGameEnd.js';
 import { setOrder } from '../component/game/setOrder.js';
+import { everyTimechange } from '../component/game/everyTimechange.js';
 
 window.onload = async () => {
-    order(ngClientIO);
+    everyTimechange(ngClientIO);
 }
 
 setOrder(ngClientIO);
