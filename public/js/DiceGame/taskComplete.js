@@ -1,11 +1,11 @@
 import { dgClientIO } from '../../link.js';
-import { order } from '../component/game/order.js';
+import { change } from '../component/game/change.js';
 import { setOrder } from '../component/game/setOrder.js';
 import { toAnnounce } from '../component/link/toAnnounce.js';
 import { toGameEnd } from '../component/link/toGameEnd.js';
 
 window.onload = () => {
-    order(dgClientIO);
+    change(dgClientIO);
 }
 
 setOrder(dgClientIO);

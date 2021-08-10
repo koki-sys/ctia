@@ -1,6 +1,7 @@
 import { setCount } from '../../nameGame/cardCount.js';
+import { toAnnounce } from '../link/toAnnounce.js';
 
-const order = (client) => {
+const everyTimechange = (client) => {
 
     const isOrder = (sessionStorage.getItem('orderPattern') != null) ? true : false;
     const isFirst = sessionStorage.getItem('firstPerson');
@@ -16,7 +17,7 @@ const order = (client) => {
 
     if (isFirst) {
         sessionStorage.removeItem("firstPerson");
-        toNameGame();
+        toAnnounce();
     }
 
     setTimeout(() => {
@@ -24,7 +25,8 @@ const order = (client) => {
             console.log("答えたよ！");
             // 順番変更処理を入れる。セッションでansweredを送信
             client.emit('order', {
-                roomId: sessionStorage.getItem('roomId')
+                roomId: sessionStorage.getItem('roomId'),
+                flg: sessionStorage.getItem('flg')
             });
 
             // 回答したflgを削除
@@ -41,4 +43,4 @@ const order = (client) => {
     }, 2000);
 }
 
-export { order };
+export { everyTimechange };

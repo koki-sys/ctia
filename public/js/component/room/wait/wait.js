@@ -32,7 +32,7 @@ const wait = (client) => {
         const limitPerRoomFromServer = parseInt(data.limitPerRoom);
 
         // 自分が入力したニックネームと一致しているのを確認
-        if (nickNameFromServer == nickNameFromSession) {
+        if (nickNameFromServer == sessionStorage.getItem('nickName')) {
             sessionStorage.setItem('nickName', data.nickName);
         }
 
@@ -44,7 +44,7 @@ const wait = (client) => {
         }
     });
 
-    gnClientIO.on("user_exists", (data) => {
+    client.on("user_exists", (data) => {
         const errMsg = data.errmsg;
         let msg = "";
         userListFromElement.innerHTML = msg;

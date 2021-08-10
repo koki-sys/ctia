@@ -11,7 +11,7 @@ const qr = (client, gameUrl) => {
 
     // sessionからQRを生成する
     const displayQR = async (roomData) => {
-        if (limitPerRoom == 1 && roomCount == 1) {
+        if (sessionStorage.getItem('roomCount') == 1 && sessionStorage.getItem('limitPerRoom') == 1) {
             $("#qr").html("<strong class='text-primary'>一人だけなので<br>共有する必要はありません。</strong>");
         } else if (roomData.roomCount && roomData.limitPerRoom) {
             const ruleUrl = frontendUrl + "/html/" + gameUrl + "/group/rule.html?";
@@ -28,17 +28,14 @@ const qr = (client, gameUrl) => {
     }
 
     client.on('roomInfo', async (data) => {
-        const roomIdFromServer = data.roomId;
-        const roomCountFromServer = data.roomCount;
-        const limitPerRoomFromServer = data.limitPerRoom;
 
         const room = {
-            roomId: roomIdFromServer,
-            roomCount: roomCountFromServer,
-            limitPerRoom: limitPerRoomFromServer
+            roomId: data.roomId,
+            roomCount: data.roomCount,
+            limitPerRoom: data.limitPerRoom
         }
 
-        await sessionStorage.setItem('roomId', roomIdFromServer);
+        await sessionStorage.setItem('roomId', data.roomId);
 
         await displayQR(room);
     })
