@@ -1,4 +1,4 @@
-import { setCount } from '../../nameGame/game/cardCount.js';
+import { setCount } from '../../nameGame/cardCount.js';
 
 const order = (client) => {
 
