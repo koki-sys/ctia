@@ -1,9 +1,8 @@
-const { user } = require('../../model/user');
 const { order } = require('../../model/order');
+const { user } = require('../../model/user');
+const { randomPattern } = require("../../component/order/randomPattern");
 
 exports.gnController = (socket, IOserver) => {
-
-    const { randomPattern } = require("../../component/order/randomPattern");
 
     socket.on("requestOrderPattern", async (data) => {
         if (data.flg != "answered") {
@@ -22,7 +21,6 @@ exports.gnController = (socket, IOserver) => {
                 random: orderPattern
             }
 
-            console.log(orderData);
             await order.add(orderData);
 
             // 順番を受け取りに来たユーザに順番を送る。
