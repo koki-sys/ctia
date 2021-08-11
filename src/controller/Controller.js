@@ -4,6 +4,7 @@ const { dgController } = require('./dicegame/dgController');
 const { gnController } = require('./goodNew/gnController');
 const { tpController } = require('./typing/tpController');
 const { ngController } = require('./namegame/ngController');
+const { igController } = require("./illustgame/igController");
 
 exports.Controller = (socketIoServer) => {
     // 順番を保存する配列
@@ -45,5 +46,6 @@ exports.Controller = (socketIoServer) => {
     illustGameServer.on("connection", (socket) => {
         roomController(socket, illustGameServer);
         userController(socket, illustGameServer);
+        igController(socket, illustGameServer);
     })
 }
