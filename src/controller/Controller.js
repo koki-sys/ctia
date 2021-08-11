@@ -8,8 +8,6 @@ const { ngController } = require('./namegame/ngController');
 exports.Controller = (socketIoServer) => {
     // 順番を保存する配列
     let waitCount;
-    let namedImgNumberArray = [];
-    let tempCharaName;
 
     // サイコロ自己紹介
     const diceGameServer = socketIoServer.of("/dg");
@@ -42,4 +40,10 @@ exports.Controller = (socketIoServer) => {
         userController(socket, nameGameServer);
         ngController(socket, nameGameServer, waitCount);
     });
+
+    const illustGameServer = socketIoServer.of("/ig");
+    illustGameServer.on("connection", (socket) => {
+        roomController(socket, illustGameServer);
+        userController(socket, illustGameServer);
+    })
 }
