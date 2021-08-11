@@ -1,3 +1,5 @@
+import { igClientIO } from '../../link.js';
+
 var canvas = document.getElementById('canvassample'),
     ctx = canvas.getContext('2d'),
     moveflg = 0,
@@ -42,6 +44,12 @@ function startPoint(e) {
     }
 
     ctx.moveTo(Xpoint, Ypoint);
+
+    igClientIO.emit("realtime-draw", {
+        act: "down",
+        x: Xpoint,
+        y: Ypoint
+    })
 }
 
 function movePoint(e) {
@@ -67,6 +75,11 @@ function movePoint(e) {
         ctx.strokeStyle = defColor;
         ctx.stroke();
 
+        igClientIO.emit("realtime-draw", {
+            act: "move",
+            x: Xpoint,
+            y: Ypoint
+        })
     }
 }
 
@@ -82,6 +95,12 @@ function endPoint(e) {
     moveflg = 0;
 
     setLocalStoreage();
+
+    igClientIO.emit("realtime-draw", {
+        act: "up",
+        x: Xpoint,
+        y: Ypoint
+    })
 }
 
 function resetCanvas() {
