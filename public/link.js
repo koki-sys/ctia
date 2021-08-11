@@ -16,6 +16,7 @@ const gnClientIO = io(backendUrl + "/gn");
 const dgClientIO = io(backendUrl + "/dg");
 const ngClientIO = io(backendUrl + "/ng");
 const tpClientIO = io(backendUrl + "/tp");
+const igClientIO = io(backendUrl + "/ig");
 
 export {
     frontendUrl,
@@ -23,5 +24,6 @@ export {
     dgClientIO,
     ngClientIO,
     tpClientIO,
+    igClientIO,
     completeGroupingUrl
 }
