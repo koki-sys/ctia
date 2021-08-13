@@ -41,18 +41,15 @@
         </a>
     </nav>
 
-    <div class="container text-center">
-        <div class="row-center">
-            <h4 class="text-center">1番目です</h4><br>
-            <div class="text-align-center">
-                <canvas class="text-align-center" id="draw-area" width="250px" height="350px"
-                    style="border: 1px solid #000000;"></canvas>
-                <script src="../../../js/illustGame/main.js"></script>
-                <script src="../../../js/illustGame/shiritori_game.js" type="module"></script>
-            </div>
-        </div>
-    </div>
-    <script>
+<div class="container mt-3">
+    <h1 id="room-name" class="text-center"></h1>
+    <h1 id="count-in-room" class="text-center"></h1>
+    <h1 class="text-center">
+        ゲームを開始します。<br />しばらくお待ち下さい。
+    </h1>
+</div>
+<script src="../../../js/illustGame/groupComp.js" type="module"></script>
+<script>
 document.addEventListener('touchstart', () => {}, {
     passive: true
 });

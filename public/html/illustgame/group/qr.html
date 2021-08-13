@@ -41,17 +41,24 @@
         </a>
     </nav>
 
-    <div class="container text-center">
-        <div class="row-center">
-            <h4 class="text-center">1番目です</h4><br>
-            <div class="text-align-center">
-                <canvas class="text-align-center" id="draw-area" width="250px" height="350px"
-                    style="border: 1px solid #000000;"></canvas>
-                <script src="../../../js/illustGame/main.js"></script>
-                <script src="../../../js/illustGame/shiritori_game.js" type="module"></script>
-            </div>
-        </div>
+    <div class="container mt-3">
+        <a href="./group.html" style="color: #003554">
+            < 戻る</a>
+                <h3 class="text-center">絵しりとり</h3>
+                <div style="margin: 0 auto; width: 240px;" class="border rounded border-primary p-3 mt-3 mb-3"
+                    id="qr"></div>
+                <p class="text-center">
+                    グループに<br />共有をお願いします<br />またはこのQRを<br />会場に掲示してください。
+                </p>
+
+                <div class="row fixed-bottom bg-white">
+                    <a href="./rule.html" class="btn btn-lg text-white mt-2 mb-2 mx-auto"
+                        style="background-color: #04ccff">
+                        <strong>次へ</strong>
+                    </a>
+                </div>
     </div>
+    <script src="../../../js/illustGame/generateQR.js" type="module"></script>
     <script>
 document.addEventListener('touchstart', () => {}, {
     passive: true
