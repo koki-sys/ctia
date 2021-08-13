@@ -105,6 +105,9 @@ function endPoint(e) {
 
 function resetCanvas() {
     ctx.clearRect(0, 0, ctx.canvas.clientWidth, ctx.canvas.clientHeight);
+    igClientIO.emit("realtime-draw", {
+        act: "reset"
+    })
 }
 
 function initLocalStorage() {
@@ -131,7 +134,12 @@ function prevCanvas() {
             resetCanvas();
             draw(logs[0]['png']);
         }, 0);
+
+        igClientIO.emit("realtime-draw", {
+            act: "prev",
+        })
     }
+
 }
 
 function nextCanvas() {
@@ -143,6 +151,10 @@ function nextCanvas() {
             resetCanvas();
             draw(logs[0]['png']);
         }, 0);
+
+        igClientIO.emit("realtime-draw", {
+            act: "next"
+        })
     }
 }
 
@@ -162,14 +174,20 @@ function clear() {
 //消しゴムモード 色をホワイトに変えるだけ
 function eraser() {
     defColor = '#FFFFFF';
+    igClientIO.emit("realtime-draw", {
+        act: "eraser"
+    })
 }
 
 //描画モード　色を元の色に戻すだけ
 function drawInPen() {
     defColor = "#555";
+    igClientIO.emit("realtime-draw", {
+        act: "drawPen"
+    })
 }
 
-const perv = document.getElementById("prev");
+const prev = document.getElementById("prev");
 const next = document.getElementById("next");
 const erase = document.getElementById("erase");
 const drawPen = document.getElementById("draw");
