@@ -1,4 +1,5 @@
 import { igClientIO } from '../../link.js';
+import { toComplete } from '../component/link/toComplete.js';
 
 var canvas = document.getElementById('draw-area'),
     ctx = canvas.getContext('2d'),
@@ -94,5 +95,8 @@ igClientIO.on("draw", (data) => {
         case "reset":
             resetCanvas();
             break;
+        case "towait":
+            toComplete();
+        break;
     }
 })
