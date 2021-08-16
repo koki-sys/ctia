@@ -1,4 +1,7 @@
 import { igClientIO } from '../../link.js';
+import { countDown } from '../component/game/countdown.js';
+
+const element = document.getElementById('display-count');
 
 var canvas = document.getElementById('canvassample'),
     ctx = canvas.getContext('2d'),
@@ -14,7 +17,10 @@ var defSize = 3,
 
 // ストレージの初期化
 var myStorage = localStorage;
-window.onload = initLocalStorage();
+window.onload = () => {
+    initLocalStorage();
+    countDown(element);
+}
 
 // PC対応
 canvas.addEventListener('mousedown', startPoint, false);
