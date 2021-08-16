@@ -131,6 +131,7 @@ function wordDisplay() {
     charInsort();
 }
 function charInsort() {
+    // 変換処理
     word_char = wordlist[random].charAt(char_num);
 }
 async function finish() {

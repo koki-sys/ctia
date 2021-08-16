@@ -20,24 +20,22 @@ window.onload = initLocalStorage();
 canvas.addEventListener('mousedown', startPoint, false);
 canvas.addEventListener('mousemove', movePoint, false);
 canvas.addEventListener('mouseup', endPoint, false);
+
 // スマホ対応
 canvas.addEventListener('touchstart', startPoint, false);
 canvas.addEventListener('touchmove', movePoint, false);
 canvas.addEventListener('touchend', endPoint, false);
-
 
 function startPoint(e) {
     e.preventDefault();
     ctx.beginPath();
 
     if (e.type == 'touchstart') {
-        console.log(e)
-        console.log(e.changedTouches[0].clientX);
         // 矢印の先っぽから始まるように調整
         Xpoint = e.changedTouches[0].clientX - 10;
         Ypoint = e.changedTouches[0].clientY - 125;
     } else {
-        console.log(e);
+
         // 矢印の先っぽから始まるように調整
         Xpoint = e.offsetX - 1;
         Ypoint = e.offsetY - 1;
@@ -54,15 +52,11 @@ function startPoint(e) {
 
 function movePoint(e) {
     if (e.buttons === 1 || e.witch === 1 || e.type == 'touchmove') {
-        console.log("スマホ")
         if (e.type == 'touchmove') {
-            console.log(e)
-            console.log(e.changedTouches[0].clientX);
             // 矢印の先っぽから始まるように調整
             Xpoint = e.changedTouches[0].clientX - 10;
             Ypoint = e.changedTouches[0].clientY - 125;
         } else {
-            console.log(e);
             // 矢印の先っぽから始まるように調整
             Xpoint = e.offsetX - 1;
             Ypoint = e.offsetY - 1;
@@ -127,19 +121,24 @@ function setLocalStoreage() {
 
 function prevCanvas() {
     var logs = JSON.parse(myStorage.getItem("__log"));
+    console.log(logs.length);
     if (logs.length > 0) {
+        console.log(logs);
+        console.log(temp);
         temp.unshift(logs.shift());
+        console.log(temp);
         setTimeout(function () {
             myStorage.setItem("__log", JSON.stringify(logs));
             resetCanvas();
+            console.log(logs[0]['png']);
             draw(logs[0]['png']);
+
+            igClientIO.emit("realtime-draw", {
+                act: "prev",
+                src: logs[0]['png']
+            })
         }, 0);
-
-        igClientIO.emit("realtime-draw", {
-            act: "prev",
-        })
     }
-
 }
 
 function nextCanvas() {
@@ -150,11 +149,12 @@ function nextCanvas() {
             myStorage.setItem("__log", JSON.stringify(logs));
             resetCanvas();
             draw(logs[0]['png']);
-        }, 0);
 
-        igClientIO.emit("realtime-draw", {
-            act: "next"
-        })
+            igClientIO.emit("realtime-draw", {
+                act: "next",
+                src: logs[0]['png']
+            })
+        }, 0);
     }
 }
 

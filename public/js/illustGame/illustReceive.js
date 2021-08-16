@@ -33,30 +33,6 @@ function setLocalStoreage() {
     }, 0);
 }
 
-function prevCanvas() {
-    var logs = JSON.parse(myStorage.getItem("__log"));
-    if (logs.length > 0) {
-        temp.unshift(logs.shift());
-        setTimeout(function () {
-            myStorage.setItem("__log", JSON.stringify(logs));
-            resetCanvas();
-            draw(logs[0]['png']);
-        }, 0);
-    }
-}
-
-function nextCanvas() {
-    var logs = JSON.parse(myStorage.getItem("__log"));
-    if (temp.length > 0) {
-        logs.unshift(temp.shift());
-        setTimeout(function () {
-            myStorage.setItem("__log", JSON.stringify(logs));
-            resetCanvas();
-            draw(logs[0]['png']);
-        }, 0);
-    }
-}
-
 function draw(src) {
     var img = new Image();
     img.src = src;
@@ -102,10 +78,12 @@ igClientIO.on("draw", (data) => {
             setLocalStoreage();
             break;
         case "prev":
-            prevCanvas();
+            console.log("前");
+            draw(data.src);
             break;
         case "next":
-            nextCanvas();
+            console.log("後")
+            draw(data.src);
             break;
         case "eraser":
             eraser();
