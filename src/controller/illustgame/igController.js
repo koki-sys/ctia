@@ -3,7 +3,8 @@ exports.igController = (socket, IOserver) => {
         IOserver.emit("draw", {
             x: data.x,
             y: data.y,
-            act: data.act
+            act: data.act,
+            src: data.src
         });
     })
 }

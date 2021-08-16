@@ -20,24 +20,22 @@ window.onload = initLocalStorage();
 canvas.addEventListener('mousedown', startPoint, false);
 canvas.addEventListener('mousemove', movePoint, false);
 canvas.addEventListener('mouseup', endPoint, false);
+
 // スマホ対応
 canvas.addEventListener('touchstart', startPoint, false);
 canvas.addEventListener('touchmove', movePoint, false);
 canvas.addEventListener('touchend', endPoint, false);
-
 
 function startPoint(e) {
     e.preventDefault();
     ctx.beginPath();
 
     if (e.type == 'touchstart') {
-        console.log(e)
-        console.log(e.changedTouches[0].clientX);
         // 矢印の先っぽから始まるように調整
         Xpoint = e.changedTouches[0].clientX - 10;
         Ypoint = e.changedTouches[0].clientY - 125;
     } else {
-        console.log(e);
+
         // 矢印の先っぽから始まるように調整
         Xpoint = e.offsetX - 1;
         Ypoint = e.offsetY - 1;
@@ -54,15 +52,11 @@ function startPoint(e) {
 
 function movePoint(e) {
     if (e.buttons === 1 || e.witch === 1 || e.type == 'touchmove') {
-        console.log("スマホ")
         if (e.type == 'touchmove') {
-            console.log(e)
-            console.log(e.changedTouches[0].clientX);
             // 矢印の先っぽから始まるように調整
             Xpoint = e.changedTouches[0].clientX - 10;
             Ypoint = e.changedTouches[0].clientY - 125;
         } else {
-            console.log(e);
             // 矢印の先っぽから始まるように調整
             Xpoint = e.offsetX - 1;
             Ypoint = e.offsetY - 1;
@@ -105,6 +99,9 @@ function endPoint(e) {
 
 function resetCanvas() {
     ctx.clearRect(0, 0, ctx.canvas.clientWidth, ctx.canvas.clientHeight);
+    igClientIO.emit("realtime-draw", {
+        act: "reset"
+    })
 }
 
 function initLocalStorage() {
@@ -124,12 +121,22 @@ function setLocalStoreage() {
 
 function prevCanvas() {
     var logs = JSON.parse(myStorage.getItem("__log"));
+    console.log(logs.length);
     if (logs.length > 0) {
+        console.log(logs);
+        console.log(temp);
         temp.unshift(logs.shift());
+        console.log(temp);
         setTimeout(function () {
             myStorage.setItem("__log", JSON.stringify(logs));
             resetCanvas();
+            console.log(logs[0]['png']);
             draw(logs[0]['png']);
+
+            igClientIO.emit("realtime-draw", {
+                act: "prev",
+                src: logs[0]['png']
+            })
         }, 0);
     }
 }
@@ -142,6 +149,11 @@ function nextCanvas() {
             myStorage.setItem("__log", JSON.stringify(logs));
             resetCanvas();
             draw(logs[0]['png']);
+
+            igClientIO.emit("realtime-draw", {
+                act: "next",
+                src: logs[0]['png']
+            })
         }, 0);
     }
 }
@@ -162,14 +174,20 @@ function clear() {
 //消しゴムモード 色をホワイトに変えるだけ
 function eraser() {
     defColor = '#FFFFFF';
+    igClientIO.emit("realtime-draw", {
+        act: "eraser"
+    })
 }
 
 //描画モード　色を元の色に戻すだけ
 function drawInPen() {
     defColor = "#555";
+    igClientIO.emit("realtime-draw", {
+        act: "drawPen"
+    })
 }
 
-const perv = document.getElementById("prev");
+const prev = document.getElementById("prev");
 const next = document.getElementById("next");
 const erase = document.getElementById("erase");
 const drawPen = document.getElementById("draw");
