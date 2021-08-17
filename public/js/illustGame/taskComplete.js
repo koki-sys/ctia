@@ -1,13 +1,14 @@
 import { igClientIO } from "../../link.js"
 import { everyTimechange } from "../component/game/everyTimechange.js";
 import { setOrder } from "../component/game/setOrder.js";
+import { toAnnounce } from "../component/link/toAnnounce.js";
 
 window.onload = () => {
     igClientIO.emit("realtime-draw", {
         act: "towait",
     })
 
-    everyTimechange(igClientIO);
+    everyTimechange(igClientIO, toAnnounce);
 }
 
 setOrder(igClientIO);
