@@ -21,6 +21,9 @@ window.onload = () => {
     initLocalStorage();
     countDown(element);
     sessionStorage.removeItem("orderPattern");
+
+    // emitして、相手側の画面を表示するプログラムを作成
+    igClientIO.emit("toReceiveReq", {})
 }
 
 // PC対応
