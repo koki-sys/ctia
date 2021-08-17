@@ -29,4 +29,8 @@ exports.igController = (socket, IOserver) => {
             changePattern: nextPattern,
         })
     })
+
+    socket.on("toReceiveReq", () => {
+        IOserver.emit("toReceive", {});
+    })
 }
