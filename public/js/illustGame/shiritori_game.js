@@ -20,6 +20,7 @@ var myStorage = localStorage;
 window.onload = () => {
     initLocalStorage();
     countDown(element);
+    sessionStorage.removeItem("orderPattern");
 }
 
 // PC対応

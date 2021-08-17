@@ -10,7 +10,6 @@ const setName = () => {
             p.textContent = "ニックネームが空です。もう一度設定してください。";
         } else {
             form.textContent = "待機中・・・"
-            console.log("setting...")
             await sessionStorage.setItem('nickName', nickName);
             await redirect();
         }
