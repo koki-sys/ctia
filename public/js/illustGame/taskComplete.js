@@ -22,6 +22,8 @@ igClientIO.on('changeOrder', (data) => {
     console.log("junnbannkae");
     if (orderPattern === pattern) {
         toAnnounce();
+    } else {
+        document.location.href = "./shiritori_receive.html";
     }
 })
 

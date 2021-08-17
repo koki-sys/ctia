@@ -21,7 +21,6 @@ const everyTimechange = (client, toLink) => {
 
     setTimeout(() => {
         if (isAnsweredFlg) {
-            console.log("答えたよ！");
             // 順番変更処理を入れる。セッションでansweredを送信
             client.emit('order', {
                 roomId: sessionStorage.getItem('roomId'),
@@ -31,7 +30,6 @@ const everyTimechange = (client, toLink) => {
             // 回答したflgを削除
             sessionStorage.removeItem("flg");
         } else if (isCorrect) {
-            console.log("せいかいしたよ！")
             // 順番変更処理を入れる。セッションでansweredを送信
             client.emit('order', {
                 roomId: sessionStorage.getItem('roomId')
