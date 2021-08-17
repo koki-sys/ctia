@@ -25,7 +25,6 @@ exports.igController = (socket, IOserver) => {
 
         await order.flgUpdate(orderId);
 
-        console.log("次の人：" + nextPattern);
         IOserver.emit("changeOrder", {
             changePattern: nextPattern,
         })

@@ -27,7 +27,6 @@ const wait = (client) => {
 
         // 個人情報を受信する
         const nickNameFromServer = data.nickName;
-        console.log(nickNameFromServer);
         const countInRoomFromServer = parseInt(data.countInRoom);
         const limitPerRoomFromServer = parseInt(data.limitPerRoom);
 
