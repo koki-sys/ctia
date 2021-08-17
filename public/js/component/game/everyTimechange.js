@@ -1,7 +1,6 @@
 import { setCount } from '../../nameGame/cardCount.js';
-import { toNameGame } from '../link/toNameGame.js';
 
-const everyTimechange = (client) => {
+const everyTimechange = (client, toLink) => {
 
     const isOrder = (sessionStorage.getItem('orderPattern') != null) ? true : false;
     const isFirst = sessionStorage.getItem('firstPerson');
@@ -17,7 +16,7 @@ const everyTimechange = (client) => {
 
     if (isFirst) {
         sessionStorage.removeItem("firstPerson");
-        toNameGame();
+        toLink();
     }
 
     setTimeout(() => {
