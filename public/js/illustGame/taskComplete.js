@@ -17,8 +17,6 @@ setOrder(igClientIO);
 igClientIO.on('changeOrder', (data) => {
     const pattern = String(data.changePattern);
     const orderPattern = sessionStorage.getItem('orderPattern');
-    console.log("'" + pattern + "'");
-    console.log("'" + orderPattern + "'");
 
     // 順番が来たら、発表画面に切り替える。
     console.log("junnbannkae");
