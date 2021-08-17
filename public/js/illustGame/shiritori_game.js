@@ -1,7 +1,5 @@
 import { igClientIO } from '../../link.js';
-import { countDown } from '../component/game/countdown.js';
-
-const element = document.getElementById('display-count');
+import { sendOrder } from '../component/game/sendOrder.js';
 
 var canvas = document.getElementById('canvassample'),
     ctx = canvas.getContext('2d'),
@@ -19,7 +17,6 @@ var defSize = 3,
 var myStorage = localStorage;
 window.onload = () => {
     initLocalStorage();
-    countDown(element);
     sessionStorage.removeItem("orderPattern");
 
     // emitして、相手側の画面を表示するプログラムを作成
@@ -202,15 +199,18 @@ const next = document.getElementById("next");
 const erase = document.getElementById("erase");
 const drawPen = document.getElementById("draw");
 const reset = document.getElementById("reset");
+const drawBtn = document.getElementById('draw-btn');
 
 prev.addEventListener("click", prevCanvas, false);
 next.addEventListener("click", nextCanvas, false);
 erase.addEventListener("click", eraser, false);
 drawPen.addEventListener("click", drawInPen, false);
 reset.addEventListener("click", resetCanvas, false);
+drawBtn.addEventListener("click", sendOrder, false);
 
 prev.addEventListener("touch", prevCanvas, false);
 next.addEventListener("touch", nextCanvas, false);
 erase.addEventListener("touch", eraser, false);
 drawPen.addEventListener("touch", drawInPen, false);
 reset.addEventListener("touch", resetCanvas, false);
+drawBtn.addEventListener("touch", sendOrder, false);
