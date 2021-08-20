@@ -1,7 +1,6 @@
 import { setCount } from '../../nameGame/cardCount.js';
-import { toNameGame } from '../link/toNameGame.js';
 
-const everyTimechange = (client) => {
+const everyTimechange = (client, toLink) => {
 
     const isOrder = (sessionStorage.getItem('orderPattern') != null) ? true : false;
     const isFirst = sessionStorage.getItem('firstPerson');
@@ -17,12 +16,11 @@ const everyTimechange = (client) => {
 
     if (isFirst) {
         sessionStorage.removeItem("firstPerson");
-        toNameGame();
+        toLink();
     }
 
     setTimeout(() => {
         if (isAnsweredFlg) {
-            console.log("答えたよ！");
             // 順番変更処理を入れる。セッションでansweredを送信
             client.emit('order', {
                 roomId: sessionStorage.getItem('roomId'),
@@ -32,7 +30,6 @@ const everyTimechange = (client) => {
             // 回答したflgを削除
             sessionStorage.removeItem("flg");
         } else if (isCorrect) {
-            console.log("せいかいしたよ！")
             // 順番変更処理を入れる。セッションでansweredを送信
             client.emit('order', {
                 roomId: sessionStorage.getItem('roomId')
