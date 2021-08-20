@@ -10,7 +10,7 @@ import { setOrder } from '../component/game/setOrder.js';
 import { everyTimechange } from '../component/game/everyTimechange.js';
 
 window.onload = async () => {
-    everyTimechange(ngClientIO);
+    everyTimechange(ngClientIO, toNameGame);
 }
 
 setOrder(ngClientIO);
