@@ -15,6 +15,11 @@ exports.IllustModelTest = () => {
             beforeInit(sampleData);
         })
 
+        it("illust beforeAdd data_exists false", async () => {
+            const isSec = await illust.exists(sampleData.roomId);
+            assert.equal(isSec, false);
+        })
+
         it("illust Add 300sec.(Initialize)", async () => {
             const data = await illust.add(300, sampleData.roomId);
             assert.equal(data, true);
@@ -41,6 +46,11 @@ exports.IllustModelTest = () => {
 
             assert.equal(isUpdate, true);
             assert.equal(result, -100);
+        })
+
+        it("illust afterAdd data_exists true", async () => {
+            const isSec = await illust.exists(sampleData.roomId);
+            assert.equal(isSec, true);
         })
 
         after(async () => {

@@ -53,5 +53,23 @@ exports.illust = {
             console.log(err);
             mycon.end();
         }
+    },
+
+    exists: async (roomId) => {
+        try {
+            mycon = await mysql.createConnection(config.database);
+            mycon.connect();
+
+            const param = [roomId];
+            const sql = 'SELECT sec FROM illust WHERE room_id = ?';
+            const [results, field] = await mycon.query(sql, param);
+
+            mycon.end();
+            const result = results[0];
+            return (typeof result != "undefined");
+        } catch (err) {
+            console.log(err);
+            mycon.end();
+        }
     }
 }
