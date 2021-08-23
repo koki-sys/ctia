@@ -1,5 +1,6 @@
 import { igClientIO } from '../../link.js';
-import { sendOrder } from '../component/game/sendOrder.js';
+import { reqCalcTime } from './emitter/reqCalcTime.js';
+import { reqSec } from './emitter/reqSec.js';
 
 var canvas = document.getElementById('canvassample'),
     ctx = canvas.getContext('2d'),
@@ -19,9 +20,45 @@ window.onload = () => {
     initLocalStorage();
     sessionStorage.removeItem("orderPattern");
 
+    reqSec();
+
     // emitして、相手側の画面を表示するプログラムを作成
-    igClientIO.emit("toReceiveReq", {})
+    igClientIO.emit("toReceiveReq", {});
+    startShowing();
 }
+
+var PassSec, PassageID;   // 秒数カウント用変数
+
+// 繰り返し処理の中身
+function showPassage() {
+    PassSec++;   // カウントアップ
+    const msg = PassSec + "秒が経過しました。";   // 表示文作成
+    return msg;   // 表示更新
+}
+
+// 繰り返し処理の開始
+function startShowing() {
+    PassSec = 0;   // カウンタのリセット
+    PassageID = setInterval(() => {
+        document.getElementById("time").innerHTML = showPassage()
+    }
+        , 1000);   // タイマーをセット(1000ms間隔)
+}
+
+// 繰り返し処理の中止
+function stopShowing() {
+    sessionStorage.setItem('time', PassSec);
+    clearInterval(PassageID);   // タイマーのクリア
+    reqCalcTime();
+}
+
+igClientIO.on("resSec", (data) => {
+    sessionStorage.setItem('time', data.sec);
+});
+
+igClientIO.on("resCalcTime", () => {
+    document.location.href = "./taskComplete.html";
+})
 
 // PC対応
 canvas.addEventListener('mousedown', startPoint, false);
@@ -206,11 +243,11 @@ next.addEventListener("click", nextCanvas, false);
 erase.addEventListener("click", eraser, false);
 drawPen.addEventListener("click", drawInPen, false);
 reset.addEventListener("click", resetCanvas, false);
-drawBtn.addEventListener("click", sendOrder, false);
+drawBtn.addEventListener("click", stopShowing, false);
 
 prev.addEventListener("touch", prevCanvas, false);
 next.addEventListener("touch", nextCanvas, false);
 erase.addEventListener("touch", eraser, false);
 drawPen.addEventListener("touch", drawInPen, false);
 reset.addEventListener("touch", resetCanvas, false);
-drawBtn.addEventListener("touch", sendOrder, false);
+drawBtn.addEventListener("touch", stopShowing, false);

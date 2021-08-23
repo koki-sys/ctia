@@ -21,4 +21,4 @@ announced.onclick = () => {
     sendOrder();
 }
 
-countDown(displayCount);
+countDown(31, displayCount);
