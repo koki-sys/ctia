@@ -49,6 +49,7 @@ function startShowing() {
 function stopShowing() {
     sessionStorage.setItem('time', PassSec);
     clearInterval(PassageID);   // タイマーのクリア
+    sessionStorage.setItem('flg', "answered");
     reqCalcTime();
 }
 
