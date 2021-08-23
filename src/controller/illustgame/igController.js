@@ -41,12 +41,16 @@ exports.igController = (socket, IOserver) => {
     })
 
     socket.on("reqSec", async (data) => {
-        let sec = await illust.getSec(data.roomId);
-        if (typeof sec == "undefined") {
-
+        let sec;
+        const isSec = await illust.exists(data.roomId);
+        
+        if (!isSec) {
             await illust.add(300, data.roomId);
             sec = data.sec;
+        } else {
+            sec = await illust.getSec(data.roomId);
         }
+        
         IOserver.emit("resSec", {
             sec: sec
         })
