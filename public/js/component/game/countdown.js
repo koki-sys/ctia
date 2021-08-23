@@ -1,8 +1,8 @@
 import { sendOrder } from "./sendOrder.js";
 
-const countDown = (displayCount) => {
+const countDown = (time, displayCount) => {
     // カウントダウンする秒数
-    let sec = 31;
+    let sec = time;
 
     // 開始日時を設定
     let dt = new Date();
