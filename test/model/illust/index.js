@@ -1,43 +1,50 @@
 const assert = require("assert");
 const { illust } = require("../../../src/model/illust");
-const { beforeIllustTest, afterIllustTest } = require("../../init/testInit");
+const { afterInit, beforeInit } = require("./init");
 
 let sampleData;
 
 exports.IllustModelTest = () => {
     describe("illust Model Test", () => {
-
-        before(async () => {
-            const initResultUserId = await beforeIllustTest();
+        before(() => {
             sampleData = {
                 roomId: 48,
-                userId: initResultUserId,
-                charaId: 3,
-                charaName: "どら"
+                enterRoomName: "部屋48",
+                limitPerRoom: 2
             }
-        });
+            beforeInit(sampleData);
+        })
 
-        it("illust Add", async () => {
-            const data = await illust.add(sampleData);
+        it("illust Add 300sec.(Initialize)", async () => {
+            const data = await illust.add(300, sampleData.roomId);
             assert.equal(data, true);
         })
 
-        it("illust getsec", async () => {
-            const data = await illust.update(sampleData);
+        it("illust getsec 300sec.", async () => {
+            const data = await illust.getSec(sampleData.roomId);
 
-            assert.equal(data.chara_number, 3);
-            assert.equal(data.chara_name, "どら");
+            assert.equal(data, 300);
         })
 
-        it("illust update", async () => {
-            const data = await illust.random(sampleData.roomId);
+        it("illust update 300sec->200sec.", async () => {
+            const isUpdate = await illust.update(200, sampleData.roomId);
+            const data = await illust.getSec(sampleData.roomId);
 
-            assert.equal(data.chara_number, 3);
-            assert.equal(data.chara_name, "どら");
+            assert.equal(isUpdate, true);
+            assert.equal(data, 200);
+        })
+
+        it("illust update 200sec-> -100sec.", async () => {
+            const gameTime = await illust.getSec(sampleData.roomId);
+            const isUpdate = await illust.update(gameTime - 300, sampleData.roomId);
+            const result = await illust.getSec(sampleData.roomId);
+
+            assert.equal(isUpdate, true);
+            assert.equal(result, -100);
         })
 
         after(async () => {
-            await afterIllustTest();
+            await afterInit();
         })
     })
 }

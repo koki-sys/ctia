@@ -4,6 +4,7 @@ const { roomModelTest } = require("./room");
 const { userModelTest } = require("./user");
 const { typingModelTest } = require('./typing');
 const { beforeInit } = require("./init");
+const { IllustModelTest } = require("./illust");
 
 // それぞれのテストファイルをインポートする
 
@@ -16,4 +17,5 @@ exports.ModelTest = () => {
     orderModelTest();
     namegameModelTest();
     typingModelTest();
+    IllustModelTest();
 }
