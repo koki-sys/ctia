@@ -50,7 +50,7 @@ exports.igController = (socket, IOserver) => {
         } else {
             sec = await illust.getSec(data.roomId);
         }
-        
+
         IOserver.emit("resSec", {
             sec: sec
         })
@@ -58,9 +58,7 @@ exports.igController = (socket, IOserver) => {
 
     socket.on("reqCalcTime", async (data) => {
         const gameTime = await illust.getSec(data.roomId);
-        console.log(gameTime)
         const time = parseInt(gameTime) - parseInt(data.sec);
-        console.log("残り" + time);
         await illust.update(time, data.roomId);
 
         IOserver.emit("resCalcTime", {});
