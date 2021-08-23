@@ -24,7 +24,7 @@ const everyTimechange = (client, toLink) => {
             // 順番変更処理を入れる。セッションでansweredを送信
             client.emit('order', {
                 roomId: sessionStorage.getItem('roomId'),
-                flg: sessionStorage.getItem('flg')
+                flg: sessionStorage.getItem('flg'),
             });
 
             // 回答したflgを削除
@@ -32,7 +32,7 @@ const everyTimechange = (client, toLink) => {
         } else if (isCorrect) {
             // 順番変更処理を入れる。セッションでansweredを送信
             client.emit('order', {
-                roomId: sessionStorage.getItem('roomId')
+                roomId: sessionStorage.getItem('roomId'),
             });
             sessionStorage.removeItem('token');
             setCount();
