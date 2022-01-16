@@ -42,78 +42,53 @@
 </body>
 
 </html>
-<div class="container mt-3">
-    <h2 class="text-center mt-5">あなたの番です</h2>
-    <img
-        src="../../../images/discuss.svg"
-        width="70%"
-        height="70%"
-        class="d-block mx-auto mt-3"
-    />
-    <p class="text-center">24時間以内にあったいいことを言いましょう！</p>
-
-    <div class="row">
-        <div class="col-6">
-            <p class="text-right">残り</p>
-        </div>
-        <div class="col-6">
-            <h3 class="text-left" id="display-count"></h3>
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-6 mt-5">
+                <h2 class="text-center">あなたの番です</h2>
+                <img src="../../../images/discuss.svg" width="70%" height="70%" class="d-block mx-auto mt-3" />
+            </div>
+            <div class="col-md-6 mt-5">
+                <p class="text-center">24時間以内にあったいいことを言いましょう！</p>
+                <div class="mx-auto text-center" style="width: 50%">
+                    <p class="d-inline">残り</p>
+                    <h3 class="d-inline" id="display-count"></h3>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="row fixed-bottom">
-        <button
-            type="button"
-            class="btn btn-lg text-white mt-5 mb-5 mx-auto"
-            data-toggle="modal"
-            data-target="#exampleModalCenter"
-            style="width: 140px; height: 40px; background-color: #00a6fb"
-        >
-            <strong style="font-size: 15px">発言したよ！</strong>
+        <button type="button" class="btn btn-lg text-white mt-5 mb-5 mx-auto" data-toggle="modal"
+            data-target="#exampleModalCenter" style="background-color: #00a6fb">
+            <strong>発言したよ！</strong>
         </button>
     </div>
-</div>
-
-<!-- Modal -->
-<div
-    class="modal fade"
-    id="exampleModalCenter"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true"
->
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">
-                    発言しましたか？
-                </h5>
-                <button
-                    type="button"
-                    class="close"
-                    data-dismiss="modal"
-                    aria-label="Close"
-                >
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">１言有りませんか？ 大丈夫ですか？</div>
-            <div class="modal-footer">
-                <button
-                    type="button"
-                    class="btn text-white"
-                    style="background-color: #00a6fb"
-                    id="announced"
-                >
-                    次の人へ
-                </button>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">
+                        発言しましたか？
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">１言有りませんか？ 大丈夫ですか？</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn text-white" style="background-color: #00a6fb" id="announced">
+                        次の人へ
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<script src="../../../js/goodNew/game.js" type="module"></script>
-<script>
+    <script src="../../../js/goodNew/game.js" type="module"></script>
+    <script>
 document.addEventListener('touchstart', () => {}, {
     passive: true
 });
