@@ -1,6 +1,6 @@
-const { randomPattern } = require('./randomPattern');
-const { user } = require('../../model/user');
-const { order } = require('../../model/order');
+const { randomPattern } = require("./randomPattern");
+const { user } = require("../../model/user");
+const { order } = require("../../model/order");
 
 exports.requestOrderPattern = (socket, IOserver) => {
     socket.on("requestOrderPattern", async (data) => {
@@ -16,8 +16,8 @@ exports.requestOrderPattern = (socket, IOserver) => {
         const orderData = {
             roomId: roomId,
             userId: userId,
-            random: orderPattern
-        }
+            random: orderPattern,
+        };
 
         await order.add(orderData);
 
@@ -26,4 +26,4 @@ exports.requestOrderPattern = (socket, IOserver) => {
             orderPattern: orderPattern,
         });
     });
-}
+};

@@ -1,9 +1,8 @@
-const { order } = require('../../model/order');
-const { user } = require('../../model/user');
+const { order } = require("../../model/order");
+const { user } = require("../../model/user");
 const { randomPattern } = require("../../component/order/randomPattern");
 
 exports.gnController = (socket, IOserver) => {
-
     socket.on("requestOrderPattern", async (data) => {
         if (data.flg != "answered") {
             const roomId = data.roomId;
@@ -18,8 +17,8 @@ exports.gnController = (socket, IOserver) => {
             const orderData = {
                 roomId: roomId,
                 userId: userId,
-                random: orderPattern
-            }
+                random: orderPattern,
+            };
 
             await order.add(orderData);
 
@@ -39,10 +38,10 @@ exports.gnController = (socket, IOserver) => {
 
                 IOserver.emit("changeOrder", {
                     changePattern: nextPattern,
-                })
+                });
             } else {
                 IOserver.emit("gameEnd", {});
             }
         }
-    })
-}
+    });
+};

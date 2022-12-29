@@ -1,7 +1,6 @@
 exports.roomController = async (socket, IOserver) => {
-
-    const { room } = require('../../model/room');
-    const { user } = require('../../model/user');
+    const { room } = require("../../model/room");
+    const { user } = require("../../model/user");
 
     /**
      * 待機処理を行う関数(ニックネーム入力画面から送信)
@@ -18,13 +17,12 @@ exports.roomController = async (socket, IOserver) => {
      */
     // set_nickname -> create_room
     socket.on("create_room", async (data) => {
-
         // 部屋数と制限人数を定義
         let roomCount;
         let limitPerRoom;
         let roomId;
 
-        // 型変換( int型へ ) 
+        // 型変換( int型へ )
         if (data.roomCount != null || data.limitPerRoom != null) {
             roomCount = parseInt(data.roomCount);
             limitPerRoom = parseInt(data.limitPerRoom);
@@ -51,8 +49,8 @@ exports.roomController = async (socket, IOserver) => {
                 const roomData = {
                     roomId: roomId,
                     enterRoomName: enterRoomName,
-                    limitPerRoom: limitPerRoom
-                }
+                    limitPerRoom: limitPerRoom,
+                };
 
                 // ルーム作製
                 await room.create(roomData);
@@ -72,5 +70,4 @@ exports.roomController = async (socket, IOserver) => {
             }
         }
     });
-
-}
+};

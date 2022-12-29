@@ -1,12 +1,11 @@
 exports.userController = (socket, serverIO) => {
-
-    const { user } = require('../../model/user');
+    const { user } = require("../../model/user");
 
     const userExists = async (isAddError, userData) => {
         if (!isAddError) {
             serverIO.to(socket.id).emit("user_exists", {
-                errmsg: "すでにユーザが存在します。<br>前の画面で名前を変更してください。"
-            })
+                errmsg: "すでにユーザが存在します。<br>前の画面で名前を変更してください。",
+            });
         } else {
             const nowCount = await user.count(userData.roomId);
 
@@ -20,12 +19,12 @@ exports.userController = (socket, serverIO) => {
                 userRow: userRow,
                 nickName: name,
                 countInRoom: nowCount,
-                limitPerRoom: userData.limitPerRoom
-            })
+                limitPerRoom: userData.limitPerRoom,
+            });
         }
-    }
+    };
 
-    socket.on('join_game', async (data) => {
+    socket.on("join_game", async (data) => {
         const roomId = parseInt(data.roomId);
         const nickName = data.nickName;
         const roomCount = parseInt(data.roomCount);
@@ -35,8 +34,8 @@ exports.userController = (socket, serverIO) => {
             roomId: roomId,
             nickname: nickName,
             roomCount: roomCount,
-            limitPerRoom: limitPerRoom
-        }
+            limitPerRoom: limitPerRoom,
+        };
 
         const count = await user.count(userData.roomId);
         if (count < limitPerRoom) {
@@ -46,4 +45,4 @@ exports.userController = (socket, serverIO) => {
             await userExists(isAddError, userData);
         }
     });
-}
+};
