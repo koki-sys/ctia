@@ -1,11 +1,13 @@
-FROM node:18-alpine3.17 AS base
+FROM node:18
 
 WORKDIR /app
 
 COPY package.json .
 
+COPY ./src /app/src
+
 RUN npm install
 
 EXPOSE 8080
 
-CMD [ "npm", "start" ]
+CMD ["npm", "start"]
