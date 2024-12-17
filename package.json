@@ -6,6 +6,7 @@
     "scripts": {
         "test": "mocha",
         "start": "node ./src/app.js",
+        "dev": "nodemon ./src/app.js",
         "compile": "gulp ejs"
     },
     "author": "koki-sys",
@@ -18,7 +19,8 @@
         "ejs": "^3.1.6",
         "mysql2": "^2.3.0",
         "npm-check-updates": "^16.6.2",
-        "socket.io": "^4.4.1"
+        "socket.io": "^4.4.1",
+        "nodemon": "^3.1.9"
     },
     "devDependencies": {
         "eslint": "^7.32.0",
