@@ -6,8 +6,9 @@ services:
     build:
       context: .
       dockerfile: ./infra/docker/node/Dockerfile
+      target: ${APP_CONTAINER_BUILD_TARGET}
     ports:
-      - 8080:8080
+      - "80:8080"
     volumes:
       - type: bind
         source: ./src
