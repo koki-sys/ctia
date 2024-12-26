@@ -1,7 +1,3 @@
-
-
-import { frontendUrl } from "../../../../link.js";
-
 const copyUrl = (client, gameUrl) => {
 
     window.onload = () => {
@@ -16,7 +12,7 @@ const copyUrl = (client, gameUrl) => {
         if (sessionStorage.getItem('roomCount') == 1 && sessionStorage.getItem('limitPerRoom') == 1) {
             $("#qr").html("<strong class='text-primary'>一人だけなので<br>共有する必要はありません。</strong>");
         } else if (roomData.roomCount && roomData.limitPerRoom) {
-            const ruleUrl = frontendUrl + "/html/" + gameUrl + "/group/rule.html?";
+            const ruleUrl = location.href.replace("qr_code_display", "game_rule_description?");
             const roomCountParam = "roomCount=" + roomData.roomCount + "&";
             const limitPerRoomParam = "limitPerRoom=" + roomData.limitPerRoom + "&";
             const roomIdParam = "roomId=" + roomData.roomId;

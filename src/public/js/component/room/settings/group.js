@@ -8,8 +8,7 @@ window.onload = () => {
 
 // qr.htmlに遷移するメソッド
 const qrlink = async () => {
-    console.log("qr画面に遷移しました。");
-    document.location.href = "qr.html";
+    document.location.href = location.href.replace("setting", "qr_code_display");
 }
 
 // ボタンをクリックしたときに部屋情報を保存する

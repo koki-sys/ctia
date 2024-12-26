@@ -47,10 +47,11 @@ const wait = (client) => {
         const errMsg = data.errmsg;
         let msg = "";
         userListFromElement.innerHTML = msg;
+        const renameUrl = location.href.replace("creating_group", "name_entry");
 
         // エラー
         msg += '<p class="text-danger text-center">' + errMsg + '</p>';
-        msg += '<a class="btn btn-outline-secondary" href="name.html">名前をつけ直す</a>';
+        msg += `<a class="btn btn-outline-secondary" href="${renameUrl}">名前をつけ直す</a>`;
         userListFromElement.innerHTML = msg;
     })
 }
