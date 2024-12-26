@@ -1,7 +1,7 @@
 const form = document.querySelector("#input-name");
 const setName = () => {
     const redirect = async () => {
-        document.location.href="./wait.html";
+        document.location.href=location.href.replace("name_entry", "creating_group");
     }
     const isNickName = async() => {
         const nickName = document.getElementById('name').value
