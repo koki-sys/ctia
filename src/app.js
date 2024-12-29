@@ -12,7 +12,7 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 app.get("/", (req, res) => res.render("index"));
-app.use("/goodnew", require("./router/goodnew"));
+app.use("/room", require("./router/room"));
 
 Controller(socketIoServer);
 
