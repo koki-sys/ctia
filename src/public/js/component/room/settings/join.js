@@ -1,4 +1,3 @@
-
 window.onload = () => {
 
     // ロード時に参加部屋などの情報を保存
@@ -14,4 +13,10 @@ window.onload = () => {
         console.log("招待者の制限人数:" + sessionStorage.getItem('limitPerRoom'));
     }
     console.log("ロードしました。");
+}
+
+const nextFromRule = document.getElementById("next-from-rule");
+
+nextFromRule.onclick = () => {
+    document.location.href = `/room/name_entry?game=${nextFromRule.value}`
 }
