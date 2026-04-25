@@ -25,7 +25,7 @@ exports.igController = (socket, IOserver) => {
 
         await order.flgUpdate(orderId);
 
-        const sec = illust.getSec(data.roomId);
+        const sec = await illust.getSec(data.roomId);
         if (sec <= 0) {
             IOserver.emit("gameEnd", {});
         } else {

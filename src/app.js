@@ -13,6 +13,10 @@ app.set("view engine", "ejs");
 
 app.get("/", (req, res) => res.render("index"));
 app.use("/goodnew", require("./router/goodnew"));
+app.use("/namegame", require("./router/namegame"));
+app.use("/dicegame", require("./router/dicegame"));
+app.use("/illustgame", require("./router/illustgame"));
+app.use("/typing", require("./router/typing"));
 
 Controller(socketIoServer);
 

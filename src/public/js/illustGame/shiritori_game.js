@@ -58,7 +58,7 @@ igClientIO.on("resSec", (data) => {
 });
 
 igClientIO.on("resCalcTime", () => {
-    document.location.href = "./taskComplete.html";
+    document.location.href = "./taskComplete";
 })
 
 // PC対応

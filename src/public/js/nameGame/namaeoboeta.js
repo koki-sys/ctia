@@ -15,7 +15,7 @@ const confirmBtnElement = document.getElementById('confirm-btn');
 const charaElement = document.getElementById('chara-card');
 
 const toNameGame = async () => {
-    document.location.href = "./namegame.html";
+    document.location.href = "./namegame";
 }
 
 // ロード時にsessionで保存されている名前と画像の番号を送信、順番変更をリクエスト
@@ -47,7 +47,7 @@ ngClientIO.on('displayCardName', (data) => {
     console.log("キャラの名前：" + charaName);
 
     const imgElement = '<img src="../allstars/gazou'+ randomCardNumber + '.png" width="100%" height="auto" class="d-block mx-auto border"/>';
-    const nameElement = '<h6 class="text-center mt-3">' + charaName + '</h3>';
+    const nameElement = '<h6 class="text-center mt-3">' + charaName + '</h6>';
     charaElement.innerHTML = imgElement + nameElement;
 })
 

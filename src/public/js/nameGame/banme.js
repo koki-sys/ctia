@@ -13,7 +13,7 @@ window.onload = () => {
 }
 
 const toNameStore = async () => {
-    document.location.href = "./namaeoboeta.html";
+    document.location.href = "./namaeoboeta";
 }
 
 let imgNumber;

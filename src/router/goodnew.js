@@ -9,4 +9,8 @@ router.get("/group/qr_code_display", (req, res) => res.render("group/qr_code_dis
 router.get("/group/game_rule_description", (req, res) => res.render("group/game_rule_description", {accessTargetGameName}));
 router.get("/group/creating_group", (req, res) => res.render("group/creating_group"));
 
+router.get("/game/announce", (req, res) => res.render("goodnew/game/announce"));
+router.get("/game/gameEnd", (req, res) => res.render("goodnew/game/gameEnd"));
+router.get("/game/taskComplete", (req, res) => res.render("goodnew/game/taskComplete"));
+
 module.exports = router;

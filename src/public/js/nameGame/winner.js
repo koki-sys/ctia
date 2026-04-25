@@ -22,5 +22,5 @@ ngClientIO.on('displayWinner', (data) => {
 })
 
 setTimeout(() => {
-    document.location.href="./gameEnd.html";
+    document.location.href="./gameEnd";
 }, 3000);

@@ -30,5 +30,5 @@ igClientIO.on('gameEnd', () => {
 })
 
 igClientIO.on("toReceive", () => {
-    document.location.href = "./shiritori_receive.html";
+    document.location.href = "./shiritori_receive";
 })

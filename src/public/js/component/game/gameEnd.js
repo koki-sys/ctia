@@ -2,7 +2,7 @@ const gameEnd = () => {
     sessionStorage.clear();
 
     setTimeout(() => {
-        document.location.href = "../../../index.html";
+        document.location.href = "/";
     }, 3000);
 }
 

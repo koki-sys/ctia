@@ -14,7 +14,7 @@ const qr = (client, gameUrl) => {
         if (sessionStorage.getItem('roomCount') == 1 && sessionStorage.getItem('limitPerRoom') == 1) {
             $("#qr").html("<strong class='text-primary'>一人だけなので<br>共有する必要はありません。</strong>");
         } else if (roomData.roomCount && roomData.limitPerRoom) {
-            const ruleUrl = frontendUrl + "/html/" + gameUrl + "/group/rule.html?";
+            const ruleUrl = frontendUrl + "/" + gameUrl + "/group/rule?";
             const roomCountParam = "roomCount=" + roomData.roomCount + "&";
             const limitPerRoomParam = "limitPerRoom=" + roomData.limitPerRoom + "&";
             const roomIdParam = "roomId=" + roomData.roomId;

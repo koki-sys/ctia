@@ -17,7 +17,7 @@ exports.ngController = (socket, IOserver, waitCount) => {
         const cards = await namegame.getNamedCharaId(roomId);
 
         // 存在チェック
-        if (typeof cards != "undefined" || cards.length != 0) {
+        if (typeof cards != "undefined" && cards.length != 0) {
             cards.map((card) => {
                 namedImgArray.push(card.chara_number);
             });
@@ -195,12 +195,13 @@ exports.ngController = (socket, IOserver, waitCount) => {
     });
 
     socket.on("isOrder", async (data) => {
-        if (orderArray.length === 0) {
-            const deleteSQL = "delete from namegame";
+        const roomId = data.roomId;
+        const nextOrder = await order.first(roomId);
 
-            await mycon.execute(deleteSQL);
+        if (!nextOrder) {
+            await namegame.deleteByRoom(roomId);
             await socket.leave(data.entryRoomName);
-            await IOserver.emit("toGameEnd", {});
+            IOserver.emit("toGameEnd", {});
         }
     });
 

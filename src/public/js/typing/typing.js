@@ -106,7 +106,7 @@ window.onload = () => {
 }
 
 const toRanking = async () => {
-    document.location.href = "./ranking.html";
+    document.location.href = "./ranking";
 }
 
 function gameStart() {

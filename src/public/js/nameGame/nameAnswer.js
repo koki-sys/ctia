@@ -12,7 +12,7 @@ const roomId = sessionStorage.getItem('roomId');
 
 // 画面遷移処理
 const toCorrectAnswerer = async () => {
-    document.location.href = "./correctAnswerer.html";
+    document.location.href = "./correctAnswerer";
 }
 
 // ロード時に画像をセット
@@ -29,7 +29,7 @@ window.onload = () => {
 // 回答用の画像を表示
 ngClientIO.on('DisplayImg', (data) => {
     const randomCardNumber = data.randomCardNumber;
-    if (randomCardNumber == 0 && randomCardNumber == null) {
+    if (randomCardNumber == 0 || randomCardNumber == null) {
         const charaImgPath = "../allstars/gazou" + randomCardNumber + ".png";
         namedCharaImg.setAttribute('src', charaImgPath);
     } else {

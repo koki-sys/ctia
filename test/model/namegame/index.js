@@ -22,7 +22,7 @@ exports.namegameModelTest = () => {
         })
 
         it("namegame find", async () => {
-            const data = await namegame.find(sampleData);
+            const data = await namegame.find(sampleData.charaId, sampleData.roomId);
 
             assert.equal(data.chara_number, 3);
             assert.equal(data.chara_name, "どら");

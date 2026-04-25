@@ -130,6 +130,41 @@ exports.namegame = {
         }
     },
 
+    unansweredCount: async (roomId) => {
+        try {
+            mycon = await mysql.createConnection(config.database);
+            mycon.connect();
+
+            const params = [roomId];
+            const sql = 'SELECT COUNT(id) AS cnt FROM namegame WHERE flg = 0 AND room_id = ?';
+            const [result] = await mycon.query(sql, params);
+
+            const count = result[0].cnt;
+            mycon.end();
+            return count;
+        } catch (err) {
+            mycon.end();
+            return false;
+        }
+    },
+
+    deleteByRoom: async (roomId) => {
+        try {
+            mycon = await mysql.createConnection(config.database);
+            mycon.connect();
+
+            const params = [roomId];
+            const sql = 'DELETE FROM namegame WHERE room_id = ?';
+            await mycon.query(sql, params);
+
+            mycon.end();
+            return true;
+        } catch (err) {
+            mycon.end();
+            return false;
+        }
+    },
+
     answeredCount: async (roomId) => {
         try {
             mycon = await mysql.createConnection(config.database);
