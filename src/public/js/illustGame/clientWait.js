@@ -1,4 +1,4 @@
-import { igClientIO } from "../../link.js";
-import { wait } from "../component/room/wait/wait.js";
+import { igClientIO } from "../../link.js"
+import { wait } from "../component/room/wait/wait.js"
 
-wait(igClientIO);
+wait(igClientIO)

@@ -1,6 +1,6 @@
-const dotenv = require("dotenv");
-dotenv.config();
-const env = process.env;
+const dotenv = require("dotenv")
+dotenv.config()
+const env = process.env
 
 const setConfig = {
     database: {
@@ -9,6 +9,6 @@ const setConfig = {
         user: env.DB_USERNAME,
         password: env.DB_PASSWORD,
     },
-};
+}
 
-exports.config = setConfig;
+exports.config = setConfig

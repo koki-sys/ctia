@@ -1,11 +1,11 @@
 const gameEnd = () => {
-    sessionStorage.clear();
+    sessionStorage.clear()
 
     setTimeout(() => {
-        document.location.href = "/";
-    }, 3000);
+        document.location.href = "/"
+    }, 3000)
 }
 
-gameEnd();
+gameEnd()
 
 export { gameEnd }

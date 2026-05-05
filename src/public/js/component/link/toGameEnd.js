@@ -1,6 +1,6 @@
 // ゲーム画面に遷移する
 const toGameEnd = async () => {
-    document.location.href = "./gameEnd";
+    document.location.href = "./gameEnd"
 }
 
 export { toGameEnd }
