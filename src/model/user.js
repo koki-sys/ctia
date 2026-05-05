@@ -10,6 +10,7 @@ exports.user = {
         const nickname = userData.nickname;
         const roomId = userData.roomId;
 
+        let mycon;
         try {
             mycon = await mysql.createConnection(config.database);
             mycon.connect();
@@ -22,7 +23,7 @@ exports.user = {
 
             return true;
         } catch (err) {
-            mycon.end();
+            if (mycon) mycon.end();
             return false;
         }
     },
@@ -30,6 +31,7 @@ exports.user = {
     // 全ユーザ情報
     all: async (roomId) => {
 
+        let mycon;
         try {
             mycon = await mysql.createConnection(config.database);
             mycon.connect();
@@ -41,7 +43,7 @@ exports.user = {
             mycon.end();
             return userRow;
         } catch (err) {
-            mycon.end();
+            if (mycon) mycon.end();
             return false;
         }
     },
@@ -49,6 +51,7 @@ exports.user = {
     // ユーザ数
     count: async (roomId) => {
 
+        let mycon;
         try {
             mycon = await mysql.createConnection(config.database);
             mycon.connect();
@@ -61,7 +64,7 @@ exports.user = {
             mycon.end();
             return userCount;
         } catch (err) {
-            mycon.end();
+            if (mycon) mycon.end();
             return false;
         }
 
@@ -70,6 +73,7 @@ exports.user = {
     // ユーザの詳細情報
     find: async (nickname) => {
 
+        let mycon;
         try {
             mycon = await mysql.createConnection(config.database);
             mycon.connect();
@@ -83,7 +87,7 @@ exports.user = {
             mycon.end();
             return user;
         } catch (err) {
-            mycon.end();
+            if (mycon) mycon.end();
             return false;
         }
     }

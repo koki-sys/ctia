@@ -8,6 +8,7 @@ exports.room = {
         const roomId = roomData.roomId;
         const enterRoomName = roomData.enterRoomName;
         const limitPerRoom = roomData.limitPerRoom;
+        let mycon;
 
         try {
             mycon = await mysql.createConnection(config.database);
@@ -21,13 +22,14 @@ exports.room = {
             mycon.end();
             return true;
         } catch (err) {
-            mycon.end();
+            if (mycon) mycon.end();
             return false;
         }
     },
 
     getRoomId: async (roomId) => {
 
+        let mycon;
         try {
             mycon = await mysql.createConnection(config.database);
             mycon.connect();
@@ -42,12 +44,13 @@ exports.room = {
             mycon.end();
             return resultRoomId;
         } catch (err) {
-            mycon.end();
+            if (mycon) mycon.end();
             return false;
         }
     },
 
     exists: async (roomId) => {
+        let mycon;
         try {
             mycon = await mysql.createConnection(config.database);
             mycon.connect();
@@ -64,7 +67,7 @@ exports.room = {
             }
             return false;
         } catch (err) {
-            mycon.end();
+            if (mycon) mycon.end();
             return false;
         }
     }

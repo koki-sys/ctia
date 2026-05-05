@@ -8,6 +8,7 @@ exports.typing = {
         const userId = typingData.userId;
         const roomId = typingData.roomId;
 
+        let mycon;
         try {
             mycon = await mysql.createConnection(config.database);
             mycon.connect();
@@ -20,12 +21,13 @@ exports.typing = {
             return true;
 
         } catch (err) {
-            mycon.end();
+            if (mycon) mycon.end();
             return false;
         }
     },
 
     all: async () => {
+        let mycon;
         try {
             mycon = await mysql.createConnection(config.database);
             mycon.connect();
@@ -36,12 +38,13 @@ exports.typing = {
             mycon.end();
             return results;
         } catch (err) {
-            mycon.end();
+            if (mycon) mycon.end();
             return false;
         }
     },
 
     count: async () => {
+        let mycon;
         try {
             mycon = await mysql.createConnection(config.database);
             mycon.connect();
@@ -53,12 +56,13 @@ exports.typing = {
             mycon.end();
             return count;
         } catch (err) {
-            mycon.end();
+            if (mycon) mycon.end();
             return false;
         }
     },
 
     delete: async () => {
+        let mycon;
         try {
             mycon = await mysql.createConnection(config.database);
             mycon.connect();
@@ -69,7 +73,7 @@ exports.typing = {
             mycon.end();
             return true;
         } catch (err) {
-            mycon.end();
+            if (mycon) mycon.end();
             return false;
         }
     },
@@ -78,6 +82,7 @@ exports.typing = {
         const userId = typingData.userId;
         const roomId = typingData.roomId;
 
+        let mycon;
         try {
             mycon = await mysql.createConnection(config.database);
             mycon.connect();

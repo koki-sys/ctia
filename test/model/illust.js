@@ -1,6 +1,21 @@
 const assert = require("assert");
-const { illust } = require("../../../src/model/illust");
-const { afterInit, beforeInit } = require("./init");
+const mysql = require('mysql2/promise');
+const { config } = require("../../src/config/config");
+const { illust } = require("../../src/model/illust");
+const { room } = require('../../src/model/room');
+
+const beforeInit = async (data) => {
+    await room.create(data);
+}
+
+const afterInit = async () => {
+    let mycon;
+    mycon = await mysql.createConnection(config.database);
+    mycon.connect();
+    await mycon.query("DELETE FROM illust");
+    await mycon.query("DELETE FROM room");
+    mycon.end();
+}
 
 let sampleData;
 
