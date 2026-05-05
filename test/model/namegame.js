@@ -1,6 +1,35 @@
 const assert = require("assert");
-const { namegame } = require("../../../src/model/namegame");
-const { beforeInit, afterInit } = require("./init");
+const mysql = require('mysql2/promise');
+const { config } = require("../../src/config/config");
+const { namegame } = require("../../src/model/namegame");
+const { user } = require('../../src/model/user');
+const { room } = require('../../src/model/room');
+
+const beforeInit = async () => {
+    const sampleData = {
+        roomId: 48,
+        enterRoomName: "部屋48",
+        nickname: "testUser",
+        limitPerRoom: 2
+    }
+
+    await room.create(sampleData);
+    await user.add(sampleData);
+    const result = await user.find(sampleData.nickname);
+    const id = result.id;
+
+    return id;
+}
+
+const afterInit = async () => {
+    let mycon;
+    mycon = await mysql.createConnection(config.database);
+    mycon.connect();
+    await mycon.query("DELETE FROM namegame");
+    await mycon.query("DELETE FROM user");
+    await mycon.query("DELETE FROM room");
+    mycon.end();
+}
 
 let sampleData;
 

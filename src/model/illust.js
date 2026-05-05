@@ -3,6 +3,7 @@ const { config } = require('../config/config');
 
 exports.illust = {
     add: async (sec, roomId) => {
+        let mycon;
         try {
             mycon = await mysql.createConnection(config.database);
             mycon.connect();
@@ -15,11 +16,12 @@ exports.illust = {
             return true;
         } catch (err) {
             console.log(err);
-            mycon.end();
+            if (mycon) mycon.end();
         }
     },
 
     getSec: async (roomId) => {
+        let mycon;
         try {
             mycon = await mysql.createConnection(config.database);
             mycon.connect();
@@ -33,11 +35,12 @@ exports.illust = {
             return result;
         } catch (err) {
             console.log(err);
-            mycon.end();
+            if (mycon) mycon.end();
         }
     },
 
     update: async (sec, roomId) => {
+        let mycon;
         try {
             mycon = await mysql.createConnection(config.database);
             mycon.connect();
@@ -51,11 +54,12 @@ exports.illust = {
 
         } catch (err) {
             console.log(err);
-            mycon.end();
+            if (mycon) mycon.end();
         }
     },
 
     exists: async (roomId) => {
+        let mycon;
         try {
             mycon = await mysql.createConnection(config.database);
             mycon.connect();
@@ -69,7 +73,7 @@ exports.illust = {
             return (typeof result != "undefined");
         } catch (err) {
             console.log(err);
-            mycon.end();
+            if (mycon) mycon.end();
         }
     }
 }

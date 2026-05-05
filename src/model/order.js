@@ -8,6 +8,7 @@ exports.order = {
         const userId = data.userId;
         const random = data.random;
 
+        let mycon;
         try {
             mycon = await mysql.createConnection(config.database);
             mycon.connect();
@@ -19,12 +20,13 @@ exports.order = {
             mycon.end();
             return true;
         } catch (err) {
-            mycon.end();
+            if (mycon) mycon.end();
             return false;
         }
     },
 
     first: async (roomId) => {
+        let mycon;
         try {
             mycon = await mysql.createConnection(config.database);
             mycon.connect();
@@ -38,12 +40,13 @@ exports.order = {
             mycon.end();
             return firstOrder;
         } catch (err) {
-            mycon.end();
+            if (mycon) mycon.end();
             return false;
         }
     },
 
     flgUpdate: async (orderId) => {
+        let mycon;
         try {
             mycon = await mysql.createConnection(config.database);
             mycon.connect();
@@ -55,7 +58,7 @@ exports.order = {
             mycon.end();
             return true;
         } catch (err) {
-            mycon.end();
+            if (mycon) mycon.end();
             return false;
         }
     }

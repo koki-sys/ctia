@@ -1,6 +1,23 @@
 const assert = require("assert");
-const { room } = require("../../../src/model/room");
-const { beforeInit, afterInit } = require("./init");
+const mysql = require('mysql2/promise');
+const { config } = require("../../src/config/config");
+const { room } = require("../../src/model/room");
+
+const beforeInit = async () => {
+    let mycon;
+    mycon = await mysql.createConnection(config.database);
+    mycon.connect();
+    await mycon.query("DELETE FROM room");
+    mycon.end();
+}
+
+const afterInit = async () => {
+    let mycon;
+    mycon = await mysql.createConnection(config.database);
+    mycon.connect();
+    await mycon.query("DELETE FROM room");
+    mycon.end();
+}
 
 exports.roomModelTest = () => {
     const sampleData = {

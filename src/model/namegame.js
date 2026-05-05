@@ -11,6 +11,7 @@ exports.namegame = {
         const userId = gameData.userId;
         const roomId = gameData.roomId;
 
+        let mycon;
         try {
             mycon = await mysql.createConnection(config.database);
             mycon.connect();
@@ -23,7 +24,7 @@ exports.namegame = {
             mycon.end();
             return true;
         } catch (err) {
-            mycon.end();
+            if (mycon) mycon.end();
             return false;
         }
 
@@ -31,6 +32,7 @@ exports.namegame = {
 
     find: async (charaId, roomId) => {
 
+        let mycon;
         try {
             mycon = await mysql.createConnection(config.database);
             mycon.connect();
@@ -45,12 +47,13 @@ exports.namegame = {
             mycon.end();
             return result;
         } catch (err) {
-            mycon.end();
+            if (mycon) mycon.end();
             return false;
         }
     },
 
     getNamedCharaId: async (roomId) => {
+        let mycon;
         try {
             mycon = await mysql.createConnection(config.database);
             mycon.connect();
@@ -63,12 +66,13 @@ exports.namegame = {
             mycon.end();
             return results;
         } catch (err) {
-            mycon.end();
+            if (mycon) mycon.end();
             return false;
         }
     },
 
     random: async (roomId) => {
+        let mycon;
         try {
             mycon = await mysql.createConnection(config.database);
             mycon.connect();
@@ -94,6 +98,7 @@ exports.namegame = {
 
     flgUpdate: async (id) => {
 
+        let mycon;
         try {
             mycon = await mysql.createConnection(config.database);
             mycon.connect();
@@ -106,12 +111,13 @@ exports.namegame = {
             mycon.end();
             return true;
         } catch (err) {
-            mycon.end();
+            if (mycon) mycon.end();
             return false;
         }
     },
 
     namedCount: async (roomId) => {
+        let mycon;
         try {
             mycon = await mysql.createConnection(config.database);
             mycon.connect();
@@ -125,12 +131,13 @@ exports.namegame = {
             mycon.end();
             return count;
         } catch (err) {
-            mycon.end();
+            if (mycon) mycon.end();
             return false;
         }
     },
 
     unansweredCount: async (roomId) => {
+        let mycon;
         try {
             mycon = await mysql.createConnection(config.database);
             mycon.connect();
@@ -143,12 +150,13 @@ exports.namegame = {
             mycon.end();
             return count;
         } catch (err) {
-            mycon.end();
+            if (mycon) mycon.end();
             return false;
         }
     },
 
     deleteByRoom: async (roomId) => {
+        let mycon;
         try {
             mycon = await mysql.createConnection(config.database);
             mycon.connect();
@@ -160,12 +168,13 @@ exports.namegame = {
             mycon.end();
             return true;
         } catch (err) {
-            mycon.end();
+            if (mycon) mycon.end();
             return false;
         }
     },
 
     answeredCount: async (roomId) => {
+        let mycon;
         try {
             mycon = await mysql.createConnection(config.database);
             mycon.connect();
@@ -179,7 +188,7 @@ exports.namegame = {
             mycon.end();
             return count;
         } catch (err) {
-            mycon.end();
+            if (mycon) mycon.end();
             return false;
         }
     }

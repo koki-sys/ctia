@@ -4,6 +4,7 @@ const { config } = require("../../src/config/config");
 exports.score = {
     addNamegame: async (score, userId, roomId) => {
 
+        let mycon;
         try {
             mycon = await mysql.createConnection(config.database);
             mycon.connect();
@@ -16,12 +17,13 @@ exports.score = {
             mycon.end();
             return true;
         } catch (err) {
-            mycon.end();
+            if (mycon) mycon.end();
             return false;
         }
     },
 
     getNamegame: async (roomId) => {
+        let mycon;
         try {
             mycon = await mysql.createConnection(config.database);
             mycon.connect();
@@ -35,7 +37,7 @@ exports.score = {
             mycon.end();
             return result;
         } catch (err) {
-            mycon.end();
+            if (mycon) mycon.end();
             return false;
         }
     }
