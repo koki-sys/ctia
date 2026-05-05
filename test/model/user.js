@@ -1,8 +1,8 @@
 const assert = require("assert");
-const mysql = require('mysql2/promise');
+const mysql = require("mysql2/promise");
 const { config } = require("../../src/config/config");
 const { user } = require("../../src/model/user");
-const { room } = require('../../src/model/room');
+const { room } = require("../../src/model/room");
 
 const afterInit = async () => {
     let mycon;

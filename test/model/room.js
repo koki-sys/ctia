@@ -1,5 +1,5 @@
 const assert = require("assert");
-const mysql = require('mysql2/promise');
+const mysql = require("mysql2/promise");
 const { config } = require("../../src/config/config");
 const { room } = require("../../src/model/room");
 

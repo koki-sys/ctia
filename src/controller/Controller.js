@@ -1,9 +1,9 @@
 const { roomController } = require("./user/roomController");
 const { userController } = require("./user/userController");
-const { dgController } = require('./dicegame/dgController');
-const { gnController } = require('./goodNew/gnController');
-const { tpController } = require('./typing/tpController');
-const { ngController } = require('./namegame/ngController');
+const { dgController } = require("./dicegame/dgController");
+const { gnController } = require("./goodNew/gnController");
+const { tpController } = require("./typing/tpController");
+const { ngController } = require("./namegame/ngController");
 const { igController } = require("./illustgame/igController");
 
 exports.Controller = (socketIoServer) => {

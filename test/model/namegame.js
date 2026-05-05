@@ -1,9 +1,9 @@
 const assert = require("assert");
-const mysql = require('mysql2/promise');
+const mysql = require("mysql2/promise");
 const { config } = require("../../src/config/config");
 const { namegame } = require("../../src/model/namegame");
-const { user } = require('../../src/model/user');
-const { room } = require('../../src/model/room');
+const { user } = require("../../src/model/user");
+const { room } = require("../../src/model/room");
 
 const beforeInit = async () => {
     const sampleData = {
