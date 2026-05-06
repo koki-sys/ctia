@@ -1,28 +1,28 @@
-const express = require("express");
-const { Controller } = require("./controller/Controller");
-const app = express();
-const http = require("http").Server(app);
-const path = require('path');
-const socketIoServer = require("socket.io")(http);
-const PORT = process.env.PORT || 8080;
+const express = require("express")
+const { Controller } = require("./controller/Controller")
+const app = express()
+const http = require("http").Server(app)
+const path = require("path")
+const socketIoServer = require("socket.io")(http)
+const PORT = process.env.PORT || 8080
 
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, "public")))
 
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"))
+app.set("view engine", "ejs")
 
-app.get("/", (req, res) => res.render("index"));
-app.use("/goodnew", require("./router/goodnew"));
-app.use("/namegame", require("./router/namegame"));
-app.use("/dicegame", require("./router/dicegame"));
-app.use("/illustgame", require("./router/illustgame"));
-app.use("/typing", require("./router/typing"));
+app.get("/", (req, res) => res.render("index"))
+app.use("/goodnew", require("./router/goodnew"))
+app.use("/namegame", require("./router/namegame"))
+app.use("/dicegame", require("./router/dicegame"))
+app.use("/illustgame", require("./router/illustgame"))
+app.use("/typing", require("./router/typing"))
 
-Controller(socketIoServer);
+Controller(socketIoServer)
 
 // ポート番号3000でListening
 http.listen(PORT, () => {
-    console.log("server listening. Port: " + PORT);
-    console.log("server running......");
-    console.log("Please Access URL:http://localhost:" + PORT + "/");
-});
+    console.log("server listening. Port: " + PORT)
+    console.log("server running......")
+    console.log("Please Access URL:http://localhost:" + PORT + "/")
+})

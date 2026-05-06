@@ -1,3 +1,3 @@
-import { complete } from '../component/room/settings/complete.js';
+import { complete } from "../component/room/settings/complete.js"
 
-complete("taskComplete");
+complete("taskComplete")

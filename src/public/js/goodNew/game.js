@@ -1,12 +1,12 @@
-import { countDown } from "../component/game/countdown.js";
-import { sendOrder } from "../component/game/sendOrder.js";
+import { countDown } from "../component/game/countdown.js"
+import { sendOrder } from "../component/game/sendOrder.js"
 
-const announced = document.getElementById('announced');
-const displayCount = document.getElementById("display-count");
+const announced = document.getElementById("announced")
+const displayCount = document.getElementById("display-count")
 
 //　確認ウィンドウのボタンをタップしたときの動作
 announced.onclick = () => {
-    sendOrder();
+    sendOrder()
 }
 
-countDown(31, displayCount);
+countDown(31, displayCount)

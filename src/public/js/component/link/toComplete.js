@@ -1,5 +1,5 @@
 const toComplete = () => {
-    document.location.href = "./taskComplete";
+    document.location.href = "./taskComplete"
 }
 
 export { toComplete }

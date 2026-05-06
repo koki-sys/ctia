@@ -1,3 +1,3 @@
-const { ModelTest } = require("./model");
+const { ModelTest } = require("./model")
 
-ModelTest();
+ModelTest()

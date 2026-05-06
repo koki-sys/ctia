@@ -1,23 +1,24 @@
-const assert = require("assert");
-const mysql = require('mysql2/promise');
-const { config } = require("../../src/config/config");
-const { illust } = require("../../src/model/illust");
-const { room } = require('../../src/model/room');
+const assert = require("assert")
+const mysql = require("mysql2/promise")
+const { describe, it, before, after } = require("mocha")
+const { config } = require("../../src/config/config")
+const { illust } = require("../../src/model/illust")
+const { room } = require("../../src/model/room")
 
 const beforeInit = async (data) => {
-    await room.create(data);
+    await room.create(data)
 }
 
 const afterInit = async () => {
-    let mycon;
-    mycon = await mysql.createConnection(config.database);
-    mycon.connect();
-    await mycon.query("DELETE FROM illust");
-    await mycon.query("DELETE FROM room");
-    mycon.end();
+    let mycon
+    mycon = await mysql.createConnection(config.database)
+    mycon.connect()
+    await mycon.query("DELETE FROM illust")
+    await mycon.query("DELETE FROM room")
+    mycon.end()
 }
 
-let sampleData;
+let sampleData
 
 exports.IllustModelTest = () => {
     describe("illust Model Test", () => {
@@ -25,51 +26,51 @@ exports.IllustModelTest = () => {
             sampleData = {
                 roomId: 48,
                 enterRoomName: "部屋48",
-                limitPerRoom: 2
+                limitPerRoom: 2,
             }
-            beforeInit(sampleData);
+            beforeInit(sampleData)
         })
 
         it("illust beforeAdd data_exists false", async () => {
-            const isSec = await illust.exists(sampleData.roomId);
-            assert.equal(isSec, false);
+            const isSec = await illust.exists(sampleData.roomId)
+            assert.equal(isSec, false)
         })
 
         it("illust Add 300sec.(Initialize)", async () => {
-            const data = await illust.add(300, sampleData.roomId);
-            assert.equal(data, true);
+            const data = await illust.add(300, sampleData.roomId)
+            assert.equal(data, true)
         })
 
         it("illust getsec 300sec.", async () => {
-            const data = await illust.getSec(sampleData.roomId);
+            const data = await illust.getSec(sampleData.roomId)
 
-            assert.equal(data, 300);
+            assert.equal(data, 300)
         })
 
         it("illust update 300sec->200sec.", async () => {
-            const isUpdate = await illust.update(200, sampleData.roomId);
-            const data = await illust.getSec(sampleData.roomId);
+            const isUpdate = await illust.update(200, sampleData.roomId)
+            const data = await illust.getSec(sampleData.roomId)
 
-            assert.equal(isUpdate, true);
-            assert.equal(data, 200);
+            assert.equal(isUpdate, true)
+            assert.equal(data, 200)
         })
 
         it("illust update 200sec-> -100sec.", async () => {
-            const gameTime = await illust.getSec(sampleData.roomId);
-            const isUpdate = await illust.update(gameTime - 300, sampleData.roomId);
-            const result = await illust.getSec(sampleData.roomId);
+            const gameTime = await illust.getSec(sampleData.roomId)
+            const isUpdate = await illust.update(gameTime - 300, sampleData.roomId)
+            const result = await illust.getSec(sampleData.roomId)
 
-            assert.equal(isUpdate, true);
-            assert.equal(result, -100);
+            assert.equal(isUpdate, true)
+            assert.equal(result, -100)
         })
 
         it("illust afterAdd data_exists true", async () => {
-            const isSec = await illust.exists(sampleData.roomId);
-            assert.equal(isSec, true);
+            const isSec = await illust.exists(sampleData.roomId)
+            assert.equal(isSec, true)
         })
 
         after(async () => {
-            await afterInit();
+            await afterInit()
         })
     })
 }
